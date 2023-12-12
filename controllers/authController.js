@@ -15,7 +15,7 @@ const createSendToken = (user, statusCode, req, res) => {
 
   const cookieOptions = {
     expires: new Date(
-      Date.noew() + process.env.JWT_COOKIE_EXPRESS_IN * 24 * 60 * 60 * 1000,
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
@@ -49,4 +49,15 @@ exports.signIn = catchAsync(async (req, res, next) => {
 
   // 3) If everything is ok, send token to client
   createSendToken(userData.user, 200, req, res);
+});
+
+exports.signOut = catchAsync(async (req, res, next) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    status: 'success',
+  });
 });
