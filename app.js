@@ -35,6 +35,7 @@ app.use(
         'script-src': [
           "'self'",
           'https://mbehgukaiafkgmqfeboa.supabase.co',
+          'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/',
           "'unsafe-inline'",
         ],
         'connect-src': [
@@ -44,6 +45,7 @@ app.use(
           'http://127.0.0.1:*',
           'http://localhost:*',
           'https://mbehgukaiafkgmqfeboa.supabase.co',
+          'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com',
         ],
       },
     },
