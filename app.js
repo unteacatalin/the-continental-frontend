@@ -24,6 +24,9 @@ app.use(cors());
 
 app.options('*', cors());
 
+// Serving static files
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Set security HTTP headers
 app.use(
   helmet({
