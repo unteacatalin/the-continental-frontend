@@ -15,6 +15,7 @@
   "author": "Catalin Marius Untea",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@supabase/supabase-js": "^2.39.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
