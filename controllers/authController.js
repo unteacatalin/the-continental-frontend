@@ -43,7 +43,9 @@ const createSendToken = (user, statusCode, req, res) => {
 exports.signUp = catchAsync(async (req, res, next) => {
   const { email, password, fullName } = req.body;
 
+  console.log('AICI!');
   const newUser = await signUpApi({ fullName, email, password, next });
+  console.log({ newUser });
 
   createSendToken(newUser, 201, req, res);
 });
