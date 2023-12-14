@@ -9,7 +9,7 @@
   "scripts": {
     "start:dev": "nodemon server.js",
     "start": "NODE_ENV=production node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js/bundled --out-file bundle.js"
   },
   "keywords": [],
   "author": "Catalin Marius Untea",
