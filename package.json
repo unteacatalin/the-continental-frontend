@@ -30,7 +30,7 @@
     "xss-clean": "^0.1.4"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "devDependencies": {
     "eslint": "^8.55.0",
