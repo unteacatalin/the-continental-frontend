@@ -1,7 +1,19 @@
 import supabase, { supabaseUrl } from './supabase';
 
 export async function getRooms() {
-  let { data: rooms, error } = await supabase.from('rooms').select('*');
+  // let { data: rooms, error } = await supabase.from('rooms').select('*');
+
+  const result = await fetch(
+    'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
+    {
+      method: 'GET',
+      credentials: 'same-origin',
+    }
+  );
+
+  const { data: rooms, error } = await result.json();
+
+  console.log({ rooms });
 
   // const data = await fetch(
   //   'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',

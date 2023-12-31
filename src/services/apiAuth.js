@@ -18,14 +18,29 @@ export async function signup({ fullName, email, password }) {
 }
 
 export async function login({ email, password }) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  const result = await fetch(
+    'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    }
+  );
+  const { data, error } = await result.json();
+  console.log({ data, error });
+  // supabase.auth.signInWithPassword({
+  //   email,
+  //   password,
+  // });
 
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(error);
 
-  return data;
+  return data.user;
 }
 
 export async function getCurrentUser(existingUserData, logout) {

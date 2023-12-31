@@ -12,9 +12,10 @@ export function useLogin() {
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: (user) => {
-      const userData = { ...user.user, jwt_expiry: Date.now() + jwtExpiry };
+      console.log({ user });
+      const userData = { ...user, jwt_expiry: Date.now() + jwtExpiry };
       queryClient.setQueryData(['user'], userData);
-      navigate('/dashboard', { replace: true });
+      navigate('/rooms', { replace: true });
     },
     onError: (err) => {
       console.error('ERROR', err);
