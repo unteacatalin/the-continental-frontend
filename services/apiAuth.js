@@ -17,21 +17,33 @@ exports.signup = async function ({ fullName, email, password, next }) {
     },
   });
 
-  if (error)
-    return next(new AppError('Could not signup. Please try again later.'));
+  if (error) {
+    console.error(error);
+    // return next(new AppError('Could not signup. Please try again later.'));
+  }
 
-  return user;
+  return { user, error };
 };
 
-exports.login = async function ({ email, password, next }) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+exports.login = async function ({ email, password }) {
+  const { data, error: supabaseError } = await supabase.auth.signInWithPassword(
+    {
+      email,
+      password,
+    },
+  );
 
-  if (error) return next(new AppError('Could not signin', 500));
+  let error;
 
-  return data;
+  if (supabaseError) {
+    // return next(new AppError('Could not signin', 500));
+    console.error(supabaseError);
+    error = 'Could not signin';
+  }
+
+  const user = data.user;
+
+  return { user, error };
 };
 
 exports.logout = async function (next) {

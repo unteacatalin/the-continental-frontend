@@ -5,37 +5,61 @@ class APIFeatures {
   }
 
   filter() {
-    // 1A) Filter
+    // 1) Filter
     const queryObj = { ...this.queryString };
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
-    // 1B) Advanced filtering
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = JSON.parse(
-      queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`),
-    );
-    this.query = this.query.find(queryStr);
+    Object.keys(queryObj).forEach((el) => {
+      const key = Object.keys(queryObj[el])[0];
+      const value = Object.values(queryObj[el])[0];
+      if (key === 'eq') {
+        this.query = this.query.eq(`${el}`, value);
+      } else if (key === 'gt') {
+        this.query = this.query.gt(`${el}`, value);
+      } else if (key === 'gte') {
+        this.query = this.query.gte(`${el}`, value);
+      } else if (key === 'lt') {
+        this.query = this.query.lt(`${el}`, value);
+      } else if (key === 'lte') {
+        this.query = this.query.lte(`${el}`, value);
+      } else if (key === 'ilike') {
+        this.query = this.query.ilike(`${el}`, value);
+      } else if (key === 'like') {
+        this.query = this.query.like(`${el}`, value);
+      }
+      return this.query;
+    });
 
     return this;
   }
 
   sort() {
+    // 2) Sort
     if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(',').join(' ');
-      this.query = this.query.sort(sortBy);
+      const sortBy = this.queryString.sort.split(',');
+      sortBy.forEach((el) => {
+        return !el.includes('-')
+          ? (this.query = this.query.order(el.replaceAll('+', ''), {
+              ascending: true,
+            }))
+          : (this.query = this.query.order(el.replaceAll('-', ''), {
+              ascending: false,
+            }));
+      });
     } else {
-      this.query = this.query.sort('-createdAt');
+      this.query = this.query.order('id', { ascending: true });
     }
 
     return this;
   }
 
   limitFields() {
-    if (this.queryString.fields) {
-      const fields = this.queryString.fields.split(',').join(' ');
+    // 3) Selected fields
+    const fields = this.queryString.fields;
+    if (fields) {
       this.query = this.query.select(fields);
     } else {
-      this.query = this.query.select('-__v');
+      this.query = this.query.select('*');
     }
 
     return this;
@@ -44,8 +68,9 @@ class APIFeatures {
   paginate() {
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 100;
-    const skip = (page - 1) * limit;
-    this.query = this.query.skip(skip).limit(limit);
+    const from = (page - 1) * limit;
+    const to = page * limit - 1;
+    this.query = this.query.range(from, to);
 
     return this;
   }

@@ -18,7 +18,8 @@ const signToken = (email) =>
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
-const createSendToken = (user, statusCode, req, res) => {
+const createSendToken = (results, statusCode, req, res) => {
+  const { user, error } = results;
   const token = signToken(user.email);
 
   const cookieOptions = {
@@ -26,47 +27,55 @@ const createSendToken = (user, statusCode, req, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000,
     ),
     httpOnly: true,
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    /*** ACTIVATE LATER ***/
+    // secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   };
 
   res.cookie('jwt', token, cookieOptions);
 
-  res.status(statusCode).json({
-    status: 'success',
-    token,
-    data: {
-      user,
-    },
+  return res.status(statusCode).json({
+    // status: error ? 'error' : 'success',
+    // token,
+    data: { user },
+    error,
   });
 };
 
-exports.signUp = catchAsync(async (req, res, next) => {
+exports.signUp = catchAsync(async (req, res) => {
   const { email, password, fullName } = req.body;
 
-  console.log('AICI!');
-  const newUser = await signUpApi({ fullName, email, password, next });
-  console.log({ newUser });
+  const newUser = await signUpApi({ fullName, email, password });
 
   createSendToken(newUser, 201, req, res);
 });
 
-exports.signIn = catchAsync(async (req, res, next) => {
+exports.signIn = catchAsync(async (req, res) => {
   const { email, password } = req.body;
+  let userData = { data: { user: {} }, error: '' };
 
   // 1) Check if email and password exist
   if (!email || !password) {
-    return next(new AppError('Please provide email and password!', 400));
+    console.error('Please provide email and password!');
+    userData.error = 'Please provide email and password!';
+    return createSendToken(userData, 400, req, res);
+    // return next(new AppError('Please provide email and password!', 400));
   }
 
   // 2) Check if user && password is correct
-  const userData = await signInApi({ email, password, next });
+  userData = await signInApi({ email, password });
 
   if (!userData || !userData.user) {
-    return next(new AppError('Incorrect email or password', 401));
+    console.error('Incorrect email or password');
+    userData.error = 'Incorrect email or password';
+    return createSendToken(userData, 401, req, res);
+    // return next(new AppError('Incorrect email or password', 401));
+  } else if (userData.error) {
+    console.error(userData.error);
+    return createSendToken(userData, 500, req, res);
   }
 
   // 3) If everything is ok, send token to client
-  createSendToken(userData.user, 200, req, res);
+  createSendToken(userData, 200, req, res);
 });
 
 exports.signOut = catchAsync(async (req, res, next) => {
@@ -105,8 +114,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 3) Check if token email is the same for the logedin user
   const currentUser = await getCurrentUser(next);
-
-  console.log({ decode });
 
   if (decode.email !== currentUser.email) {
     return next(new AppError('Token belongs to different user'));
