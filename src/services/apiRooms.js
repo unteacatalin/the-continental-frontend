@@ -7,10 +7,10 @@ export async function getRooms() {
   const { data: rooms, error } = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
     {
-      headers: {
-        'Access-Control-Allow-Origin':
-          'https://gregarious-moonbeam-01fd30.netlify.app',
-      },
+      // headers: {
+      //   'Access-Control-Allow-Origin':
+      //     'https://gregarious-moonbeam-01fd30.netlify.app',
+      // },
       withCredentials: true,
       // credentials: 'same-origin',
     }
