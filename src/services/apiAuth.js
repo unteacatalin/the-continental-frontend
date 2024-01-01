@@ -29,7 +29,6 @@ export async function login({ email, password }) {
         email,
         password,
       }),
-      credentials: 'include',
     }
   );
   const { data, error } = await result.json();
