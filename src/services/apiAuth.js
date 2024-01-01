@@ -20,7 +20,7 @@ export async function signup({ fullName, email, password }) {
 
 export async function login({ email, password }) {
   const {
-    data: { data },
+    data: { user },
     error,
   } = await axios({
     method: 'POST',
@@ -44,7 +44,7 @@ export async function login({ email, password }) {
   //   }),
   // }
   // const { data, error } = await result.json();
-  console.log({ data, error });
+  console.log({ user, error });
   // supabase.auth.signInWithPassword({
   //   email,
   //   password,
@@ -52,7 +52,7 @@ export async function login({ email, password }) {
 
   if (error) throw new Error(error);
 
-  return data.user;
+  return user;
 }
 
 export async function getCurrentUser(existingUserData, logout) {
@@ -61,10 +61,10 @@ export async function getCurrentUser(existingUserData, logout) {
 
   // const { data: { user } = {}, error } = await supabase.auth.getUser();
 
-  const result = await fetch(
+  const result = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
     {
-      credentials: 'same-origin',
+      withCredentials: true,
     }
   );
 
