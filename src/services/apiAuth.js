@@ -19,12 +19,13 @@ export async function signup({ fullName, email, password }) {
 }
 
 export async function login({ email, password }) {
-  const { data, error } = await axios({
+  const {
+    data: { data },
+    error,
+  } = await axios({
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      // 'Access-Control-Allow-Origin':
-      //   'https://gregarious-moonbeam-01fd30.netlify.app',
     },
     url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
     data: JSON.stringify({
