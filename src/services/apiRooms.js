@@ -7,7 +7,7 @@ export async function getRooms() {
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
     {
       method: 'GET',
-      credentials: 'same-origin',
+      credentials: 'include',
     }
   );
 
