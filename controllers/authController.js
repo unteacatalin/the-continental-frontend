@@ -114,6 +114,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 3) Check if token email is the same for the logedin user
   const currentUser = await getCurrentUser(next);
+  console.log({ email1: decode.email, email2: currentUser.email });
 
   if (decode.email !== currentUser.email) {
     return next(new AppError('Token belongs to different user'));
