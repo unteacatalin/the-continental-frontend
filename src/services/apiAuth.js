@@ -29,7 +29,7 @@ export async function login({ email, password }) {
         email,
         password,
       }),
-      credentials: 'same-origin',
+      credentials: 'include',
     }
   );
   const { data, error } = await result.json();
