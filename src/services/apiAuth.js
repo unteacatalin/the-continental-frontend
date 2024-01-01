@@ -44,12 +44,21 @@ export async function login({ email, password }) {
 }
 
 export async function getCurrentUser(existingUserData, logout) {
-  const { data: { session } = {} } = await supabase.auth.getSession();
-  if (!session) return null;
+  // const { data: { session } = {} } = await supabase.auth.getSession();
+  // if (!session) return null;
 
-  const { data: { user } = {}, error } = await supabase.auth.getUser();
+  // const { data: { user } = {}, error } = await supabase.auth.getUser();
 
-  if (error) throw new Error(error.message);
+  const result = await fetch(
+    'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
+    {
+      credentials: 'same-origin',
+    }
+  );
+
+  const { data: { user } = {}, error } = await result.json();
+
+  if (error) throw new Error(error);
 
   if (existingUserData.jwt_expiry < Date.now()) {
     logout();
