@@ -39,6 +39,7 @@ app.use(
           "'self'",
           'https://mbehgukaiafkgmqfeboa.supabase.co',
           'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/',
+          'https://gregarious-moonbeam-01fd30.netlify.app/',
           "'unsafe-inline'",
         ],
         'connect-src': [
@@ -49,6 +50,7 @@ app.use(
           'http://localhost:*',
           'https://mbehgukaiafkgmqfeboa.supabase.co',
           'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com',
+          'https://gregarious-moonbeam-01fd30.netlify.app/',
         ],
       },
     },

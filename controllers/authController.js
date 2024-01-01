@@ -144,15 +144,22 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 });
 
 exports.getMe = catchAsync(async (req, res, next) => {
+  let userData = { data: { user: {} }, error: '' };
+
   const user = await getCurrentUser(next);
 
   if (!user) {
-    return next(
-      new AppError('You are not logged in! Please log in to get access.', 401),
-    );
+    console.error('You are not logged in! Please log in to get access.');
+    userData.error = 'You are not logged in! Please log in to get access.';
+    return createSendToken(userData, 401, req, res);
+    // return next(
+    //   new AppError('You are not logged in! Please log in to get access.', 401),
+    // );
   }
 
-  createSendToken(user, 200, req, res);
+  userData.data.user = user;
+
+  createSendToken(userData, 200, req, res);
 });
 
 exports.updateMyUserData = catchAsync(async (req, res, next) => {
