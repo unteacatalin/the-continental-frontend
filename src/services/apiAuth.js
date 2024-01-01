@@ -61,14 +61,14 @@ export async function getCurrentUser(existingUserData, logout) {
 
   // const { data: { user } = {}, error } = await supabase.auth.getUser();
 
-  const result = await axios.get(
+  const { data: { user } = {}, error } = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
     {
       withCredentials: true,
     }
   );
 
-  const { data: { user } = {}, error } = await result.json();
+  // const { data: { user } = {}, error } = await result.json();
 
   if (error) throw new Error(error);
 
