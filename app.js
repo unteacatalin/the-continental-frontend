@@ -20,7 +20,7 @@ app.enable('trust proxy');
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
-app.use(cors({ origin: 'https://gregarious-moonbeam-01fd30.netlify.app/' }));
+app.use(cors({ origin: 'https://gregarious-moonbeam-01fd30.netlify.app' }));
 
 app.options('*', cors());
 
