@@ -18,20 +18,26 @@ export async function signup({ fullName, email, password }) {
 }
 
 export async function login({ email, password }) {
-  const result = await fetch(
-    'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    }
-  );
-  const { data, error } = await result.json();
+  const result = await axios({
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
+    data: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+  // {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     email,
+  //     password,
+  //   }),
+  // }
+  // const { data, error } = await result.json();
   console.log({ data, error });
   // supabase.auth.signInWithPassword({
   //   email,
