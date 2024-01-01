@@ -18,7 +18,7 @@ export async function signup({ fullName, email, password }) {
 }
 
 export async function login({ email, password }) {
-  const result = await axios({
+  const { data, error } = await axios({
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
