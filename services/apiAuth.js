@@ -2,10 +2,10 @@ const AppError = require('../utils/appError');
 const supabase = require('../utils/supabase');
 const { supabaseUrl } = require('../utils/supabase');
 
-exports.signup = async function ({ fullName, email, password, next }) {
+exports.signup = async function ({ fullName, email, password }) {
   const {
     data: { user },
-    error,
+    error: supabaseError,
   } = await supabase.auth.signUp({
     email,
     password,
@@ -17,12 +17,15 @@ exports.signup = async function ({ fullName, email, password, next }) {
     },
   });
 
-  if (error) {
-    console.error(error);
-    // return next(new AppError('Could not signup. Please try again later.'));
+  let error;
+
+  if (supabaseError) {
+    console.error(supabaseError);
+    error = 'Could not signup. Please try again later.';
+    // return next(new AppError('Could not signup. Please try again later.', 500));
   }
 
-  return { user, error };
+  return { data: { user }, error };
 };
 
 exports.login = async function ({ email, password }) {
@@ -43,7 +46,7 @@ exports.login = async function ({ email, password }) {
 
   const user = data.user;
 
-  return { user, error };
+  return { data: { user }, error };
 };
 
 exports.logout = async function () {
