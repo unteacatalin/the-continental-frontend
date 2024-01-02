@@ -78,9 +78,8 @@ export async function getCurrentUser(existingUserData, logout) {
   if (error) throw new Error(error);
 
   if (existingUserData.jwt_expiry < Date.now()) {
-    // logout();
-    // return null;
-    return user;
+    logout();
+    return null;
   } else {
     const newUserData = { ...user, jwt_expiry: existingUserData.jwt_expiry };
 

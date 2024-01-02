@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 export const supabaseUrl = 'https://mbehgukaiafkgmqfeboa.supabase.co';
 
 // JWT expiry time
-export const jwtExpiry = 3 * 60 * 60 * 1000;
+export const jwtExpiry = 6 * 60 * 60 * 1000;
 
 let supabaseKey;
 if (import.meta.env.NETLIFY === 'true') {
