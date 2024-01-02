@@ -22,7 +22,7 @@ app.enable('trust proxy');
 // Implement CORS
 app.use(
   cors({
-    // credentials: true,
+    credentials: true,
     origin: 'https://gregarious-moonbeam-01fd30.netlify.app',
   }),
 );
