@@ -25,6 +25,7 @@ export async function login({ email, password }) {
   } = await axios({
     method: 'POST',
     headers: {
+      'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
     },
     url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
