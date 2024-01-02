@@ -46,10 +46,15 @@ exports.login = async function ({ email, password }) {
   return { user, error };
 };
 
-exports.logout = async function (next) {
+exports.logout = async function () {
   const { error } = await supabase.auth.signOut();
 
-  if (error) return next(new AppError('Could not signout', 500));
+  if (error) {
+    console.error('Coult not signout');
+    // return next(new AppError('Could not signout', 500));
+  }
+
+  return { error };
 };
 
 exports.getCurrentUser = async function (next) {

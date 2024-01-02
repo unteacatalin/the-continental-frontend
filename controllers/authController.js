@@ -85,7 +85,14 @@ exports.signOut = catchAsync(async (req, res, next) => {
     httpOnly: true,
   });
 
-  signOutApi(next);
+  const { error } = signOutApi();
+
+  if (error) {
+    return res.status(500).json({
+      status: 'fail',
+      error,
+    });
+  }
 
   res.status(200).json({
     status: 'success',
