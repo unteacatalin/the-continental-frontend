@@ -27,7 +27,13 @@ app.use(
   }),
 );
 
-app.options('*', cors());
+app.options(
+  '*',
+  cors({
+    credentials: true,
+    origin: 'https://gregarious-moonbeam-01fd30.netlify.app',
+  }),
+);
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
