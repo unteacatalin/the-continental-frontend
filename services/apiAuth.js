@@ -25,7 +25,7 @@ exports.signup = async function ({ fullName, email, password }) {
     // return next(new AppError('Could not signup. Please try again later.', 500));
   }
 
-  return { data: { user }, error };
+  return { user, error };
 };
 
 exports.login = async function ({ email, password }) {
@@ -46,7 +46,7 @@ exports.login = async function ({ email, password }) {
 
   const user = data.user;
 
-  return { data: { user }, error };
+  return { user, error };
 };
 
 exports.logout = async function () {
