@@ -65,6 +65,10 @@ export async function getCurrentUser(existingUserData, logout) {
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
     {
       withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
     }
   );
 
