@@ -10,7 +10,6 @@ export async function getRooms() {
       withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
       },
       // credentials: 'same-origin',
     }
