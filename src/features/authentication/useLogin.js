@@ -10,7 +10,7 @@ export function useLogin() {
   const navigate = useNavigate();
 
   const { mutate: login, isLoading } = useMutation({
-    mutationFn: loginApi,
+    mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: (user) => {
       console.log({ user });
       const userData = { ...user, jwt_expiry: Date.now() + jwtExpiry };
