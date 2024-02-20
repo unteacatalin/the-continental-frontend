@@ -37,8 +37,7 @@ export async function signup({ fullName, email, password }) {
 
 export async function login({ email, password }) {
   const {
-    // data: { user },
-    data,
+    data: { data: {user} },
     error,
   } = await axios({
     method: 'POST',
@@ -72,9 +71,7 @@ export async function login({ email, password }) {
 
   if (error) throw new Error(error);
 
-  console.log({data});
-
-  return data.user;
+  return user;
 }
 
 export async function getCurrentUser(existingUserData, logout) {
