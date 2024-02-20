@@ -92,7 +92,7 @@ export async function getCurrentUser(existingUserData, logout) {
 
   // const { data: { user } = {}, error } = await result.json();
 
-  console.log({getCurrentUser: user});
+  console.log({ user});
 
   if (error) throw new Error(error);
 
