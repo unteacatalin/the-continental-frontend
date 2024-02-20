@@ -83,7 +83,7 @@ export async function getCurrentUser(existingUserData, logout) {
   const { data: { user } = {}, error } = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
     {
-      // withCredentials: true,
+      withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
@@ -110,7 +110,7 @@ export async function logout() {
   const { error } = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
     {
-      withCredentials: true,
+      // withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
