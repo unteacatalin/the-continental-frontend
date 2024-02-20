@@ -17,7 +17,7 @@ export async function signup({ fullName, email, password }) {
       password,
       fullName,
     }),
-    withCredentials: true,
+    // withCredentials: true,
   });
   // await supabase.auth.signUp({
   //   email,
@@ -83,7 +83,7 @@ export async function getCurrentUser(existingUserData, logout) {
   const { data: { user } = {}, error } = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
     {
-      withCredentials: true,
+      // withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
@@ -93,6 +93,8 @@ export async function getCurrentUser(existingUserData, logout) {
   // const { data: { user } = {}, error } = await result.json();
 
   if (error) throw new Error(error);
+
+  console.log({getCurrentUser: user});
 
   if (existingUserData.jwt_expiry < Date.now()) {
     logout();
