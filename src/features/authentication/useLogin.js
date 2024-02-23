@@ -12,7 +12,6 @@ export function useLogin() {
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: (user) => {
-      console.log({ user });
       const userData = { ...user, jwt_expiry: Date.now() + jwtExpiry };
       queryClient.setQueryData(['user'], userData);
       navigate('/rooms', { replace: true });
