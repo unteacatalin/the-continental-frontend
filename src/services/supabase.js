@@ -5,7 +5,7 @@ export const supabaseUrl = 'https://mbehgukaiafkgmqfeboa.supabase.co';
 // JWT expiry time
 export const jwtExpiry = 6 * 60 * 60 * 1000;
 
-let supabaseKey = ;
+let supabaseKey;
 if (import.meta.env.NETLIFY === 'true') {
   supabaseKey = process.env.VITE_SUPABASE_KEY;
 } else {
