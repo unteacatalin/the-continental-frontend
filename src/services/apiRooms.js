@@ -7,7 +7,7 @@ export async function getRooms() {
   const { data: {data: {rooms}, error} } = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
     {
-      // withCredentials: true,
+      withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
