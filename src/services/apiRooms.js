@@ -4,16 +4,18 @@ import axios from 'axios';
 export async function getRooms() {
   // let { data: rooms, error } = await supabase.from('rooms').select('*');
 
-  const { data: {data: {rooms}, error} } = await axios.get(
+  const { data, error} } = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
     {
-      withCredentials: true,
+      // withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
       // credentials: 'same-origin',
     }
   );
+
+  console.log({rooms: data});
 
   // const { data: rooms, error } = await result.json();
 
@@ -34,7 +36,7 @@ export async function getRooms() {
     throw new Error('Rooms data could not be loaded');
   }
   // return result.rooms;
-  return rooms;
+  return data.data.rooms;
 }
 
 export async function deleteRoom(id) {
