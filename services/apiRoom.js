@@ -1,6 +1,7 @@
 const supabase = require('../utils/supabase');
 const { supabaseUrl } = require('../utils/supabase');
 const APIFeatures = require('../utils/apiFeatures');
+const axios = require('axios');
 
 exports.getRooms = async function (req) {
   // const features = new APIFeatures(supabase.from('rooms'), req.query)
@@ -24,7 +25,7 @@ exports.getRooms = async function (req) {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      credentials: 'same-origin',
+      // credentials: 'same-origin',
     }
   );
 
