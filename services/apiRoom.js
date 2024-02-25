@@ -24,7 +24,7 @@ exports.getRooms = async function (req) {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      // credentials: 'same-origin',
+      credentials: 'same-origin',
     }
   );
 
