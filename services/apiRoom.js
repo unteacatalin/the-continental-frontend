@@ -3,19 +3,40 @@ const { supabaseUrl } = require('../utils/supabase');
 const APIFeatures = require('../utils/apiFeatures');
 
 exports.getRooms = async function (req) {
-  const features = new APIFeatures(supabase.from('rooms'), req.query)
-    .limitFields()
-    .filter()
-    .sort()
-    .paginate();
-  // EXECUTE QUERY
-  const { data: rooms, error } = await features.query;
+  // const features = new APIFeatures(supabase.from('rooms'), req.query)
+  //   .limitFields()
+  //   .filter()
+  //   .sort()
+  //   .paginate();
+  // // EXECUTE QUERY
+  // const { data: rooms, error } = await features.query;
+
+  // if (error) {
+  //   console.error(error);
+  // }
+
+  // return { data: rooms, error };
+
+  const { data, error}  = await axios.get(
+    'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
+    {
+      // withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      // credentials: 'same-origin',
+    }
+  );
+
+  console.log({rooms: data});
 
   if (error) {
     console.error(error);
+    throw new Error('Rooms data could not be loaded');
   }
 
-  return { data: rooms, error };
+  // return result.rooms;
+  return {data: data.data.rooms, error};  
 };
 
 exports.deleteRoom = async function (id) {
