@@ -159,6 +159,8 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 exports.getMe = catchAsync(async (req, res, next) => {
   let userData = { data: { user: {} }, error: '' };
 
+  console.log({me: req.user});
+
   const user = await getCurrentUser(next);
 
   if (!user) {
