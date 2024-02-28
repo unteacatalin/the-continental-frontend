@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import {
-  QueryCache,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
@@ -53,7 +52,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  <Route index element={<Navigate replace to='rooms' />} />
+                  <Route index element={<Navigate replace to='dashboard' />} />
                   <Route path='dashboard' element={<Dashboard />} />
                   <Route path='bookings' element={<Bookings />} />
                   <Route path='bookings/:bookingId' element={<Booking />} />

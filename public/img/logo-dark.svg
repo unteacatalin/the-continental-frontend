@@ -44,16 +44,16 @@
       <text id="ROOMS_TO_KILL_FOR-2" data-name="ROOMS
 TO
 KILL
-FOR" transform="translate(132 197)" fill="none" stroke="#869410" stroke-width="1" font-size="20" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="-36.772" y="0">ROOMS</tspan><tspan x="-13.071" y="27">TO</tspan><tspan x="-19.883" y="54">KILL</tspan><tspan x="-19.312" y="81">FOR</tspan></text>
+FOR" transform="translate(132 197)" fill="none" stroke="#869410" stroke-width="1" font-size="20" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="-42" y="0">ROOMS</tspan><tspan x="-17" y="27">TO</tspan><tspan x="-24" y="54">KILL</tspan><tspan x="-24" y="81">FOR</tspan></text>
     </g>
     <g id="Scroll_Group_2" data-name="Scroll Group 2" transform="translate(848 388)" clip-path="url(#clip-path)" style="isolation: isolate">
       <g transform="matrix(1, 0, 0, 1, -8, -285)" filter="url(#Continental)">
-        <text id="Continental-2" data-name="Continental" transform="translate(117 338)" fill="#ebff3b" stroke="#fff" stroke-width="1" font-size="60" font-family="KunstlerScript, Kunstler Script"><tspan x="-102.012" y="0">Continental</tspan></text>
+        <text id="Continental-2" data-name="Continental" transform="translate(117 338)" fill="#ebff3b" stroke="#fff" stroke-width="1" font-size="40" font-family="KunstlerScript, Kunstler Script"><tspan x="-100" y="0">Continental</tspan></text>
       </g>
     </g>
     <g id="Scroll_Group_3" data-name="Scroll Group 3" transform="translate(940 227)" clip-path="url(#clip-path-2)" style="isolation: isolate">
       <g transform="matrix(1, 0, 0, 1, -100, -124)" filter="url(#C)">
-        <text id="C-2" data-name="C" transform="translate(121 166)" fill="#ebff3b" stroke="#000" stroke-width="1" font-size="50" font-family="KunstlerScript, Kunstler Script"><tspan x="-19.434" y="0">C</tspan></text>
+        <text id="C-2" data-name="C" transform="translate(121 166)" fill="#ebff3b" stroke="#000" stroke-width="1" font-size="50" font-family="KunstlerScript, Kunstler Script"><tspan x="-7" y="0">C</tspan></text>
       </g>
     </g>
   </g>

@@ -1,43 +1,29 @@
 import supabase, { supabaseUrl } from './supabase';
-import axios from 'axios';
 
 export async function signup({ fullName, email, password }) {
-  const {
-    data: { user },
-    error,
-  } = await axios({
-    method: 'POST',
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        fullName,
+        avatar: '',
+      },
     },
-    url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signup',
-    data: JSON.stringify({
-      email,
-      password,
-      fullName,
-    }),
-    // withCredentials: true,
   });
-  // await supabase.auth.signUp({
-  //   email,
-  //   password,
-  //   options: {
-  //     data: {
-  //       fullName,
-  //       avatar: '',
-  //     },
-  //   },
-  // });
 
-  if (error) throw new Error(error);
+  if (error) throw new Error(error.message);
 
-  return user;
+  return data;
 }
 
 export async function login({ email, password }) {
+  // const { data, error } = await supabase.auth.signInWithPassword({
+  //   email,
+  //   password,
+  // });
   const {
-    data: { data: {user} },
+    data: { user },
     error,
   } = await axios({
     method: 'POST',
@@ -52,26 +38,14 @@ export async function login({ email, password }) {
     }),
     // withCredentials: true,
   });
-  // {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     email,
-  //     password,
-  //   }),
-  // }
-  // const { data, error } = await result.json();
 
-  // supabase.auth.signInWithPassword({
-  //   email,
-  //   password,
-  // });
-
-  if (error) throw new Error(error);
+  if (error) throw new Error(error.message);
 
   return user;
+
+//   if (error) throw new Error(error.message);
+
+//   return data;
 }
 
 export async function getCurrentUser(existingUserData, logout) {
@@ -80,26 +54,20 @@ export async function getCurrentUser(existingUserData, logout) {
 
   // const { data: { user } = {}, error } = await supabase.auth.getUser();
 
-  const { data: { data: {user} } = {}, error } = await axios.get(
-    'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
-    {
-      withCredentials: true,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    }
-  );
-
-  // const { data: { user } = {}, error } = await result.json();
-
-  console.log({ user});
-
-  if (error) throw new Error(error);
-
   if (existingUserData.jwt_expiry < Date.now()) {
     logout();
     return null;
   } else {
+    const { user, error } = await axios({
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+      url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me'});
+  
+    if (error) throw new Error(error.message);
+  
     const newUserData = { ...user, jwt_expiry: existingUserData.jwt_expiry };
 
     return newUserData;
@@ -107,15 +75,7 @@ export async function getCurrentUser(existingUserData, logout) {
 }
 
 export async function logout() {
-  const { error } = await axios.get(
-    'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me',
-    {
-      // withCredentials: true,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    }
-  );
+  const { error } = await supabase.auth.signOut();
 
   if (error) throw new Error(error.message);
 }

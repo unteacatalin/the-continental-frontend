@@ -2,16 +2,16 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const catchAsync = require('../src/utils/catchAsync');
+const AppError = require('../src/utils/appError');
 const {
   login: signInApi,
   getCurrentUser,
   logout: signOutApi,
   signup: signUpApi,
   updateUser,
-} = require('../services/apiAuth');
-const supabase = require('../utils/supabase');
+} = require('../src/services/apiAuth');
+const supabase = require('../src/utils/supabase');
 
 const signToken = (email) =>
   jwt.sign({ email }, process.env.JWT_SECRET, {

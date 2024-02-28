@@ -1,10 +1,10 @@
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const catchAsync = require('../src/utils/catchAsync');
+const AppError = require('../src/utils/appError');
 const {
   getRooms,
   deleteRoom: deleteRoomApi,
   createEditRoom: createEditRoomApi,
-} = require('../services/apiRoom');
+} = require('../src/services/apiRoom');
 
 exports.getAllRooms = catchAsync(async (req, res, next) => {
   // To allow for nested GET Reviews on tour (hack)

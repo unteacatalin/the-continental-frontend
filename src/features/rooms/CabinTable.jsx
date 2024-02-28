@@ -12,7 +12,7 @@ function CabinTable() {
 
   if (isLoading) return <Spinner />;
 
-  if (!rooms?.length) return <Empty resource='rooms' />;
+  if (!rooms.length) return <Empty resource='rooms' />;
 
   // !) FILTER
   const filterValue = searchParams.get('discount') || 'all';
