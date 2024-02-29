@@ -12,7 +12,7 @@ export function useLogin() {
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: (user) => {
-      const userData = { ...user.user, jwt_expiry: Date.now() + process.env.JWT_EXPIRES_IN };
+      const userData = { ...user, jwt_expiry: Date.now() + process.env.JWT_EXPIRES_IN };
       queryClient.setQueryData(['user'], userData);
       navigate('/dashboard', { replace: true });
     },

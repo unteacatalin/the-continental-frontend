@@ -25,7 +25,7 @@ export async function login({ email, password }) {
   //   password,
   // });
   const {
-    data,
+    data: { user },
     error,
   } = await axios({
     method: 'POST',
@@ -41,11 +41,9 @@ export async function login({ email, password }) {
     // withCredentials: true,
   });
 
-  console.log({data});
-
   if (error) throw new Error(error.message);
 
-  return data.user;
+  return user;
 
 //   if (error) throw new Error(error.message);
 
