@@ -1,5 +1,6 @@
 import axios from 'axios';
-import supabase, { supabaseUrl } from '../utils/supabase';
+import supabase from '../utils/supabase';
+import { supabaseUrl } from '../utils/supabase';
 
 export async function signup({ fullName, email, password }) {
   const { data, error } = await supabase.auth.signUp({
