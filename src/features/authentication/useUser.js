@@ -14,7 +14,7 @@ export function useUser() {
   const existingUserData =
     queryCache.find({ queryKey: ['user'] })?.state?.data ?? {};
 
-  console.log({ existingUserData });
+  console.log({ existingUserData: queryCache.find({ queryKey: ['user'] }) });
 
   const { isLoading, data: user } = useQuery({
     queryKey: ['user'],
