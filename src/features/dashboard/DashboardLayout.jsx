@@ -4,7 +4,7 @@ import { useRecentBookings } from './useRecentBookings';
 import Spinner from '../../ui/Spinner';
 import { useRecentStays } from './useRecentStays';
 import Stats from './Stats';
-import { useRooms } from '../cabins/useRooms';
+import { useRooms } from '../rooms/useRooms';
 import SalesChart from './SalesChart';
 import { format } from 'date-fns';
 import DurationChart from './DurationChart';

@@ -1,4 +1,4 @@
-import { supabaseUrl } from '../services/supabase';
+import { supabaseUrl } from '../utils/supabase';
 
 const imageUrl = `${supabaseUrl}/storage/v1/object/public/room-images/`;
 

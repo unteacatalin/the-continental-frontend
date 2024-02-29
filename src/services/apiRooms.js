@@ -1,9 +1,9 @@
-const supabase = require('../utils/supabase');
-const { supabaseUrl } = require('../utils/supabase');
-const APIFeatures = require('../utils/apiFeatures');
-const axios = require('axios');
+import supabase from '../utils/supabase';
+import { supabaseUrl } from '../utils/supabase';
+import APIFeatures from '../utils/apiFeatures';
+import axios from 'axios';
 
-exports.getRooms = async function (req) {
+export const getRooms = async function (req) {
   // const features = new APIFeatures(supabase.from('rooms'), req.query)
   //   .limitFields()
   //   .filter()
@@ -40,7 +40,7 @@ exports.getRooms = async function (req) {
   return {data: data.data.rooms, error};  
 };
 
-exports.deleteRoom = async function (id) {
+export const deleteRoom = async function (id) {
   const { error } = await supabase.from('rooms').delete().eq('id', id);
 
   if (error) {
@@ -50,7 +50,7 @@ exports.deleteRoom = async function (id) {
   return { data: { room: {} }, error };
 };
 
-exports.createEditRoom = async function ({ newRoom, id }) {
+export const createEditRoom = async function ({ newRoom, id }) {
   const hasImage = !!newRoom?.image;
 
   const hasImagePath = hasImage && newRoom.image?.startsWith?.(supabaseUrl);

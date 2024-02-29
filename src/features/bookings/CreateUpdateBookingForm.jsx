@@ -13,9 +13,9 @@ import Checkbox from '../../ui/Checkbox';
 import Textarea from '../../ui/Textarea';
 import DtPicker from '../../ui/DtPicker';
 import { useAllGuests } from '../guests/useAllGuests';
-import { useBookedRoomsInInterval } from '../cabins/useBookedRoomsInInterval';
+import { useBookedRoomsInInterval } from '../rooms/useBookedRoomsInInterval';
 import { useCreateUpdateBooking } from '../../context/CreateUpdateBookingContext';
-import { useRooms } from '../cabins/useRooms';
+import { useRooms } from '../rooms/useRooms';
 import { useSettings } from '../settings/useSettings';
 import { subtractDates } from '../../utils/helpers';
 
