@@ -41,7 +41,7 @@ export async function login({ email, password }) {
     // withCredentials: true,
   });
 
-  if (error || !data.user) throw new Error(error.message);
+  if (error || !data.user) throw new Error(error);
 
   return data.user;
 
