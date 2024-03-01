@@ -12,7 +12,15 @@ export function useLogin() {
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: (user) => {
-      const userData = { ...user, jwt_expiry: Date.now() + process.env.JWT_EXPIRES_IN };
+      let jwt_expiry;
+
+      if (import.meta.env.NETLIFY === 'true') {
+        jwt_expiry = Date.now() + process.env.VITE_JWT_EXPIRES_IN * 60 * 60 * 1000;
+      } else {
+        jwt_expiry = Date.now() + import.meta.env.VITE_JWT_EXPIRES_IN * 60 * 60 * 1000;
+      }
+
+      const userData = { ...user, jwt_expiry };
       queryClient.setQueryData(['user'], userData);
       navigate('/dashboard', { replace: true });
     },

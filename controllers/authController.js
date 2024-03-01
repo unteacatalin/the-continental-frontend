@@ -13,10 +13,21 @@ const {
 } = require('../src/services/apiAuth');
 const supabase = require('../src/utils/supabase');
 
-const signToken = (email) =>
-  jwt.sign({ email }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
+const signToken = (email) =>{
+  let expiresIn;
+  let jwtSecret;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    expiresIn = `${process.env.VITE_JWT_EXPIRES_IN}h`;
+    jwtSecret = process.env.VITE_JWT_SECRET;
+  } else {
+    expiresIn = `${import.meta.env.VITE_JWT_EXPIRES_IN}h`;
+    jwtSecret = import.meta.env.VITE_JWT_SECRET;
+  }
+
+  return jwt.sign({ email }, process.env.JWT_SECRET, {
+    expiresIn: process.env.VITE_JWT_EXPIRES_IN,
+  })};
 
 const createSendToken = (results, statusCode, req, res) => {
   const { user, error } = results;
