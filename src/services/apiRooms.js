@@ -3,7 +3,7 @@ import { supabaseUrl } from '../utils/supabase';
 import APIFeatures from '../utils/apiFeatures';
 import axios from 'axios';
 
-export const getRooms = async function (req) {
+export const getRooms = async function () {
   // const features = new APIFeatures(supabase.from('rooms'), req.query)
   //   .limitFields()
   //   .filter()
@@ -22,9 +22,9 @@ export const getRooms = async function (req) {
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
     {
       withCredentials: true,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
+      // headers: {
+      //   'Access-Control-Allow-Origin': '*',
+      // },
       // credentials: 'same-origin',
     }
   );
