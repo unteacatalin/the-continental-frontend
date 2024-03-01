@@ -24,7 +24,7 @@ export function useLogin() {
 
       const userData = { ...user, jwt_expiry };
       queryClient.setQueryData(['user'], userData);
-      navigate('/dashboard', { replace: true });
+      navigate('/rooms', { replace: true });
     },
     onError: (err) => {
       console.error('ERROR', err);
