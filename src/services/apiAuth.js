@@ -49,7 +49,9 @@ export async function login({ email, password }) {
 
   if (error) throw new Error(error);
 
-  if (!data.user) throw new Error('Authentication failed! Please try again later!');
+  const user = data?.data?.user;
+
+  if (!user) throw new Error('Authentication failed! Please try again later!');
 
   return data.user;
 
