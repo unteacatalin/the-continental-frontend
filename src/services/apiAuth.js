@@ -41,7 +41,9 @@ export async function login({ email, password }) {
     // withCredentials: true,
   });
 
-  if (error || !data.user) throw new Error(error);
+  if (error) throw new Error(error);
+
+  if (!data.user) throw new Error('Authentication failed! Please try again later!');
 
   return data.user;
 
