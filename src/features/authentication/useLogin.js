@@ -14,6 +14,8 @@ export function useLogin() {
     onSuccess: (user) => {
       let jwt_expiry;
 
+      console.log({user});
+
       if (import.meta.env.NETLIFY === 'true') {
         jwt_expiry = Date.now() + process.env.VITE_JWT_EXPIRES_IN * 60 * 60 * 1000;
       } else {
