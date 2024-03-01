@@ -34,12 +34,18 @@ export async function login({ email, password }) {
       'Content-Type': 'application/json',
     },
     url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
+    // data: {
+    //   email,
+    //   password
+    // }
     data: JSON.stringify({
       email,
       password,
     }),
     // withCredentials: true,
   });
+
+  console.log({dataApi: data});
 
   if (error) throw new Error(error);
 
