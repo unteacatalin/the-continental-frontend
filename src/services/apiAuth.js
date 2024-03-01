@@ -41,6 +41,8 @@ export async function login({ email, password }) {
     // withCredentials: true,
   });
 
+  console.log({userApi: user});
+
   if (error) throw new Error(error.message);
 
   return user;
