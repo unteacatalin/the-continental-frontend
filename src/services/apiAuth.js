@@ -49,7 +49,7 @@ export async function login({ email, password }) {
 
   if (!user) throw new Error('Authentication failed! Please try again later!');
 
-  return data.user;
+  return user;
 
 //   if (error) throw new Error(error.message);
 
