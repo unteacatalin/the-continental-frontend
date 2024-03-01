@@ -38,7 +38,7 @@ export async function login({ email, password }) {
       email,
       password,
     }),
-    // withCredentials: true,
+    withCredentials: true,
   });
 
   console.log({userApi: data.data.user});
