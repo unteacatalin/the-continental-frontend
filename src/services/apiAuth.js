@@ -34,10 +34,6 @@ export async function login({ email, password }) {
       'Content-Type': 'application/json',
     },
     url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
-    // data: {
-    //   email,
-    //   password
-    // }
     data: JSON.stringify({
       email,
       password,
@@ -70,7 +66,7 @@ export async function getCurrentUser(existingUserData, logout) {
     logout();
     return null;
   } else {
-    const { user, error } = await axios({
+    const { data, error } = await axios({
       method: 'GET',
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -78,7 +74,9 @@ export async function getCurrentUser(existingUserData, logout) {
       },
       url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me'});
   
-    if (error) throw new Error(error.message);
+    if (error) throw new Error(error);
+
+    const user = data?.data?.user;
   
     const newUserData = { ...user, jwt_expiry: existingUserData.jwt_expiry };
 

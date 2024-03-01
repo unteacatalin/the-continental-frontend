@@ -20,13 +20,13 @@ export const getRooms = async function (req) {
 
   const { data, error}  = await axios.get(
     'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
-    {
-      // withCredentials: true,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      credentials: 'same-origin',
-    }
+    // {
+    //   // withCredentials: true,
+    //   headers: {
+    //     'Access-Control-Allow-Origin': '*',
+    //   },
+    //   // credentials: 'same-origin',
+    // }
   );
 
   console.log({rooms: data});
@@ -36,8 +36,10 @@ export const getRooms = async function (req) {
     throw new Error('Rooms data could not be loaded');
   }
 
+  const rooms = data?.data?.rooms;
+
   // return result.rooms;
-  return {data: data.data.rooms, error};  
+  return {data: rooms, error};  
 };
 
 export const deleteRoom = async function (id) {
