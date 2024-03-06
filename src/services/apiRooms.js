@@ -18,8 +18,16 @@ export const getRooms = async function () {
 
   // return { data: rooms, error };
 
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   const { data, error}  = await axios.get(
-    'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/rooms',
+    `${backendUrl}api/v1/rooms`,
     {
       withCredentials: true,
       headers: {

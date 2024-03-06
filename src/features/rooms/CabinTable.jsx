@@ -9,12 +9,9 @@ import Empty from '../../ui/Empty';
 function CabinTable() {
   const { isLoading, rooms, error } = useRooms();
   const [searchParams] = useSearchParams();
-  console.log({CabinTableData: rooms});  
   
   if (isLoading) return <Spinner />;
   
-  console.log({CabinTable: rooms.data});
-
   if (!rooms.data || !rooms.data.length) return <Empty resource='rooms' />;
 
   // !) FILTER
@@ -48,8 +45,6 @@ function CabinTable() {
     typeof rooms.data[0][field] === 'number'
       ? filteredRooms.sort(compareNumbers)
       : filteredRooms.sort(compareText);
-
-  console.log({sortedRooms});
 
   return (
     <Menus>
