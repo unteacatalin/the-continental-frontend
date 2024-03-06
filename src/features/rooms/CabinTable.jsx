@@ -9,7 +9,6 @@ import Empty from '../../ui/Empty';
 function CabinTable() {
   const { isLoading, rooms, error } = useRooms();
   const [searchParams] = useSearchParams();
-  console.log({searchParams});
 
   if (isLoading) return <Spinner />;
 
@@ -46,6 +45,8 @@ function CabinTable() {
     typeof rooms[0][field] === 'number'
       ? filteredRooms.sort(compareNumbers)
       : filteredRooms.sort(compareText);
+
+  console.log({sortedRooms});
 
   return (
     <Menus>
