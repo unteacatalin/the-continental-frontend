@@ -87,7 +87,16 @@ export async function getCurrentUser(existingUserData, logout) {
 }
 
 export async function logout() {
-  const { error } = await supabase.auth.signOut();
+  // const { error } = await supabase.auth.signOut();
+  const { data, error } = await axios({
+    method: 'GET',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+    url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signout', 
+    withCredentials: true
+  });
 
   if (error) throw new Error(error.message);
 }
