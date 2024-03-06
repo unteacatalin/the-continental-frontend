@@ -72,7 +72,9 @@ export async function getCurrentUser(existingUserData, logout) {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
-      url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me'});
+      url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me', 
+      withCredentials: true
+    });
   
     if (error) throw new Error(error);
 
