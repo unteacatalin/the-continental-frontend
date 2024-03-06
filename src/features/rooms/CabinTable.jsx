@@ -7,26 +7,25 @@ import { useSearchParams } from 'react-router-dom';
 import Empty from '../../ui/Empty';
 
 function CabinTable() {
-  const { isLoading, data, error } = useRooms();
+  const { isLoading, rooms, error } = useRooms();
   const [searchParams] = useSearchParams();
-  console.log({CabinTableData: data});  
+  console.log({CabinTableData: rooms});  
   
   if (isLoading) return <Spinner />;
   
-  const rooms = data?.data;
-  console.log({CabinTable: rooms});
+  console.log({CabinTable: rooms.data});
 
-  if (!rooms.length) return <Empty resource='rooms' />;
+  if (!rooms.data || !rooms.data.length) return <Empty resource='rooms' />;
 
   // !) FILTER
   const filterValue = searchParams.get('discount') || 'all';
 
   let filteredRooms = [];
-  if (filterValue === 'all') filteredRooms = rooms;
+  if (filterValue === 'all') filteredRooms = rooms.data;
   if (filterValue === 'no-discount')
-    filteredRooms = rooms.filter((room) => room.discount === 0);
+    filteredRooms = rooms.data.filter((room) => room.discount === 0);
   if (filterValue === 'with-discount')
-    filteredRooms = rooms.filter((room) => room.discount > 0);
+    filteredRooms = rooms.data.filter((room) => room.discount > 0);
 
   // 2) SORT
   const sortBy = searchParams.get('sortBy') || 'name-asc';
