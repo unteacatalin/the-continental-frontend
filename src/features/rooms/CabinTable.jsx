@@ -45,7 +45,7 @@ function CabinTable() {
     return (a[field] - b[field]) * modifier;
   }
   const sortedRooms =
-    typeof rooms[0][field] === 'number'
+    typeof rooms.data[0][field] === 'number'
       ? filteredRooms.sort(compareNumbers)
       : filteredRooms.sort(compareText);
 
