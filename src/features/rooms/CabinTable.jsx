@@ -9,7 +9,7 @@ import Empty from '../../ui/Empty';
 function CabinTable() {
   const { isLoading, data, error } = useRooms();
   const [searchParams] = useSearchParams();
-  
+  console.log({CabinTableData: data});  
   
   if (isLoading) return <Spinner />;
   
