@@ -1,13 +1,43 @@
 import supabase from "../utils/supabase";
 
 export async function getSettings() {
-  const { data, error } = await supabase.from("settings").select("*").single();
+  // const { data, error } = await supabase.from("settings").select("*").single();
+
+  // if (error) {
+  //   console.error(error);
+  //   throw new Error("Settings could not be loaded");
+  // }
+  // return data;
+
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  const { data, error }  = await axios.get(
+    `${backendUrl}api/v1/settings`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+    }
+    }
+  );
+
+  console.log({settings: data});
 
   if (error) {
     console.error(error);
-    throw new Error("Settings could not be loaded");
+    throw new Error('Settings data could not be loaded');
   }
-  return data;
+
+  const settings = data?.data?.settings;
+
+  // return result.rooms;
+  return {data: settings, error};  
 }
 
 // We expect a newSetting object that looks like {setting: newValue}
