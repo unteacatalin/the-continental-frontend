@@ -3,20 +3,50 @@ import supabase from '../utils/supabase';
 import { supabaseUrl } from '../utils/supabase';
 
 export async function signup({ fullName, email, password }) {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        fullName,
-        avatar: '',
-      },
+  // const { data, error } = await supabase.auth.signUp({
+  //   email,
+  //   password,
+  //   options: {
+  //     data: {
+  //       fullName,
+  //       avatar: '',
+  //     },
+  //   },
+  // });
+
+  // if (error) throw new Error(error.message);
+
+  // return data;
+  const {
+    data,
+    error,
+  } = await axios({
+    method: 'POST',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
     },
+    url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signup',
+    data: JSON.stringify({
+      email,
+      password,
+      options: {
+        data: {
+          fullName,
+          avatar: '',
+        },
+      },      
+    }),
+    withCredentials: true,
   });
 
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(error);
 
-  return data;
+  const user = data?.data?.user;
+
+  if (!user) throw new Error('Signing up failed! Please try again later!');
+
+  return user;  
 }
 
 export async function login({ email, password }) {
