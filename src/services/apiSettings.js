@@ -28,8 +28,6 @@ export const getSettings = async function () {
     }
   );
 
-  console.log({settings: data});
-
   if (error) {
     console.error(error);
     throw new Error('Settings data could not be fetched');
