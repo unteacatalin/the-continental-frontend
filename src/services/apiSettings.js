@@ -1,6 +1,7 @@
 import supabase from "../utils/supabase";
+import axios from 'axios';
 
-export async function getSettings() {
+export const getSettings = async function () {
   // const { data, error } = await supabase.from("settings").select("*").single();
 
   // if (error) {
