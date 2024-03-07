@@ -36,7 +36,7 @@ export const getSettings = async function () {
   const settings = data?.data?.settings;
 
   // return result.rooms;
-  return {data: settings, error};  
+  return { settings, error};  
 }
 
 // We expect a newSetting object that looks like {setting: newValue}
