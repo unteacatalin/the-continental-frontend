@@ -31,7 +31,7 @@ export async function getSettings() {
 
   if (error) {
     console.error(error);
-    throw new Error('Settings data could not be loaded');
+    throw new Error('Settings data could not be fetched');
   }
 
   const settings = data?.data?.settings;
