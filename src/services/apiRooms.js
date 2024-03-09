@@ -51,13 +51,42 @@ export const getRooms = async function () {
 };
 
 export const deleteRoom = async function (id) {
-  const { error } = await supabase.from('rooms').delete().eq('id', id);
+  // const { error } = await supabase.from('rooms').delete().eq('id', id);
+
+  // if (error) {
+  //   console.error(error);
+  // }
+
+  // return { data: { room: {} }, error };
+
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  const { data, error}  = await axios.delete(
+    `${backendUrl}api/v1/rooms/${id}`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+        // 'Content-Type': 'application/json'
+    }
+    }
+  );
 
   if (error) {
     console.error(error);
+    throw new Error('Rooms data could not be loaded');
   }
 
-  return { data: { room: {} }, error };
+  const rooms = data?.data?.rooms;
+
+  // return result.rooms;
+  return {data: rooms, error};   
 };
 
 export const createEditRoom = async function ({ newRoom, id }) {
