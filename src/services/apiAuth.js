@@ -92,7 +92,7 @@ export async function getCurrentUser(existingUserData, logout) {
 
   // const { data: { user } = {}, error } = await supabase.auth.getUser();
 
-  if (existingUserData.jwt_expiry < Date.now()) {
+  if (!existingUserData.jwt_expiry || existingUserData.jwt_expiry < Date.now()) {
     logout();
     return null;
   } else {

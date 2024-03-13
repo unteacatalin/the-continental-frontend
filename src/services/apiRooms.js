@@ -90,54 +90,41 @@ export const deleteRoom = async function (id) {
 };
 
 export const createEditRoom = async function ({ newRoom, id }) {
-  const hasImage = !!newRoom?.image;
+  let backendUrl;
 
-  const hasImagePath = hasImage && newRoom.image?.startsWith?.(supabaseUrl);
-
-  const imageName = `${Math.random()}-${newRoom.image?.name}`?.replaceAll(
-    '/',
-    '',
-  );
-
-  const imagePath = hasImage
-    ? hasImagePath
-      ? newRoom.image
-      : `${supabaseUrl}/storage/v1/object/public/room-images/${imageName}`
-    : `${supabaseUrl}/storage/v1/object/public/room-images/missing_picture.jpg`;
-
-  // 1) Create/edit room
-  let query = supabase.from('rooms');
-
-  if (!id) {
-    // A) CREATE
-    query = query.insert([{ ...newRoom, image: imagePath }]);
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
   } else {
-    // B) Edit
-    query = query.update({ ...newRoom, image: imagePath }).eq('id', id);
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
-  const { data: room, error } = await query.select();
+  let reqUrl = `${backendUrl}api/v1/rooms`;
+
+  if (id) {
+    reqUrl += `/${id}`;
+  }
+
+  const { data, error}  = await axios({
+    method: 'PATCH',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+    url: reqUrl,
+    data: JSON.stringify({
+      newRoom,
+      id
+    }),
+    withCredentials: true,
+  });
 
   if (error) {
     console.error(error);
+    throw new Error('Room cound not be saved!');
   }
 
-  if (hasImagePath)
-    return { data: { room: Array.isArray(room) ? room[0] : room }, error };
+  const room = data?.data?.rooms;
 
-  // 2. Update image
-  const { error: storageError } = await supabase.storage
-    .from('room-images')
-    .upload(imageName, newRoom.image);
-
-  // 3. Delete the cabin IF there was an image uploading image
-  if (storageError) {
-    await supabase.from('rooms').delete().eq('id', data.id);
-    console.error(storageError);
-  }
-
-  return {
-    data: { room: Array.isArray(room) ? room[0] : room },
-    error: storageError,
-  };
+  // return result.rooms;
+  return {data: room, error};  
 };
