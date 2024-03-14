@@ -37,8 +37,6 @@ export const getRooms = async function () {
     }
   );
 
-  console.log({rooms: data});
-
   if (error) {
     console.error(error);
     throw new Error('Rooms data could not be loaded');
@@ -103,6 +101,8 @@ export const createEditRoom = async function ({ newRoom, id }) {
   if (id) {
     reqUrl += `/${id}`;
   }
+
+  console.log({reqUrl, newRoom})
 
   const { data, error}  = await axios.patch(
     reqUrl,

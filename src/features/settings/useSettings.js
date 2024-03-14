@@ -13,7 +13,5 @@ export function useSettings() {
 
   const settings = data?.settings;
 
-  console.log({settings});
-
   return { isLoading, settings, error };
 }
