@@ -111,13 +111,13 @@ export const createEditRoom = async function ({ newRoom, id }) {
       id
     }),
     {
+      withCredentials: true,  
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
-      withCredentials: true,  
     }
-  );
+    );
 
   if (error) {
     console.error(error);
