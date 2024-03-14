@@ -104,19 +104,20 @@ export const createEditRoom = async function ({ newRoom, id }) {
     reqUrl += `/${id}`;
   }
 
-  const { data, error}  = await axios({
-    method: 'PATCH',
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-    },
-    url: reqUrl,
-    data: JSON.stringify({
+  const { data, error}  = await axios.patch(
+    reqUrl,
+    JSON.stringify({
       newRoom,
       id
     }),
-    withCredentials: true,
-  });
+    {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,  
+    }
+  );
 
   if (error) {
     console.error(error);
