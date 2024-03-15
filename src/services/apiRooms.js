@@ -114,7 +114,7 @@ export const createEditRoom = async function ({ newRoom, id }) {
         'Content-Type': 'application/json',
       },
     }
-    );
+  );
 
   if (error) {
     console.error(error);
