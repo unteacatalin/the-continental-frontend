@@ -97,15 +97,17 @@ export const createEditRoom = async function ({ newRoom, id }) {
   }
 
   let reqUrl = `${backendUrl}api/v1/rooms`;
+  let method = 'POST';
 
   if (id) {
     reqUrl += `/${id}`;
+    method = 'PATCH'
   }
 
   console.log({reqUrl, newRoom})
 
   const { data, error}  = await axios({
-    method: 'PATCH',
+    method,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
