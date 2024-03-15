@@ -75,7 +75,7 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
       );
     } else
       createRoom(
-        { ...data, image },
+        { newRoom: {...data, image} },
         {
           onSuccess: (data) => {
             // console.log({ data });
