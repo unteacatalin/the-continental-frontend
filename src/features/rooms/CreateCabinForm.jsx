@@ -65,7 +65,7 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
     const image = typeof data.image === 'string' ? data.image : data.image[0];
     if (isEditSession) {
       editRoom(
-        { newRoom: { ...data, image }, id: editId },
+        { ...data, image , id: editId },
         {
           onSuccess: (data) => {
             reset();
@@ -75,7 +75,7 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
       );
     } else
       createRoom(
-        { newRoom: {...data, image} },
+        { ...data, image },
         {
           onSuccess: (data) => {
             // console.log({ data });

@@ -87,7 +87,7 @@ export const deleteRoom = async function (id) {
   return {data: rooms, error};   
 };
 
-export const createEditRoom = async function ({ newRoom, id }) {
+export const createEditRoom = async function (newRoom) {
   let backendUrl;
 
   if (import.meta.env.NETLIFY === 'true') {
@@ -96,6 +96,7 @@ export const createEditRoom = async function ({ newRoom, id }) {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
+  const id = newRoom?.id;
   let reqUrl = `${backendUrl}api/v1/rooms`;
   let method = 'POST';
 
@@ -113,7 +114,7 @@ export const createEditRoom = async function ({ newRoom, id }) {
       'Content-Type': 'application/json',
     },
     url: reqUrl,
-    data: JSON.stringify( {newRoom} ),
+    data: JSON.stringify( newRoom ),
     withCredentials: true,
   });
 
