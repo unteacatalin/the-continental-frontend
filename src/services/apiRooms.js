@@ -111,7 +111,7 @@ export const createEditRoom = async function (newRoom) {
     method,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
+      'Content-Type': id ? 'application/json' : 'multipart/form-data',
     },
     url: reqUrl,
     data: JSON.stringify( newRoom ),
