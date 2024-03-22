@@ -96,6 +96,19 @@ export const createEditRoom = async function (newRoom) {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
+  const image = newRoom?.formData;
+  let error, imageName;
+
+  if (image) {
+    const {data, error: errorUploadingFile} = await uploadImage(image);
+    if (errorUploadingFile) {
+      error = errorUploadingFile;
+      throw new Error(error);
+    } else {
+      imageName = data?.imageName;
+    }
+  }
+
   const id = newRoom?.id;
   let reqUrl = `${backendUrl}api/v1/rooms`;
   let method = 'POST';
@@ -105,20 +118,21 @@ export const createEditRoom = async function (newRoom) {
     method = 'PATCH'
   }
 
-  console.log({reqUrl, newRoom})
+  console.log({reqUrl, newRoom, imageName})
 
-  const { data, error}  = await axios({
+  const { data, error: errorSavingData}  = await axios({
     method,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Content-Type': id ? 'application/json' : 'multipart/form-data',
+      'Content-Type': 'application/json',
     },
     url: reqUrl,
-    data: JSON.stringify( newRoom ),
+    data: JSON.stringify( {newRoom, imageName} ),
     withCredentials: true,
   });
 
-  if (error) {
+  if (errorSavingData) {
+    error = errorSavingData;
     console.error(error);
     throw new Error('Room cound not be saved!');
   }
@@ -128,3 +142,42 @@ export const createEditRoom = async function (newRoom) {
   // return result.rooms;
   return {data: room, error};  
 };
+
+const uploadImage = async function (image) {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  if (!image) {
+    console.error('Missing image file! Unable to upload image!');
+    throw new Error('Missing image file! Unable to upload image!');
+  }
+
+  let reqUrl = `${backendUrl}api/v1/rooms/image`;
+  let method = 'POST';
+
+  const { data, error}  = await axios({
+    method,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'multipart/form-data',
+    },
+    url: reqUrl,
+    file: image,
+    withCredentials: true,
+  });
+
+  if (error) {
+    console.error(error);
+    throw new Error('Room cound not be saved!');
+  }  
+
+  const imageName = data?.data?.imageName;
+
+  // return result.supaimage;
+  return {data: imageName, error};  
+}

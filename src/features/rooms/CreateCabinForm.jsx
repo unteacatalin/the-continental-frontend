@@ -74,9 +74,12 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
           },
         }
       );
-    } else
+    } else {
+      const formData = new FormData();
+      formData.append("file", data.image[0]);
+
       createRoom(
-        { ...data, image },
+        { ...data, image, formData },
         {
           onSuccess: (data) => {
             // console.log({ data });
@@ -85,6 +88,7 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
           },
         }
       );
+    }
   }
 
   function onError(errors) {
