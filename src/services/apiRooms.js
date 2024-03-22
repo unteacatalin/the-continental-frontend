@@ -97,6 +97,7 @@ export const createEditRoom = async function (newRoom) {
   }
 
   const image = newRoom?.formData;
+  console.log({createEditRoom: image});
   let error, imageName;
 
   if (image) {
@@ -145,6 +146,8 @@ export const createEditRoom = async function (newRoom) {
 
 const uploadImage = async function (image) {
   let backendUrl;
+
+  console.log({image});
 
   if (import.meta.env.NETLIFY === 'true') {
     backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
