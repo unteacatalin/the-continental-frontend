@@ -167,7 +167,7 @@ const uploadImage = async function (image) {
     method,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     url: reqUrl,
     file: image,
@@ -176,7 +176,7 @@ const uploadImage = async function (image) {
 
   if (error) {
     console.error(error);
-    throw new Error('Room cound not be saved!');
+    throw new Error('Room image cound not be saved!');
   }  
 
   const imageName = data?.data?.imageName;
