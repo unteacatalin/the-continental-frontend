@@ -97,7 +97,7 @@ export const createEditRoom = async function (newRoom) {
   }
 
   const image = newRoom?.formData;
-  console.log({createEditRoom: image});
+  console.log({"createEditRoom-formData": image});
   let error, imageName;
 
   if (image) {
@@ -118,8 +118,6 @@ export const createEditRoom = async function (newRoom) {
     reqUrl += `/${id}`;
     method = 'PATCH'
   }
-
-  console.log({reqUrl, newRoom, imageName})
 
   const { data, error: errorSavingData}  = await axios({
     method,
