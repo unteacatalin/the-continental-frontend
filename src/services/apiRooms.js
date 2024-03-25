@@ -167,7 +167,7 @@ const uploadImage = async function (image) {
     method,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'multipart/form-data',
     },
     url: reqUrl,
     file: image,
