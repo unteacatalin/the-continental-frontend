@@ -77,6 +77,7 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
     } else {
       const formData = new FormData();
       formData.append("image", typeof data.image[0] === 'file' ?? data.image[0]);
+      console.log({ image: data.image[0], dataForm });
 
       createRoom(
         { ...data, image, formData },
