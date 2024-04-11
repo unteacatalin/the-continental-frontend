@@ -181,6 +181,7 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
             return (
               <FileInput
                 {...field}
+                value={value?.fileName}
                 id='image'
                 accept='image/*'
                 disabled={isWorking}
