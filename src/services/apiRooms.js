@@ -168,7 +168,7 @@ const uploadImage = async function (image) {
       'Content-Type': 'multipart/form-data',
     },
     url: reqUrl,
-    file: image,
+    data: image,
     withCredentials: true,
   });
 
