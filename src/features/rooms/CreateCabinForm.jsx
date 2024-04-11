@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import Input from '../../ui/Input';
 import Form from '../../ui/Form';
@@ -50,7 +50,7 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
   const { id: editId, ...editValues } = roomToEdit;
   const isEditSession = Boolean(editId);
 
-  const { register, handleSubmit, reset, getValues, formState } = useForm({
+  const { register, handleSubmit, reset, getValues, formState, control } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
@@ -77,7 +77,7 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
     } else {
       const formData = new FormData();
       formData.append("image", typeof data.image[0] === 'file' ?? data.image[0]);
-      console.log({ image: data.image[0], formData });
+      console.log({ image: data.image[0] });
 
       createRoom(
         { ...data, image, formData },
@@ -173,13 +173,27 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
       </FormRow>
 
       <FormRow error={errors?.image?.message} label='Room photo'>
-        <FileInput
-          id='image'
-          accept='image/*'
-          disabled={isWorking}
-          {...register('image', {
-            required: isEditSession ? false : 'This field is required',
-          })}
+        <Controller
+          control={control}
+          name={"image"}
+          rules={{required: isEditSession ? false : 'This field is required'}}
+          render={({field: {value, onChange, ...field}}) => {
+            return (
+              <FileInput
+                {...field}
+                id='image'
+                accept='image/*'
+                disabled={isWorking}
+                // {...register('image', {
+                //   required: isEditSession ? false : 'This field is required',
+                // })}
+                {...register('image')}
+                onChange={(event) => {
+                  onChange(event.target.files[0]);
+                }}
+              />
+            )
+          }}
         />
       </FormRow>
 
