@@ -6,7 +6,7 @@ export function useEditRoom() {
   const queryClient = useQueryClient();
 
   const { mutate: editRoom, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newRoom, id }) => createEditRoom(newRoom, id),
+    mutationFn: (newRoom) => createEditRoom(newRoom),
     onSuccess: () => {
       toast.success('Room successfully edited');
       queryClient.invalidateQueries({ queryKey: ['rooms'] });
