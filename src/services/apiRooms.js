@@ -180,5 +180,5 @@ const uploadImage = async function (image) {
   const imageName = data?.data?.imageName;
 
   // return result.supaimage;
-  return {data: imageName, error};  
+  return {data: {imageName}, error};  
 }
