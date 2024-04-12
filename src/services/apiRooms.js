@@ -126,7 +126,7 @@ export const createEditRoom = async function (newRoom) {
       'Content-Type': 'application/json',
     },
     url: reqUrl,
-    data: JSON.stringify( {...newRoom, image: imageName, formData: undefined} ),
+    data: JSON.stringify( {...newRoom, image: imageName ? imageName : undefined, formData: undefined} ),
     withCredentials: true,
   });
 
