@@ -111,6 +111,7 @@ export const createEditRoom = async function (newRoom) {
   }
 
   const id = newRoom?.id;
+  const imageUrl = newRoom?.image;
   let reqUrl = `${backendUrl}api/v1/rooms`;
   let method = 'POST';
 
@@ -126,7 +127,7 @@ export const createEditRoom = async function (newRoom) {
       'Content-Type': 'application/json',
     },
     url: reqUrl,
-    data: JSON.stringify( {...newRoom, image: imageName ? imageName : undefined, formData: undefined} ),
+    data: JSON.stringify( {...newRoom, image: imageName ? imageName : imageUrl ? imageUrl : undefined, formData: undefined} ),
     withCredentials: true,
   });
 
