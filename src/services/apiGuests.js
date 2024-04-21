@@ -122,6 +122,8 @@ export async function getGuests({ filter, sortBy, page }) {
     backendUrl += `from=${from}&to=${to}`;
   }  
 
+  console.log({backendUrl});
+
   const { data, error } = await axios.get(backendUrl,{
     withCredentials: true,
     headers: {
