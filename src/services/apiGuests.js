@@ -1,3 +1,4 @@
+import axios from 'axios';
 import supabase from '../utils/supabase';
 
 import { PAGE_SIZE } from '../utils/constants';
@@ -28,42 +29,113 @@ export async function getGuestsRowCount({ filter }) {
   return { countRows };
 }
 
+// export async function getGuests({ filter, sortBy, page }) {
+  // let query = supabase.from('guests').select('*', { count: 'exact' });
+
+  // // FILTER
+  // if (filter) {
+  //   if (filter.nationalID) {
+  //     query = query.ilike('nationalID', `%${filter.nationalID}%`);
+  //   }
+  //   if (filter.email) {
+  //     query = query.ilike('email', `%${filter.email}%`);
+  //   }
+  // }
+
+  // // SORT
+  // if (sortBy && sortBy.field) {
+  //   query = query.order(sortBy.field, {
+  //     ascending: sortBy.direction === 'asc',
+  //   });
+  // }
+
+  // // PAGINATION
+  // if (page) {
+  //   const from = (page - 1) * PAGE_SIZE;
+  //   const to = page * PAGE_SIZE - 1;
+
+  //   query = query.range(from, to);
+  // }
+
+  // const { data, error, count } = await query;
+
+  // if (error) {
+  //   console.error(error);
+  //   throw new Error('Guests could not be loaded');
+  // }
+
+  // return { data, count };
+
 export async function getGuests({ filter, sortBy, page }) {
-  let query = supabase.from('guests').select('*', { count: 'exact' });
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  let exists = false;
 
   // FILTER
   if (filter) {
     if (filter.nationalID) {
-      query = query.ilike('nationalID', `%${filter.nationalID}%`);
+      backendUrl += `?nationalID=${filter.nationalID}`;
+      exists = true;
     }
     if (filter.email) {
-      query = query.ilike('email', `%${filter.email}%`);
+      if (exists) {
+        backendUrl += '&';
+      } else {
+        backendUrl += '?';
+        exists = true;
+      }
+      backendUrl += `email=${filter.email}`;
     }
   }
 
   // SORT
   if (sortBy && sortBy.field) {
-    query = query.order(sortBy.field, {
-      ascending: sortBy.direction === 'asc',
-    });
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
+
+    backendUrl += `sortBy=${sortBy}`;
   }
 
   // PAGINATION
   if (page) {
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
+
     const from = (page - 1) * PAGE_SIZE;
     const to = page * PAGE_SIZE - 1;
 
-    query = query.range(from, to);
-  }
+    backendUrl += `from=${from}&to=${to}`;
+  }  
 
-  const { data, error, count } = await query;
+  const { data, error } = await axios.get(`${backendUrl}api/v1/guests`,{
+    withCredentials: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
+  });
 
   if (error) {
     console.error(error);
-    throw new Error('Guests could not be loaded');
+    throw new Error('Guests data could not be loaded');
   }
 
-  return { data, count };
+  const rooms = data?.data?.rooms;
+
+  return { data: rooms, error }
 }
 
 export async function createEditGuest(newGuest, countryFlag, nationality, id) {

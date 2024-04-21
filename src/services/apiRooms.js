@@ -1,23 +1,6 @@
-import supabase from '../utils/supabase';
-import { supabaseUrl } from '../utils/supabase';
-import APIFeatures from '../utils/apiFeatures';
 import axios from 'axios';
 
 export const getRooms = async function () {
-  // const features = new APIFeatures(supabase.from('rooms'), req.query)
-  //   .limitFields()
-  //   .filter()
-  //   .sort()
-  //   .paginate();
-  // // EXECUTE QUERY
-  // const { data: rooms, error } = await features.query;
-
-  // if (error) {
-  //   console.error(error);
-  // }
-
-  // return { data: rooms, error };
-
   let backendUrl;
 
   if (import.meta.env.NETLIFY === 'true') {
@@ -32,8 +15,7 @@ export const getRooms = async function () {
       withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*', 
-        // 'Content-Type': 'application/json'
-    }
+      }
     }
   );
 
@@ -44,19 +26,10 @@ export const getRooms = async function () {
 
   const rooms = data?.data?.rooms;
 
-  // return result.rooms;
   return {data: rooms, error};  
 };
 
 export const deleteRoom = async function (id) {
-  // const { error } = await supabase.from('rooms').delete().eq('id', id);
-
-  // if (error) {
-  //   console.error(error);
-  // }
-
-  // return { data: { room: {} }, error };
-
   let backendUrl;
 
   if (import.meta.env.NETLIFY === 'true') {
@@ -71,8 +44,7 @@ export const deleteRoom = async function (id) {
       withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*', 
-        // 'Content-Type': 'application/json'
-    }
+      }
     }
   );
 
@@ -83,7 +55,6 @@ export const deleteRoom = async function (id) {
 
   const rooms = data?.data?.rooms;
 
-  // return result.rooms;
   return {data: rooms, error};   
 };
 
@@ -139,7 +110,6 @@ export const createEditRoom = async function (newRoom) {
 
   const room = data?.data?.rooms;
 
-  // return result.rooms;
   return {data: room, error};  
 };
 
@@ -180,6 +150,5 @@ const uploadImage = async function (image) {
 
   const imageName = data?.data?.imageName;
 
-  // return result.supaimage;
   return {data: {imageName}, error};  
 }
