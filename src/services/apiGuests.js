@@ -76,7 +76,7 @@ export async function getGuests({ filter, sortBy, page }) {
   }
 
   let exists = false;
-  backendUrl += '/api/v1/guests';
+  backendUrl += 'api/v1/guests';
 
   // FILTER
   if (filter) {
@@ -104,7 +104,7 @@ export async function getGuests({ filter, sortBy, page }) {
       exists = true;
     }
 
-    backendUrl += `sortBy=${sortBy}`;
+    backendUrl += `sortBy=${sortBy.field}`;
   }
 
   // PAGINATION
