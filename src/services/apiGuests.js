@@ -76,6 +76,7 @@ export async function getGuests({ filter, sortBy, page }) {
   }
 
   let exists = false;
+  backendUrl += '/api/v1/guests';
 
   // FILTER
   if (filter) {
@@ -121,7 +122,7 @@ export async function getGuests({ filter, sortBy, page }) {
     backendUrl += `from=${from}&to=${to}`;
   }  
 
-  const { data, error } = await axios.get(`${backendUrl}api/v1/guests`,{
+  const { data, error } = await axios.get(backendUrl,{
     withCredentials: true,
     headers: {
       'Access-Control-Allow-Origin': '*'
