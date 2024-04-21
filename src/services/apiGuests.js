@@ -104,7 +104,7 @@ export async function getGuests({ filter, sortBy, page }) {
       exists = true;
     }
 
-    backendUrl += `sortBy=${sortBy.field}`;
+    backendUrl += `sort=${sortBy.field}`;
   }
 
   // PAGINATION
