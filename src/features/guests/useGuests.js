@@ -1,7 +1,7 @@
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
-import { getGuests, getGuests as getGuestsApi } from '../../services/apiGuests';
+import { getGuests as getGuestsApi } from '../../services/apiGuests';
 import { PAGE_SIZE } from '../../utils/constants';
 
 export function useGuests() {
@@ -44,7 +44,7 @@ export function useGuests() {
     queryClient.prefetchQuery({
       queryKey: ['guests', filter, sortBy, page + 1],
       queryFn: () =>
-        getGuests({
+        getGuestsApi({
           filter,
           sortBy,
           page: page + 1,
@@ -56,7 +56,7 @@ export function useGuests() {
     queryClient.prefetchQuery({
       queryKey: ['guests', filter, sortBy, page - 1],
       queryFn: () =>
-        getGuests({
+        getGuestsApi({
           filter,
           sortBy,
           page: page - 1,

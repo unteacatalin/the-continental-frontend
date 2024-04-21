@@ -136,9 +136,9 @@ export async function getGuests({ filter, sortBy, page }) {
     throw new Error('Guests data could not be loaded');
   }
 
-  const rooms = data?.data?.rooms;
+  const guests = data?.data?.guests;
 
-  return { data: rooms, error }
+  return { data: guests, error }
 }
 
 export async function createEditGuest(newGuest, countryFlag, nationality, id) {
