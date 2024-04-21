@@ -104,7 +104,7 @@ export async function getGuests({ filter, sortBy, page }) {
       exists = true;
     }
 
-    backendUrl += `sort=${sortBy.field}-${sortBy.direction}`;
+    backendUrl += `sort=${sortBy.field}${sortBy.direction === 'desc' ? '-' : '+'}`;
   }
 
   // PAGINATION
