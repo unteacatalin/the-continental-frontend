@@ -163,7 +163,7 @@ export async function getGuests({ filter, sortBy, page }) {
 
   console.log({getGuests: data});
 
-  return { data: {guests, count}, error }
+  return { data: guests, count, error }
 }
 
 export async function createEditGuest(newGuest, countryFlag, nationality, id) {
