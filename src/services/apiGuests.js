@@ -4,29 +4,51 @@ import supabase from '../utils/supabase';
 import { PAGE_SIZE } from '../utils/constants';
 
 export async function getGuestsRowCount({ filter }) {
-  let queryCount = supabase.from('guests').select('id', {
-    count: 'exact',
-    head: true,
-  });
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  let exists = false;
+  backendUrl += 'api/v1/guests/count';
 
   // FILTER
   if (filter) {
     if (filter.nationalID) {
-      queryCount = queryCount.ilike('nationalID', `%${filter.nationalID}%`);
+      backendUrl += `?nationalID=${filter.nationalID}`;
+      exists = true;
     }
     if (filter.email) {
-      queryCount = queryCount.ilike('email', `%${filter.email}%`);
+      if (exists) {
+        backendUrl += '&';
+      } else {
+        backendUrl += '?';
+        exists = true;
+      }
+      backendUrl += `email=${filter.email}`;
     }
   }
 
-  const { error, count: countRows } = await queryCount;
+  console.log({backendUrl});
+
+  const { data, error } = await axios.get(backendUrl,{
+    withCredentials: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
+  });
 
   if (error) {
     console.error(error);
     throw new Error('Guests count could not be loaded');
   }
 
-  return { countRows };
+  const count = data?.data?.count;
+
+  return { data: count, error }
 }
 
 // export async function getGuests({ filter, sortBy, page }) {
