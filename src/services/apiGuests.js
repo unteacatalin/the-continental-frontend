@@ -160,6 +160,8 @@ export async function getGuests({ filter, sortBy, page }) {
 
   const guests = data?.data?.guests;
 
+  console.log({getGuests: data});
+
   return { data: guests, error }
 }
 
