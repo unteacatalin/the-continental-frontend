@@ -7,8 +7,8 @@ export function useCreateGuest() {
   const queryClient = useQueryClient();
 
   const { mutate: createGuest, isLoading: isCreating } = useMutation({
-    mutationFn: ({ newGuest, nationalityID, nationality }) =>
-      createEditGuest({...newGuest, nationalityID, nationality}),
+    mutationFn: ({ newGuest, countryFlag, nationality }) =>
+      createEditGuest({...newGuest, countryFlag, nationality}),
     onSuccess: () => {
       toast.success('New guest successfully created');
       queryClient.invalidateQueries({ queryKey: ['guests'] });
