@@ -49,6 +49,7 @@ const Error = styled.span`
 
 function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
   const { id: editId, ...editValues } = guestToEdit;
+  console.log({ editId });
   const isEditSession = Boolean(editId);
   const options = nationalities();
   const [flag, setFlag] = useState('');
