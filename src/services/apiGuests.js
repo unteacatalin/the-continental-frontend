@@ -178,6 +178,9 @@ export async function createEditGuest(newGuest) {
   const id = newGuest.id;
   const countryFlag = newGuest.countryFlag;
   const nationality = newGuest.nationality;
+
+  console.log({createEditGuest: newGuest});
+
   let reqUrl = `${backendUrl}api/v1/guests`;
   let method = 'POST';
 
