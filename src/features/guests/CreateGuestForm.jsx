@@ -54,6 +54,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
   const options = nationalities();
   const [flag, setFlag] = useState('');
   const [nationality, setNationality] = useState('');
+  const [nationalID, setNationalID] = useState('');
 
   const { register, handleSubmit, reset, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
@@ -81,7 +82,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
     if (isEditSession) {
       editGuest(
         // { newGuest: data, countryFlag: flag, nationality, id: editId },
-        { ...data, countryFlag: flag, nationality, id: editId },
+        { ...data, countryFlag: flag, nationality, nationalID, id: editId },
         {
           onSuccess: (data) => {
             reset();
@@ -92,7 +93,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
     } else {
       createGuest(
         // { newGuest: data, countryFlag: flag, nationality },
-        { ...data, countryFlag: flag, nationality },
+        { ...data, countryFlag: flag, nationality, nationalID },
         {
           onSuccess: (data) => {
             reset();
@@ -149,9 +150,11 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
           type='text'
           id='nationalID'
           disabled={isWorking}
-          {...register('nationalID', {
-            required: 'This field is required',
-          })}
+          value={nationalID}
+          onChange={(e) => setNationalID(e.target.value)}
+          // {...register('nationalID', {
+          //   required: 'This field is required',
+          // })}
         />
       </FormRow>
 
