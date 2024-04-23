@@ -181,6 +181,7 @@ export async function createEditGuest(newGuest) {
   const countryFlag = newGuest.countryFlag;
   const nationality = newGuest.nationality;
   const nationalID = newGuest.nationalID;
+  const email = newGuest.email;
 
   let reqUrl = `${backendUrl}api/v1/guests`;
   let method = 'POST';
@@ -197,7 +198,7 @@ export async function createEditGuest(newGuest) {
       'Content-Type': 'application/json',
     },
     url: reqUrl,
-    data: JSON.stringify({ ...newGuest, countryFlag, nationality, nationalID }),
+    data: JSON.stringify({ ...newGuest, countryFlag, nationality, nationalID, email }),
     withCredentials: true
   });
 
