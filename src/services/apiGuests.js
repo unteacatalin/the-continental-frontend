@@ -166,28 +166,48 @@ export async function getGuests({ filter, sortBy, page }) {
   return { data: guests, count, error }
 }
 
-export async function createEditGuest(newGuest, countryFlag, nationality, id) {
-  // 1. Create/edit guest
-  let query = supabase.from('guests');
+export async function createEditGuest(newGuest) {
+  let backendUrl;
 
-  if (!id) {
-    // A) CREATE
-    query = query.insert([{ ...newGuest, countryFlag, nationality }]);
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
   } else {
-    // B) EDIT
-    query = query
-      .update({ ...newGuest, countryFlag, nationality })
-      .eq('id', id);
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
-  const { data: guest, error } = await query.select();
+  const id = newGuest.id;
+  const countryFlag = newGuest.countryFlag;
+  const nationality = newGuest.nationality;
+  let reqUrl = `${backenUrl}api/v1/guests`;
+  let method = 'POST';
 
-  if (error) {
-    console.error(error);
-    throw new Error('Guest could not be created/edited');
+  if (id) {
+    reqUrl += `/${id}`;
+    method = 'PATCH';
   }
 
-  return guest;
+  const { data, error: errorSavingData } = await axios({
+    method,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+    url: reqUrl,
+    data: JSON.stringify({ ...newGuest, countryFlag, nationality }),
+    withCredentials: true
+  });
+
+  let error;
+
+  if (errorSavingData) {
+    console.error(errorSavingData);
+    error = 'Guest could not be created/edited';
+    throw new Error(error);
+  }
+
+  const guest = data?.data?.guest;
+
+  return {data: guest, error};
 }
 
 export async function deleteGuest(id) {

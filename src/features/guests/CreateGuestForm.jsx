@@ -79,7 +79,8 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
   function onSubmit(data) {
     if (isEditSession) {
       editGuest(
-        { newGuest: data, countryFlag: flag, nationality, id: editId },
+        // { newGuest: data, countryFlag: flag, nationality, id: editId },
+        { ...data, countryFlag: flag, nationality, id: editId },
         {
           onSuccess: (data) => {
             reset();
@@ -89,7 +90,8 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
       );
     } else {
       createGuest(
-        { newGuest: data, countryFlag: flag, nationality },
+        // { newGuest: data, countryFlag: flag, nationality },
+        { ...data, countryFlag: flag, nationality },
         {
           onSuccess: (data) => {
             reset();

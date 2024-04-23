@@ -8,7 +8,7 @@ export function useEditGuest() {
 
   const { mutate: editGuest, isLoading: isEditing } = useMutation({
     mutationFn: ({ newGuest, countryFlag, nationality, id }) =>
-      createEditGuest(newGuest, countryFlag, nationality, id),
+      createEditGuest({...newGuest, countryFlag, nationality, id}),
     onSuccess: () => {
       toast.success('Guest successfully edited');
       queryClient.invalidateQueries({ queryKey: ['guests'] });
