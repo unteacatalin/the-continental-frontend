@@ -168,7 +168,7 @@ export async function getGuests({ filter, sortBy, page }) {
 
 export async function createEditGuest(newGuest) {
   console.log({createEditGuest: newGuest});
-    
+
   let backendUrl;
 
   if (import.meta.env.NETLIFY === 'true') {
@@ -180,6 +180,7 @@ export async function createEditGuest(newGuest) {
   const id = newGuest.id;
   const countryFlag = newGuest.countryFlag;
   const nationality = newGuest.nationality;
+  const nationalID = newGuest.nationalID;
 
   let reqUrl = `${backendUrl}api/v1/guests`;
   let method = 'POST';
@@ -196,7 +197,7 @@ export async function createEditGuest(newGuest) {
       'Content-Type': 'application/json',
     },
     url: reqUrl,
-    data: JSON.stringify({ ...newGuest, countryFlag, nationality }),
+    data: JSON.stringify({ ...newGuest, countryFlag, nationality, nationalID }),
     withCredentials: true
   });
 
