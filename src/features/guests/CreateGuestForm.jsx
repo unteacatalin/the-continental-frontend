@@ -136,6 +136,8 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
           type='text'
           id='email'
           disabled={isWorking}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           {...register('email', {
             required: 'This field is required',
             pattern: {
