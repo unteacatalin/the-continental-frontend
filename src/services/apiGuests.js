@@ -165,8 +165,6 @@ export async function getGuests({ filter, sortBy, page }) {
 }
 
 export async function createEditGuest(newGuest) {
-  console.log({createEditGuest: newGuest});
-
   let backendUrl;
 
   if (import.meta.env.NETLIFY === 'true') {
@@ -174,6 +172,8 @@ export async function createEditGuest(newGuest) {
   } else {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
+
+  console.log({newGuest});
 
   const id = newGuest.id;
   const countryFlag = newGuest.countryFlag;

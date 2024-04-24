@@ -71,7 +71,6 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
   const nationalIDField = register('nationalID', {
     required: 'This field is required',
     onChange: (e) => {
-      // nationalIDField.onChange(e); 
       setNationalID(e.target.value);
     }
   });
@@ -83,7 +82,6 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
       message: 'Plase provide a valid email address',
     },
     onChange: (e) => {
-      // emailField.onChange(e);
       setEmail(e.target.value);
     }
   });
