@@ -32,8 +32,6 @@ export async function getGuestsRowCount({ filter }) {
     }
   }
 
-  console.log({backendUrl});
-
   const { data, error } = await axios.get(backendUrl,{
     withCredentials: true,
     headers: {
@@ -216,12 +214,30 @@ export async function createEditGuest(newGuest) {
 }
 
 export async function deleteGuest(id) {
-  const { error } = await supabase.from('guests').delete().eq('id', id);
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  const { data, error } = await axios.delete(
+    `${backendUrl}api/v1/guests/${id}`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
 
   if (error) {
     console.error(error);
     throw new Error('Guest data could not be deleted');
   }
 
-  return {};
+  const guest = data?.data?.guest;
+
+  return { data: guest, error };
 }
