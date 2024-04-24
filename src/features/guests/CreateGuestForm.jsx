@@ -148,7 +148,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
           type='text'
           id='email'
           disabled={isWorking}
-          // value={email}
+          value={email}
           // onChange={(e) => setEmail(e.target.value)}
           {...emailField}
           onChange={(e) => {
@@ -163,7 +163,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
           type='text'
           id='nationalID'
           disabled={isWorking}
-          // value={nationalID}
+          value={nationalID}
           {...nationalIDField}
           onChange={(e) => {
             nationalIDField.onChange(e); 
