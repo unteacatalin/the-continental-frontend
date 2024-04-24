@@ -61,23 +61,31 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
     defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
-
+  
   const { createGuest, isCreating } = useCreateGuest();
-
+  
   const { editGuest, isEditing } = useEditGuest();
-
+  
   const isWorking = isCreating || isEditing;
-
+  
   const nationalIDField = register('nationalID', {
     required: 'This field is required',
+    onChange: (e) => {
+      // nationalIDField.onChange(e); 
+      setNationalID(e.target.value);
+    }
   });
-
+  
   const emailField = register('email', {
     required: 'This field is required',
     pattern: {
       value: /\S+@\S+\.\S+/,
       message: 'Plase provide a valid email address',
     },
+    onChange: (e) => {
+      // emailField.onChange(e);
+      setEmail(e.target.value);
+    }
   });
 
   useEffect(
@@ -95,7 +103,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
     if (isEditSession) {
       editGuest(
         // { newGuest: data, countryFlag: flag, nationality, id: editId },
-        { ...data, countryFlag: flag, nationality, nationalID, email, fullName, id: editId },
+        { ...data, countryFlag: flag, nationality, nationalID, email, id: editId },
         {
           onSuccess: (data) => {
             reset();
@@ -106,7 +114,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
     } else {
       createGuest(
         // { newGuest: data, countryFlag: flag, nationality },
-        { ...data, countryFlag: flag, nationality, nationalID, email, fullName },
+        { ...data, countryFlag: flag, nationality, nationalID, email },
         {
           onSuccess: (data) => {
             reset();
@@ -151,10 +159,6 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
           value={email}
           // onChange={(e) => setEmail(e.target.value)}
           {...emailField}
-          onChange={(e) => {
-            emailField.onChange(e);
-            setEmail(e.target.value);
-          }}
         />
       </FormRow>
 
@@ -165,10 +169,6 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
           disabled={isWorking}
           value={nationalID}
           {...nationalIDField}
-          onChange={(e) => {
-            nationalIDField.onChange(e); 
-            setNationalID(e.target.value);
-          }}
         />
       </FormRow>
 
