@@ -55,7 +55,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
   const [flag, setFlag] = useState('');
   const [nationality, setNationality] = useState('');
   const [nationalID, setNationalID] = useState(natIDSup);
-  // const [email, setEmail] = useState(emailSup);
+  const [email, setEmail] = useState(emailSup);
 
   const { register, handleSubmit, reset, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
