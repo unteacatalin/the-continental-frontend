@@ -72,6 +72,14 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
     required: 'This field is required',
   });
 
+  const emailField = register('email', {
+    required: 'This field is required',
+    pattern: {
+      value: /\S+@\S+\.\S+/,
+      message: 'Plase provide a valid email address',
+    },
+  });
+
   useEffect(
     function () {
       const fg = options.find(
