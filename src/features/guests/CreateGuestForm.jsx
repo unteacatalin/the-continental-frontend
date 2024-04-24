@@ -55,7 +55,7 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
   const [flag, setFlag] = useState('');
   const [nationality, setNationality] = useState('');
   const [nationalID, setNationalID] = useState(natIDSup);
-  const [email, setEmail] = useState(emailSup);
+  // const [email, setEmail] = useState(emailSup);
 
   const { register, handleSubmit, reset, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
@@ -67,6 +67,10 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
   const { editGuest, isEditing } = useEditGuest();
 
   const isWorking = isCreating || isEditing;
+
+  const nationalIDField = register('nationalID', {
+    required: 'This field is required',
+  });
 
   useEffect(
     function () {
@@ -136,15 +140,13 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
           type='text'
           id='email'
           disabled={isWorking}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          {...register('email', {
-            required: 'This field is required',
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: 'Plase provide a valid email address',
-            },
-          })}
+          // value={email}
+          // onChange={(e) => setEmail(e.target.value)}
+          {...emailField}
+          onChange={(e) => {
+            emailField.onChange(e);
+            setEmail(e.target.value);
+          }}
         />
       </FormRow>
 
@@ -153,11 +155,12 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
           type='text'
           id='nationalID'
           disabled={isWorking}
-          value={nationalID}
-          onChange={(e) => setNationalID(e.target.value)}
-          {...register('nationalID', {
-            required: 'This field is required',
-          })}
+          // value={nationalID}
+          {...nationalIDField}
+          onChange={(e) => {
+            nationalIDField.onChange(e); 
+            setNationalID(e.target.value);
+          }}
         />
       </FormRow>
 
