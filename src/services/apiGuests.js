@@ -98,6 +98,8 @@ export async function getGuests({ filter, sortBy, page }) {
   let exists = false;
   backendUrl += 'api/v1/guests';
 
+  console.log({filter});
+
   // FILTER
   if (filter) {
     if (filter.nationalID) {
@@ -172,8 +174,6 @@ export async function createEditGuest(newGuest) {
   } else {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
-
-  console.log({newGuest});
 
   const id = newGuest.id;
   const countryFlag = newGuest.countryFlag;
