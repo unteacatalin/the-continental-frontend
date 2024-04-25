@@ -15,7 +15,9 @@ import Modal from '../ui/Modal';
 
 function Guests() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [email, setEmail] = useState(searchParams.get('email') || '');
+  const [email, setEmail] = useState(
+    searchParams.get('email') || ''
+  );
   const [nationalID, setNationalID] = useState(
     searchParams.get('nationalID') || ''
   );

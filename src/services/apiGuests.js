@@ -1,5 +1,5 @@
 import axios from 'axios';
-import supabase from '../utils/supabase';
+// import supabase from '../utils/supabase';
 
 import { PAGE_SIZE } from '../utils/constants';
 
@@ -141,7 +141,7 @@ export async function getGuests({ filter, sortBy, page }) {
     const from = (page - 1) * PAGE_SIZE;
     const to = page * PAGE_SIZE - 1;
 
-    backendUrl += `from=${from}&to=${to}`;
+    backendUrl += `page=${page}&from=${from}&to=${to}`;
   }  
 
   console.log({backendUrl});
