@@ -14,7 +14,7 @@ function CabinTable() {
   
   if (!rooms.data || !rooms.data.length) return <Empty resource='rooms' />;
 
-  // !) FILTER
+  // 1) FILTER
   const filterValue = searchParams.get('discount') || 'all';
 
   let filteredRooms = [];

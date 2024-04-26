@@ -1,3 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
+
 import Empty from '../../ui/Empty';
 import Menus from '../../ui/Menus';
 import Pagination from '../../ui/Pagination';
@@ -8,10 +10,27 @@ import { useGuests } from './useGuests';
 
 function GuestsTable() {
   const { guests, isLoading, count } = useGuests();
+  const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
 
   if (!guests?.length) return <Empty resource='guests' />;
+
+  // 1) FILTER
+  const emailFilterValue = searchParams.get('email') || '';
+  const nationalIDFilterValue = searchParams.get('nationalID') || '';
+
+  let filteredGuests = [];
+
+  if (!emailFilterValue && !nationalIDFilterValue) {
+    filteredGuests = guests;
+  } else if (emailFilterValue && !nationalIDFilterValue) {
+    filteredGuests = guests.filter((guest) => guest.email.includes(emailFilterValue));
+  } else if (!emailFilterValue && nationalIDFilterValue) {
+    filteredGuests = guests.filter((guest) => guest.nationalID.includes(nationalIDFilterValue));
+  } else if (emailFilterValue && nationalIDFilterValue) {
+    filteredGuests = guests.filter((guest) => guest.email.includes(emailFilterValue) && guest.nationalID.includes(nationalIDFilterValue));
+  }
 
   return (
     <Menus>
@@ -26,7 +45,7 @@ function GuestsTable() {
         </Table.Header>
 
         <Table.Body
-          data={guests}
+          data={filteredGuests}
           render={(guest) => <GuestRow key={guest.id} guest={guest} />}
         />
         <Table.Footer>
