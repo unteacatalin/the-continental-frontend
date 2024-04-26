@@ -17,8 +17,8 @@ function GuestsTable() {
   if (!guests?.length) return <Empty resource='guests' />;
 
   // 1) FILTER
-  const emailFilterValue = searchParams.get('email') || '';
-  const nationalIDFilterValue = searchParams.get('nationalID') || '';
+  const emailFilterValue = searchParams.get('email')?.toLowerCase() || '';
+  const nationalIDFilterValue = searchParams.get('nationalID')?.toLowerCase() || '';
 
   let filteredGuests = [];
 
@@ -27,11 +27,11 @@ function GuestsTable() {
   if (!emailFilterValue && !nationalIDFilterValue) {
     filteredGuests = guests;
   } else if (emailFilterValue && !nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.email.includes(emailFilterValue));
+    filteredGuests = guests.filter((guest) => guest.email.toLowerCase().indexOf(emailFilterValue) === -1);
   } else if (!emailFilterValue && nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.nationalID.includes(nationalIDFilterValue));
+    filteredGuests = guests.filter((guest) => guest.nationalID.toLowerCase().indexOf(nationalIDFilterValue) === -1);
   } else if (emailFilterValue && nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.email.includes(emailFilterValue) && guest.nationalID.includes(nationalIDFilterValue));
+    filteredGuests = guests.filter((guest) => guest.email.toLowerCase().indexOf(emailFilterValue) === -1 && guest.nationalID.toLowerCase().indexOf(nationalIDFilterValue) === -1);
   }
 
   return (
