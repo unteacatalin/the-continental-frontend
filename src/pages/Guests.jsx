@@ -47,9 +47,16 @@ function Guests() {
       if (searchParams.get('email')) {
         filter = { ...filter, email };
         setEmail(searchParams.get('email'));
+      } else {
+        filter = { ...filter, email: undefined };
+        setEmail(searchParams.get('email'));
       }
+
       if (searchParams.get('nationalID')) {
         filter = { ...filter, nationalID };
+        setNationalID(searchParams.get('nationalID'));
+      } else {
+        filter = { ...filter, nationalID: undefined };
         setNationalID(searchParams.get('nationalID'));
       }
     },
