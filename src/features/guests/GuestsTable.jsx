@@ -27,11 +27,11 @@ function GuestsTable() {
   if (!emailFilterValue && !nationalIDFilterValue) {
     filteredGuests = guests;
   } else if (emailFilterValue && !nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.email.toLowerCase().indexOf(emailFilterValue) === -1);
+    filteredGuests = guests.filter((guest) => guest.email.toLowerCase().indexOf(emailFilterValue) !== -1);
   } else if (!emailFilterValue && nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.nationalID.toLowerCase().indexOf(nationalIDFilterValue) === -1);
+    filteredGuests = guests.filter((guest) => guest.nationalID.toLowerCase().indexOf(nationalIDFilterValue) !== -1);
   } else if (emailFilterValue && nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.email.toLowerCase().indexOf(emailFilterValue) === -1 && guest.nationalID.toLowerCase().indexOf(nationalIDFilterValue) === -1);
+    filteredGuests = guests.filter((guest) => guest.email.toLowerCase().indexOf(emailFilterValue) !== -1 && guest.nationalID.toLowerCase().indexOf(nationalIDFilterValue) !== -1);
   }
 
   return (
