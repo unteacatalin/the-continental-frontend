@@ -22,6 +22,8 @@ function GuestsTable() {
 
   let filteredGuests = [];
 
+  console.log({guests, emailFilterValue, nationalIDFilterValue});
+
   if (!emailFilterValue && !nationalIDFilterValue) {
     filteredGuests = guests;
   } else if (emailFilterValue && !nationalIDFilterValue) {
