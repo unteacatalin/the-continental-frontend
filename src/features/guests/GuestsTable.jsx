@@ -16,27 +16,6 @@ function GuestsTable() {
 
   if (!guests?.length) return <Empty resource='guests' />;
 
-  // 1) FILTER
-  const emailFilterValue = searchParams.get('email')?.toLowerCase() || '';
-  const nationalIDFilterValue = searchParams.get('nationalID')?.toLowerCase() || '';
-
-  let filteredGuests = [];
-
-  // console.log({guests, emailFilterValue, nationalIDFilterValue});
-
-  if (!emailFilterValue && !nationalIDFilterValue) {
-    filteredGuests = guests;
-  } else if (emailFilterValue && !nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => {
-      console.log({guest});
-      return guest.email.toLowerCase().includes(emailFilterValue)
-    });
-  } else if (!emailFilterValue && nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.nationalID.toLowerCase().includes(nationalIDFilterValue));
-  } else if (emailFilterValue && nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.email.toLowerCase().includes(emailFilterValue) && guest.nationalID.toLowerCase().includes(nationalIDFilterValue));
-  }
-
   return (
     <Menus>
       <Table columns='1.5fr 1fr 0.7fr 1fr 0.3fr 3.2rem'>
@@ -50,7 +29,7 @@ function GuestsTable() {
         </Table.Header>
 
         <Table.Body
-          data={filteredGuests}
+          data={guests}
           render={(guest) => <GuestRow key={guest.id} guest={guest} />}
         />
         <Table.Footer>

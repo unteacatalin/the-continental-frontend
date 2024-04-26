@@ -96,7 +96,7 @@ export async function getGuests({ filter, sortBy, page }) {
   }
 
   let exists = false;
-  let updPage = page;
+  // let updPage = page;
   backendUrl += 'api/v1/guests';
 
   console.log({filter});
@@ -106,7 +106,7 @@ export async function getGuests({ filter, sortBy, page }) {
     if (filter.nationalID) {
       backendUrl += `?nationalID=${filter.nationalID}`;
       exists = true;
-      updPage = 1;
+      // updPage = 1;
     }
     if (filter.email) {
       if (exists) {
@@ -114,38 +114,38 @@ export async function getGuests({ filter, sortBy, page }) {
       } else {
         backendUrl += '?';
         exists = true;
-        updPage = 1;
+        // updPage = 1;
       }
       backendUrl += `email=${filter.email}`;
     }
   }
 
-  // SORT
-  if (sortBy && sortBy.field) {
-    if (exists) {
-      backendUrl += '&';
-    } else {
-      backendUrl += '?';
-      exists = true;
-    }
+  // // SORT
+  // if (sortBy && sortBy.field) {
+  //   if (exists) {
+  //     backendUrl += '&';
+  //   } else {
+  //     backendUrl += '?';
+  //     exists = true;
+  //   }
 
-    backendUrl += `sort=${sortBy.field}${sortBy.direction === 'desc' ? '-' : '+'}`;
-  }
+  //   backendUrl += `sort=${sortBy.field}${sortBy.direction === 'desc' ? '-' : '+'}`;
+  // }
 
-  // PAGINATION
-  if (page) {
-    if (exists) {
-      backendUrl += '&';
-    } else {
-      backendUrl += '?';
-      exists = true;
-    }
+  // // PAGINATION
+  // if (page) {
+  //   if (exists) {
+  //     backendUrl += '&';
+  //   } else {
+  //     backendUrl += '?';
+  //     exists = true;
+  //   }
 
-    const from = (updPage - 1) * PAGE_SIZE;
-    const to = updPage * PAGE_SIZE - 1;
+  //   const from = (updPage - 1) * PAGE_SIZE;
+  //   const to = updPage * PAGE_SIZE - 1;
 
-    backendUrl += `from=${from}&to=${to}`;
-  }  
+  //   backendUrl += `from=${from}&to=${to}`;
+  // }  
 
   console.log({backendUrl});
 
