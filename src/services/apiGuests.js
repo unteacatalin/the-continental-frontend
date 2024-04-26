@@ -104,7 +104,7 @@ export async function getGuests({ filter, sortBy, page }) {
   // FILTER
   if (filter) {
     if (filter.nationalID) {
-      backendUrl += `?nationalID=${filter.nationalID}`;
+      backendUrl += `?nationalID[ilike]=${filter.nationalID}`;
       exists = true;
       // updPage = 1;
     }
@@ -116,7 +116,7 @@ export async function getGuests({ filter, sortBy, page }) {
         exists = true;
         // updPage = 1;
       }
-      backendUrl += `email=${filter.email}`;
+      backendUrl += `email[ilike]=${filter.email}`;
     }
   }
 
