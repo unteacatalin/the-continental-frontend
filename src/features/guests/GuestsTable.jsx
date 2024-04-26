@@ -22,12 +22,15 @@ function GuestsTable() {
 
   let filteredGuests = [];
 
-  console.log({guests, emailFilterValue, nationalIDFilterValue});
+  // console.log({guests, emailFilterValue, nationalIDFilterValue});
 
   if (!emailFilterValue && !nationalIDFilterValue) {
     filteredGuests = guests;
   } else if (emailFilterValue && !nationalIDFilterValue) {
-    filteredGuests = guests.filter((guest) => guest.email.toLowerCase().includes(emailFilterValue));
+    filteredGuests = guests.filter((guest) => {
+      console.log({guest});
+      return guest.email.toLowerCase().includes(emailFilterValue)
+    });
   } else if (!emailFilterValue && nationalIDFilterValue) {
     filteredGuests = guests.filter((guest) => guest.nationalID.toLowerCase().includes(nationalIDFilterValue));
   } else if (emailFilterValue && nationalIDFilterValue) {
