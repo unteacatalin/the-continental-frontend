@@ -48,7 +48,8 @@ function FilterText({ filterField, placeholder, refFilterGuest }) {
   const { filterGuest, setFilterGuest } = useFilterGuest();
 
   useEffect(() => {
-    if (fieldText) {
+    // if (fieldText) {
+    if (compareRef(filterGuest, refFilterGuest.current)) {
       searchParams.set(filterField, fieldText);
       if (searchParams.get('page')) searchParams.set('page', 1);
       setSearchParams(searchParams);
