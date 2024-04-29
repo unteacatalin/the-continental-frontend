@@ -9,7 +9,7 @@ import GuestRow from './GuestRow';
 import { useGuests } from './useGuests';
 
 function GuestsTable() {
-  const { guests, isLoading, count, from, to } = useGuests();
+  const { guests, isLoading, count, from, to, PAGE_SIZE } = useGuests();
   const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
@@ -33,7 +33,7 @@ function GuestsTable() {
           render={(guest) => <GuestRow key={guest.id} guest={guest} />}
         />
         <Table.Footer>
-          <Pagination count={count} from={from} to={to} />
+          <Pagination count={count} from={from} to={to} pageSize={PAGE_SIZE} />
         </Table.Footer>
       </Table>
     </Menus>

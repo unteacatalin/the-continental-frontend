@@ -64,5 +64,5 @@ export function useGuests() {
     });
   }
 
-  return { isLoading, guests, count, from, to, error };
+  return { isLoading, guests, count, from, to, PAGE_SIZE, error };
 }
