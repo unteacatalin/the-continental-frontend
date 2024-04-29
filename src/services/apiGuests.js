@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import supabase from '../utils/supabase';
 
-import { PAGE_SIZE } from '../utils/constants';
+// import { PAGE_SIZE } from '../utils/constants';
 
 export async function getGuestsRowCount({ filter }) {
   let backendUrl;
@@ -120,32 +120,33 @@ export async function getGuests({ filter, sortBy, page }) {
     }
   }
 
-  // // SORT
-  // if (sortBy && sortBy.field) {
-  //   if (exists) {
-  //     backendUrl += '&';
-  //   } else {
-  //     backendUrl += '?';
-  //     exists = true;
-  //   }
+  // SORT
+  if (sortBy && sortBy.field) {
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
 
-  //   backendUrl += `sort=${sortBy.field}${sortBy.direction === 'desc' ? '-' : '+'}`;
-  // }
+    backendUrl += `sort=${sortBy.field}${sortBy.direction === 'desc' ? '-' : '+'}`;
+  }
 
-  // // PAGINATION
-  // if (page) {
-  //   if (exists) {
-  //     backendUrl += '&';
-  //   } else {
-  //     backendUrl += '?';
-  //     exists = true;
-  //   }
+  // PAGINATION
+  if (page) {
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
 
-  //   const from = (updPage - 1) * PAGE_SIZE;
-  //   const to = updPage * PAGE_SIZE - 1;
+    // const from = (updPage - 1) * PAGE_SIZE;
+    // const to = updPage * PAGE_SIZE - 1;
 
-  //   backendUrl += `from=${from}&to=${to}`;
-  // }  
+    // backendUrl += `from=${from}&to=${to}`;
+    backendUrl += `page=${page}`;
+  }  
 
   console.log({backendUrl});
 
@@ -163,10 +164,13 @@ export async function getGuests({ filter, sortBy, page }) {
 
   const guests = data?.data?.guests;
   const count = data?.data?.count;
+  const from = data?.data?.from;
+  const to = data?.data?.to;
+  const PAGE_SIZE = data?.data?.pageSize;
 
   console.log({getGuests: data});
 
-  return { data: guests, count, error }
+  return { data: guests, count, from, to, PAGE_SIZE, error }
 }
 
 export async function createEditGuest(newGuest) {

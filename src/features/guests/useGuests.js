@@ -2,7 +2,7 @@ import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { getGuests as getGuestsApi } from '../../services/apiGuests';
-import { PAGE_SIZE } from '../../utils/constants';
+// import { PAGE_SIZE } from '../../utils/constants';
 
 export function useGuests() {
   const queryClient = useQueryClient();
@@ -29,7 +29,7 @@ export function useGuests() {
 
   // QUERY
   const {
-    data: { data: guests, count } = {},
+    data: { data: guests, count, from, to, PAGE_SIZE } = {},
     isLoading,
     error,
   } = useQuery({
@@ -64,5 +64,5 @@ export function useGuests() {
     });
   }
 
-  return { isLoading, guests, error, count };
+  return { isLoading, guests, count, from, to, error };
 }
