@@ -10,7 +10,7 @@ export function useGuests() {
 
   // FILTER
   const filterEmail = searchParams.get('email');
-  const filterNationalID = searchParams.get('nationalid');
+  const filterNationalID = searchParams.get('nationalID');
   let filter = {};
   if (filterEmail) {
     filter = { ...filter, email: filterEmail };
