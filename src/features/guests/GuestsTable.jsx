@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 import Empty from '../../ui/Empty';
 import Menus from '../../ui/Menus';
@@ -10,7 +10,7 @@ import { useGuests } from './useGuests';
 
 function GuestsTable() {
   const { guests, isLoading, count, from, to, PAGE_SIZE } = useGuests();
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
 

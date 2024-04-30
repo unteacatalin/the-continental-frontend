@@ -96,17 +96,15 @@ export async function getGuests({ filter, sortBy, page }) {
   }
 
   let exists = false;
-  // let updPage = page;
   backendUrl += 'api/v1/guests';
 
-  console.log({filter});
+  console.log({guestFilter: filter});
 
   // FILTER
   if (filter) {
     if (filter.nationalID) {
       backendUrl += `?nationalID[ilike]=${filter.nationalID}`;
       exists = true;
-      // updPage = 1;
     }
     if (filter.email) {
       if (exists) {
@@ -114,7 +112,6 @@ export async function getGuests({ filter, sortBy, page }) {
       } else {
         backendUrl += '?';
         exists = true;
-        // updPage = 1;
       }
       backendUrl += `email[ilike]=${filter.email}`;
     }
@@ -141,21 +138,20 @@ export async function getGuests({ filter, sortBy, page }) {
       exists = true;
     }
 
-    // const from = (updPage - 1) * PAGE_SIZE;
-    // const to = updPage * PAGE_SIZE - 1;
-
-    // backendUrl += `from=${from}&to=${to}`;
     backendUrl += `page=${page}`;
   }  
 
   console.log({backendUrl});
 
-  const { data, error } = await axios.get(backendUrl,{
-    withCredentials: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*'
+  const { data, error } = await axios.get(
+    backendUrl,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
     }
-  });
+  );
 
   if (error) {
     console.error(error);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getRooms = async function () {
+export const getRooms = async function ({filter, sortBy, page}) {
   let backendUrl;
 
   if (import.meta.env.NETLIFY === 'true') {
@@ -9,8 +9,53 @@ export const getRooms = async function () {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
+  let exists = false;
+  backendUrl += 'api/v1/guests';
+
+  console.log({roomFilter: filter});
+
+  // FILTER  
+  if (filter) {
+    if (filter.discount) {
+      if (filter.discount === 'all') {
+        backendUrl += `?discount[gte]=0`;
+      } else if (filter.discount === 'no-discount') {
+        backendUrl += `?discount[eq]=0`;
+      } else if (filter.discount === 'with-discount') {
+        backendUrl += `?discount[gt]=0`;
+      }
+      exists = true;
+    }
+  }
+
+  // SORT
+  if (sortBy && sortBy.field) {
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
+
+    backendUrl += `sort=${sortBy.field}${sortBy.direction === 'desc' ? '-' : '+'}`;
+  }
+
+  // PAGINATION
+  if (page) {
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
+
+    backendUrl += `page=${page}`;
+  }  
+
+  console.log({backendUrl});  
+
   const { data, error}  = await axios.get(
-    `${backendUrl}api/v1/rooms`,
+    backendUrl,
     {
       withCredentials: true,
       headers: {
@@ -25,8 +70,14 @@ export const getRooms = async function () {
   }
 
   const rooms = data?.data?.rooms;
+  const count = data?.data?.count;
+  const from = data?.data?.from;
+  const to = data?.data?.to;
+  const PAGE_SIZE = data?.data?.pageSize;
 
-  return {data: rooms, error};  
+  console.log({getGuests: data});
+
+  return {data: rooms, count, from, to, PAGE_SIZE, error};  
 };
 
 export const deleteRoom = async function (id) {
