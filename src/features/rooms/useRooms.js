@@ -24,7 +24,7 @@ export function useRooms() {
 
   // QUERY
   const {
-    data: { data: { rooms, count, from, to, PAGE_SIZE }},
+    data,
     isLoading,
     error,
   } = useQuery({
@@ -32,8 +32,14 @@ export function useRooms() {
     queryFn: () => getRooms({ filter, sortBy, page }),
   });
 
+  
+  const rooms = data?.data?.rooms; 
+  const count = data?.data?.count;
+  const from = data?.data?.from;
+  const to = data?.data?.to;
+  const PAGE_SIZE = data?.data?.PAGE_SIZE;
+  
   console.log({ROOMS: rooms, count, from, to, PAGE_SIZE});
-
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);  
 
