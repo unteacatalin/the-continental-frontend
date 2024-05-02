@@ -10,7 +10,7 @@ export const getRooms = async function ({filter, sortBy, page}) {
   }
 
   let exists = false;
-  backendUrl += 'api/v1/guests';
+  backendUrl += 'api/v1/rooms';
 
   console.log({roomFilter: filter});
 
@@ -24,8 +24,10 @@ export const getRooms = async function ({filter, sortBy, page}) {
       } else if (filter.discount === 'with-discount') {
         backendUrl += `?discount[gt]=0`;
       }
-      exists = true;
+    } else {
+      backendUrl += `?discount[gte]=0`;
     }
+    exists = true;
   }
 
   // SORT
