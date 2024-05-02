@@ -22,14 +22,16 @@ export function useRooms() {
   // PAGINATION
   const page = !searchParams.get('page') ? 1 : Number(searchParams.get('page'));
 
+  console.log('AJUNGE AICI???');
+
   // QUERY
   const {
-    isLoading,
     data: {data: rooms, count, from, to, PAGE_SIZE},
+    isLoading,
     error,
   } = useQuery({
-    queryKey: ['rooms', filter, sortBy, page],
     queryFn: () => getRooms({ filter, sortBy, page }),
+    queryKey: ['rooms', filter, sortBy, page],
   });
 
   // PRE-FETCHING
