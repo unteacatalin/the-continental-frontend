@@ -5,6 +5,7 @@ import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
 import { useSearchParams } from 'react-router-dom';
 import Empty from '../../ui/Empty';
+import Pagination from '../../ui/Pagination';
 
 function CabinTable() {
   const { isLoading, rooms, count, PAGE_SIZE, error } = useRooms();
