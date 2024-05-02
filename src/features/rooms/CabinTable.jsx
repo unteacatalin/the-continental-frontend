@@ -3,17 +3,17 @@ import CabinRow from './CabinRow';
 import { useRooms } from './useRooms';
 import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 import Empty from '../../ui/Empty';
 import Pagination from '../../ui/Pagination';
 
 function CabinTable() {
   const { isLoading, rooms, count, PAGE_SIZE, error } = useRooms();
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
   
   if (isLoading) return <Spinner />;
   
-  if (!rooms.data || !rooms.data.length) return <Empty resource='rooms' />;
+  if (!rooms?.length) return <Empty resource='rooms' />;
 
   // // 1) FILTER
   // const filterValue = searchParams.get('discount') || 'all';
