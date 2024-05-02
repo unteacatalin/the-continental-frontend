@@ -71,13 +71,13 @@ export const getRooms = async function ({filter, sortBy, page}) {
     throw new Error('Rooms data could not be loaded');
   }
 
+  console.log({getGuests: data});
+
   const rooms = data?.data?.rooms;
   const count = data?.data?.count;
   const from = data?.data?.from;
   const to = data?.data?.to;
   const PAGE_SIZE = data?.data?.pageSize;
-
-  console.log({getGuests: data});
 
   return {data: rooms, count, from, to, PAGE_SIZE, error};  
 };
