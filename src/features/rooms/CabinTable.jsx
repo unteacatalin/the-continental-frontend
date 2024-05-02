@@ -11,6 +11,8 @@ function CabinTable() {
   const { isLoading, rooms, count, PAGE_SIZE, error } = useRooms();
   // const [searchParams] = useSearchParams();
   
+  console.log({rooms});
+
   if (isLoading) return <Spinner />;
   
   if (!rooms?.length) return <Empty resource='rooms' />;
@@ -58,13 +60,13 @@ function CabinTable() {
           <div>Discount</div>
           <div></div>
         </Table.Header>
-        <Table.Body
+        {/* <Table.Body
           data={rooms}
           render={(room) => <CabinRow room={room} key={room.id} />}
         />
         <Table.Footer>
           <Pagination count={count} pageSize={PAGE_SIZE} />
-        </Table.Footer>        
+        </Table.Footer>         */}
       </Table>
     </Menus>
   );
