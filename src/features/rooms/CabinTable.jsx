@@ -60,13 +60,13 @@ function CabinTable() {
           <div>Discount</div>
           <div></div>
         </Table.Header>
-        {/* <Table.Body
+        <Table.Body
           data={rooms}
           render={(room) => <CabinRow room={room} key={room.id} />}
         />
         <Table.Footer>
           <Pagination count={count} pageSize={PAGE_SIZE} />
-        </Table.Footer>         */}
+        </Table.Footer>        
       </Table>
     </Menus>
   );
