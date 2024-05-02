@@ -15,7 +15,7 @@ export function useRooms() {
   }
 
   // SORT
-  const sortByRaw = searchParams.get('sortBy') || 'fullName-asc';
+  const sortByRaw = searchParams.get('sortBy') || 'name-asc';
   const [field, direction] = sortByRaw.split('-');
   const sortBy = { field, direction };
 
