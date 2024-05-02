@@ -33,7 +33,7 @@ export function useRooms() {
   });
 
   
-  const rooms = data?.data?.rooms; 
+  const rooms = data?.data; 
   const count = data?.count;
   const from = data?.from;
   const to = data?.to;
