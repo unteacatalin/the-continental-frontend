@@ -24,7 +24,7 @@ export function useRooms() {
 
   // QUERY
   const {
-    data: rooms, count, from, to, PAGE_SIZE,
+    data: {rooms, count, from, to, PAGE_SIZE},
     isLoading,
     error,
   } = useQuery({
