@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { getBookings, getBookingsRowCount } from '../../services/apiBookings';
-import { PAGE_SIZE } from '../../utils/constants';
+// import { PAGE_SIZE } from '../../utils/constants';
 
 export function useBookings() {
   const queryClient = useQueryClient();
@@ -23,29 +23,10 @@ export function useBookings() {
   // PAGINATION
   const page = !searchParams.get('page') ? 1 : Number(searchParams.get('page'));
 
-  // // CHECK BOOKINGS COUNT
-  // const { data: { countRows } = {} } = useQuery({
-  //   queryKey: ['bookingsCount', filter],
-  //   queryFn: () => getBookingsRowCount({ filter }),
-  //   cacheTime: 0,
-  // });
-
-  // queryClient.invalidateQueries({
-  //   queryKey: ['bookingsCount', filter],
-  //   refetchType: 'none',
-  // });
-
-  // let updPage = page;
-  // if (Math.ceil(countRows / PAGE_SIZE) < updPage && updPage > 1) {
-  //   searchParams.set('page', updPage - 1);
-  //   setSearchParams(searchParams);
-  //   updPage = updPage - 1;
-  // }
-
   // QUERY
   const {
     isLoading,
-    data: { data: bookings, count } = {},
+    data: { data: bookings, count, from, to, PAGE_SIZE } = {},
     error,
   } = useQuery({
     queryKey: ['bookings', filter, sortBy, page],
@@ -57,6 +38,8 @@ export function useBookings() {
   //   setSearchParams(searchParams);
   //   // updPage = updPage - 1;
   // } else {
+
+  console.log({BOOKINGS: data, count, from, to, PAGE_SIZE});
 
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
@@ -75,5 +58,5 @@ export function useBookings() {
     });
   }
   // }
-  return { isLoading, bookings, error, count };
+  return { isLoading, bookings, count, from, to, PAGE_SIZE, error };
 }

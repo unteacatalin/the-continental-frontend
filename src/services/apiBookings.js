@@ -1,6 +1,8 @@
+import axios from 'axios';
+
 import { getToday } from '../utils/helpers';
 import supabase from '../utils/supabase';
-import { PAGE_SIZE } from '../utils/constants';
+// import { PAGE_SIZE } from '../utils/constants';
 
 export async function getBookingsRowCount({ filter }) {
   let queryCount = supabase.from('bookings').select('id', {
@@ -23,40 +25,81 @@ export async function getBookingsRowCount({ filter }) {
 }
 
 export async function getBookings({ filter, sortBy, page }) {
-  let query = supabase
-    .from('bookings')
-    .select('*, rooms(name, id), guests(fullName, email, nationalID, id)', {
-      count: 'exact',
-    });
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  let exists = false;
+  backendUrl += 'api/v1/rooms';
+
+  console.log({bookingFilter: filter});
 
   // FILTER
   if (filter) {
-    query = query[filter.method || 'eq'](filter.field, filter.value);
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
+
+    backendUrl += `${filter.field}[${filter.method || 'eq'}]=${filter.value}`;
   }
 
   // SORT
   if (sortBy && sortBy.field) {
-    query = query.order(sortBy.field, {
-      ascending: sortBy.direction === 'asc',
-    });
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
+
+    backendUrl += `sort=${sortBy.field}${sortBy.direction === 'desc' ? '-' : '+'}`;
   }
 
   // PAGINATION
   if (page) {
-    const from = (page - 1) * PAGE_SIZE;
-    const to = page * PAGE_SIZE - 1;
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
 
-    query = query.range(from, to);
+    backendUrl += `page=${page}`;
   }
 
-  const { data, error, count } = await query;
+  console.log({backendUrl}); 
+
+  const { data, error}  = await axios.get(
+    backendUrl,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
 
   if (error) {
     console.error(error);
-    throw new Error('Bookings could not be loaded');
+    throw new Error('Rooms data could not be loaded');
   }
 
-  return { data, count };
+  console.log({getGuests: data});
+
+  const bookings = data?.data?.bookings;
+  const count = data?.data?.count;
+  const from = data?.data?.from;
+  const to = data?.data?.to;
+  const PAGE_SIZE = data?.data?.pageSize;
+
+  return {data: bookings, count, from, to, PAGE_SIZE, error};  
 }
 
 export async function getBooking(id) {
