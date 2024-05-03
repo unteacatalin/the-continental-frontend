@@ -9,7 +9,7 @@ import Pagination from '../../ui/Pagination';
 function BookingTable() {
   const { bookings, isLoading, count, PAGE_SIZE, error } = useBookings();
 
-  console.log({booking});
+  console.log({bookings});
 
   if (isLoading) return <Spinner />;
 
