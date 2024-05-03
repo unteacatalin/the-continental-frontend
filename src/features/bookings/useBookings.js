@@ -39,7 +39,7 @@ export function useBookings() {
   //   // updPage = updPage - 1;
   // } else {
 
-  console.log({BOOKINGS: data, count, from, to, PAGE_SIZE});
+  console.log({BOOKINGS: bookings, count, from, to, PAGE_SIZE});
 
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
