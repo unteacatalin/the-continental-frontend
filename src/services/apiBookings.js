@@ -34,7 +34,7 @@ export async function getBookings({ filter, sortBy, page }) {
   }
 
   let exists = false;
-  backendUrl += 'api/v1/rooms';
+  backendUrl += 'api/v1/bookings';
 
   console.log({bookingFilter: filter});
 
