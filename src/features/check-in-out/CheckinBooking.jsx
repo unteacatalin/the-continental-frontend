@@ -71,6 +71,8 @@ function CheckinBooking() {
     }
   }
 
+  console.log({CheckinBooking: booking})
+
   return (
     <>
       <Row type='horizontal'>
