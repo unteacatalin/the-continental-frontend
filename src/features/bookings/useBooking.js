@@ -18,5 +18,7 @@ export function useBooking() {
 
   const booking = data?.data?.booking;
 
+  console.log({'useBooking': booking});
+
   return { isLoading, booking, error };
 }
