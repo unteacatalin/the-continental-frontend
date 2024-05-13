@@ -224,8 +224,24 @@ export async function getBookedRoomsInInterval(startDate, endDate, bookingId) {
 }
 
 export async function createUpdateBooking(obj, id) {
-  // 1. Create/update guest
-  let query = supabase.from('bookings');
+  // // 1. Create/update guest
+  // let query = supabase.from('bookings');
+
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  let reqUrl = `${backendUrl}api/v1/bookings`;
+  let method = 'POST';
+
+  if (id) {
+    reqUrl += `/${id}`;
+    method = 'PATCH';
+  }
 
   console.log({ obj });
 
@@ -264,21 +280,46 @@ export async function createUpdateBooking(obj, id) {
     guestId,
   };
 
-  if (!id) {
-    // A) CREATE
-    query = query.insert([newBooking]);
-  } else {
-    // B) EDIT
-    query = query.update(newBooking).eq('id', id);
+  // if (!id) {
+  //   // A) CREATE
+  //   query = query.insert([newBooking]);
+  // } else {
+  //   // B) EDIT
+  //   query = query.update(newBooking).eq('id', id);
+  // }
+
+  // const { data, error } = await query.select().single();
+
+  // if (error) {
+  //   console.error(error);
+  //   throw new Error('Booking could not be updated');
+  // }
+  // return data;
+
+  const { data, error: errorSavingData } = await axios({
+    method,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+    url: reqUrl,
+    data: JSON.stringify(newBooking),
+    withCredentials: true
+  });
+
+  let error;
+
+  if (errorSavingData) {
+    console.error(errorSavingData);
+    error = 'Guest could not be created/edited';
+    throw new Error(error);
   }
 
-  const { data, error } = await query.select().single();
+  const booking = data?.data?.booking;
 
-  if (error) {
-    console.error(error);
-    throw new Error('Booking could not be updated');
-  }
-  return data;
+  console.log({createUpdateBooking: data});
+
+  return {data: booking, error};
 }
 
 export async function deleteBooking(id) {
