@@ -244,8 +244,7 @@ export async function createUpdateBooking(obj, id) {
   }
   
   console.log({ obj });
-  console.log('AJUNG AICI????????');
-
+  
   const {
     created_at,
     startDate,
@@ -264,10 +263,14 @@ export async function createUpdateBooking(obj, id) {
     // rooms: { id: roomId },
     // guests: { id: guestId },
   } = obj;
+  console.log('AJUNG AICI????????');
+  const validCreateAt = !isNaN(new Date(created_at)) ? new Date(created_at).toISOString() : undefined;
+  const validStartDate = !isNaN(new Date(startDate)) ? new Date(startDate).toISOString() : undefined;
+  const validEndDate = !isNaN(new Date(endDate)) ? new Date(endDate).toISOString() : undefined;
   const newBooking = {
-    created_at: new Date(created_at).toISOString(),
-    startDate: new Date(startDate).toISOString(),
-    endDate: new Date(endDate).toISOString(),
+    created_at: validCreateAt,
+    startDate: validStartDate,
+    endDate: validEndDate,
     numNights,
     numGuests,
     roomPrice,
