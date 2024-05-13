@@ -306,6 +306,7 @@ export async function createUpdateBooking(obj, id) {
     data: JSON.stringify(newBooking),
     withCredentials: true
   });
+  console.log({createUpdateBooking: data});
 
   let error;
 
@@ -315,9 +316,7 @@ export async function createUpdateBooking(obj, id) {
     throw new Error(error);
   }
 
-  console.log({createUpdateBooking: data});
   const booking = data?.data?.booking;
-
 
   return {data: booking, error};
 }
