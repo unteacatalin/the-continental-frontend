@@ -315,9 +315,9 @@ export async function createUpdateBooking(obj, id) {
     throw new Error(error);
   }
 
+  console.log({createUpdateBooking: data});
   const booking = data?.data?.booking;
 
-  console.log({createUpdateBooking: data});
 
   return {data: booking, error};
 }
