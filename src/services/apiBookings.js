@@ -121,7 +121,7 @@ export async function getBooking(id) {
 
   backendUrl = `${backendUrl}/${id}`;
 
-  const { data: booking, error: fetchError } = await axios.get(
+  const { data, error: fetchError } = await axios.get(
     backendUrl,
     {
       withCredentials: true,
@@ -135,6 +135,8 @@ export async function getBooking(id) {
     console.error(fetchError);
     throw new Error('Booking not found');
   }
+
+  const booking = data?.booking;
 
   console.log({getBookingAPI: booking});
 
