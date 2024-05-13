@@ -242,8 +242,9 @@ export async function createUpdateBooking(obj, id) {
     reqUrl += `/${id}`;
     method = 'PATCH';
   }
-
+  
   console.log({ obj });
+  console.log('AJUNG AICI????????');
 
   const {
     created_at,
@@ -296,7 +297,6 @@ export async function createUpdateBooking(obj, id) {
   // }
   // return data;
 
-  console.log('AJUNG AICI????????');
 
   const { data, error: errorSavingData } = await axios({
     method,
