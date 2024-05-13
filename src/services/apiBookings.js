@@ -119,11 +119,17 @@ export async function getBooking(id) {
     return { data: {}, error }
   }
 
-  const { data: booking, error: fetchError } = await supabase
-    .from('bookings')
-    .select('*, rooms(*), guests(*)')
-    .eq('id', id)
-    .single();
+  backendUrl = `${backendUrl}/${id}`;
+
+  const { data: booking, error: fetchError } = await axios.get(
+    backendUrl,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
+    }
+  );
 
   if (fetchError) {
     console.error(fetchError);
