@@ -136,7 +136,7 @@ export async function getBooking(id) {
     throw new Error('Booking not found');
   }
 
-  const booking = data?.booking;
+  const booking = data;
 
   console.log({getBookingAPI: booking});
 
