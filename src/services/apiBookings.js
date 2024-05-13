@@ -103,18 +103,34 @@ export async function getBookings({ filter, sortBy, page }) {
 }
 
 export async function getBooking(id) {
-  const { data, error } = await supabase
+  let backendUrl;
+  let error = '';
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  backendUrl += 'api/v1/bookings';
+
+  if (!id) {
+    error = 'Missing booking id'
+    return { data: {}, error }
+  }
+
+  const { data: booking, error: fetchError } = await supabase
     .from('bookings')
     .select('*, rooms(*), guests(*)')
     .eq('id', id)
     .single();
 
-  if (error) {
-    console.error(error);
+  if (fetchError) {
+    console.error(fetchError);
     throw new Error('Booking not found');
   }
 
-  return data;
+  return {data: booking, error};
 }
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
