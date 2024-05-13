@@ -16,9 +16,9 @@ export function useBooking() {
     retry: false,
   });
 
-  const booking = data?.data?.booking;
+  console.log({'useBooking': data});
 
-  console.log({'useBooking': booking});
+  const booking = data?.data?.booking;
 
   return { isLoading, booking, error };
 }
