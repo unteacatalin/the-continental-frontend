@@ -26,12 +26,15 @@ function Guests() {
   // PAGINATION
   const page = !searchParams.get('page') ? 1 : Number(searchParams.get('page'));
 
-  const { data: { countRows, pageSize } = {}, isFetching } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ['guestsCount', filter],
     queryFn: async () => await getGuestsRowCount({ filter }),
   });
 
-  console.log({countGuests: countRows, pageSizeGuests: pageSize});
+  const countRows = data?.countRows;
+  const pageSize = data?.pageSize;
+
+  console.log({countGuests: countRows, pageSizeGuests: pageSize, data});
 
   useEffect(
     function () {
