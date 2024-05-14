@@ -67,7 +67,7 @@ function Guests() {
     [searchParams.get('email'), searchParams.get('nationalID')]
   );
 
-  if (isFetching) return <Spinner />;
+  // if (isFetching) return <Spinner />;
 
   return (
     <>
