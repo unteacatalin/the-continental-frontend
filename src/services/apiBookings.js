@@ -5,6 +5,14 @@ import supabase from '../utils/supabase';
 // import { PAGE_SIZE } from '../utils/constants';
 
 export async function getBookingsRowCount({ filter }) {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+    
   let queryCount = supabase.from('bookings').select('id', {
     count: 'exact',
     head: true,

@@ -45,8 +45,9 @@ export async function getGuestsRowCount({ filter }) {
   }
 
   const count = data?.data?.count;
+  const pageSize = data?.data?.pageSize;
 
-  return { data: count, error }
+  return { data: { count, pageSize }, error }
 }
 
 // export async function getGuests({ filter, sortBy, page }) {

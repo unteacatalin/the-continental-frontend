@@ -7,7 +7,6 @@ import Heading from '../ui/Heading';
 import Spinner from '../ui/Spinner';
 import Button from '../ui/Button';
 import { getGuestsRowCount } from '../services/apiGuests';
-import { PAGE_SIZE } from '../utils/constants';
 import GuestsTableOperations from '../features/guests/GuestsTableOperations';
 import GuestsTable from '../features/guests/GuestsTable';
 import CreateGuestForm from '../features/guests/CreateGuestForm';
@@ -27,14 +26,16 @@ function Guests() {
   // PAGINATION
   const page = !searchParams.get('page') ? 1 : Number(searchParams.get('page'));
 
-  const { data: { countRows } = {}, isFetching } = useQuery({
+  const { data: { countRows, pageSize } = {}, isFetching } = useQuery({
     queryKey: ['guestsCount', filter],
     queryFn: async () => await getGuestsRowCount({ filter }),
   });
 
+  console.log({countGuests: countRows, pageSizeGuests: pageSize});
+
   useEffect(
     function () {
-      if (countRows && Math.ceil(countRows / PAGE_SIZE) < page && page > 1) {
+      if (countRows && pageSize && Math.ceil(countRows / pageSize) < page && page > 1) {
         searchParams.set('page', page - 1);
         setSearchParams(searchParams);
       }
