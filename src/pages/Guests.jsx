@@ -1,12 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import Row from '../ui/Row';
 import Heading from '../ui/Heading';
-import Spinner from '../ui/Spinner';
+// import Spinner from '../ui/Spinner';
 import Button from '../ui/Button';
-import { getGuestsRowCount } from '../services/apiGuests';
+// import { getGuestsRowCount } from '../services/apiGuests';
 import GuestsTableOperations from '../features/guests/GuestsTableOperations';
 import GuestsTable from '../features/guests/GuestsTable';
 import CreateGuestForm from '../features/guests/CreateGuestForm';
