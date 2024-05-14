@@ -31,8 +31,8 @@ function Guests() {
     queryFn: async () => await getGuestsRowCount({ filter }),
   });
 
-  const countRows = data?.countRows;
-  const pageSize = data?.pageSize;
+  const countRows = data?.data?.countRows;
+  const pageSize = data?.data?.pageSize;
 
   console.log({countGuests: countRows, pageSizeGuests: pageSize, data});
 
