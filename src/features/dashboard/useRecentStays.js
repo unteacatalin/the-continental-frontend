@@ -21,6 +21,8 @@ export function useRecentStays() {
     queryKey: ['stays', `last-${numDays}`],
   });
 
+  console.log({stays: data});
+
   const stays = data?.bookings;
 
   const confirmedStays = stays?.filter(
