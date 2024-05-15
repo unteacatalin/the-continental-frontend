@@ -18,9 +18,9 @@ const StyledDashboardLayout = styled.div`
 `;
 
 function DashboardLayout() {
-  const { isLoading: isLoadingBookings, data } = useRecentBookings();
-  const bookings = data?.data;
-  console.log({dataBookingsAfterDate: data});
+  const { isLoading: isLoadingBookings, bookings } = useRecentBookings();
+  // const bookings = data?.bookings;
+  console.log({dataBookingsAfterDate: bookings});
   const {
     isLoading: isLoadingStays,
     confirmedStays,
