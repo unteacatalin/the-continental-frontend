@@ -172,18 +172,48 @@ export async function getBookingsAfterDate(date) {
 
 // Returns all STAYS that are were created after the given date
 export async function getStaysAfterDate(date) {
-  const { data, error } = await supabase
-    .from('bookings')
-    .select('*, guests(fullName)')
-    .gte('startDate', date)
-    .lte('startDate', getToday());
+  let backendUrl;
 
-  if (error) {
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  backendUrl += 'api/v1/bookings/stays-after-date';
+
+  let error = '';
+
+  if (!date) {
+    error = "Missing stay's after date";
     console.error(error);
+    throw new Error(error);
+  } else {
+    backendUrl = `${backendUrl}/${date}`;
+  }
+
+  console.log({getStaysAfterDateURL: backendUrl});
+
+  const { data, error: errorStaysAfterDate } = await axios.get(
+    backendUrl,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
+
+  if (errorStaysAfterDate) {
+    console.error(errorStaysAfterDate);
     throw new Error('Bookings could not get loaded');
   }
 
-  return data;
+  console.log({getStaysAfterDateDATA: data});
+
+  const bookings = data?.data?.bookings || [];
+
+  return { data: bookings, error };
 }
 
 // Activity means that there is a check in or a check out today
