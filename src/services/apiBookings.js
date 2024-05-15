@@ -4,34 +4,6 @@ import { getToday } from '../utils/helpers';
 import supabase from '../utils/supabase';
 // import { PAGE_SIZE } from '../utils/constants';
 
-export async function getBookingsRowCount({ filter }) {
-  let backendUrl;
-
-  if (import.meta.env.NETLIFY === 'true') {
-    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
-  } else {
-    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
-  }
-    
-  let queryCount = supabase.from('bookings').select('id', {
-    count: 'exact',
-    head: true,
-  });
-
-  if (filter) {
-    queryCount = queryCount[filter.method || 'eq'](filter.field, filter.value);
-  }
-
-  const { error, count: countRows } = await queryCount;
-
-  if (error) {
-    console.error(error);
-    throw new Error('Bookings count could not be loaded');
-  }
-
-  return { countRows };
-}
-
 export async function getBookings({ filter, sortBy, page }) {
   let backendUrl;
 
@@ -154,18 +126,48 @@ export async function getBooking(id) {
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
 // date: ISOString
 export async function getBookingsAfterDate(date) {
-  const { data, error } = await supabase
-    .from('bookings')
-    .select('created_at, totalPrice, extrasPrice, isPaid')
-    .gte('created_at', date)
-    .lte('created_at', getToday({ end: true }));
+  let backendUrl;
 
-  if (error) {
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  backendUrl += 'api/v1/bookings/after-date';
+
+  let error = '';
+
+  if (!date) {
+    error = "Missing booking's after date";
     console.error(error);
+    throw new Error(error);
+  } else {
+    backendUrl += `${backendUrl}/${date}`;
+  }
+
+  console.log({getBookingsAfterDateURL: backendUrl});
+
+  const { data, error: errorBookingsAfterDate } = await axios.get(
+    backendUrl,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
+
+  if (errorBookingsAfterDate) {
+    console.error(errorBookingsAfterDate);
     throw new Error('Bookings could not get loaded');
   }
 
-  return data;
+  console.log({getBookingsAfterDateDATA: data});
+
+  const bookings = data?.data?.bookings;
+
+  return { data: bookings, error };
 }
 
 // Returns all STAYS that are were created after the given date
