@@ -79,7 +79,7 @@ export async function getBookings({ filter, sortBy, page }) {
   const to = data?.data?.to;
   const PAGE_SIZE = data?.data?.pageSize;
 
-  return {data: bookings, count, from, to, PAGE_SIZE, error};  
+  return {data: bookings = [], count, from, to, PAGE_SIZE, error};  
 }
 
 export async function getBooking(id) {
@@ -167,7 +167,7 @@ export async function getBookingsAfterDate(date) {
 
   const bookings = data?.data?.bookings;
 
-  return { data: bookings, error };
+  return { data: bookings = [], error };
 }
 
 // Returns all STAYS that are were created after the given date
