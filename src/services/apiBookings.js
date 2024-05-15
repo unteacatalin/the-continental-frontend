@@ -143,7 +143,7 @@ export async function getBookingsAfterDate(date) {
     console.error(error);
     throw new Error(error);
   } else {
-    backendUrl += `${backendUrl}/${date}`;
+    backendUrl = `${backendUrl}/${date}`;
   }
 
   console.log({getBookingsAfterDateURL: backendUrl});
