@@ -69,6 +69,8 @@ function BookingRow({ booking }) {
   const roomName = rooms?.name; 
   const roomId = rooms?.id;
 
+  console.log({"BookingRow-Rooms": rooms});
+
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
   const { deleteBooking, isDeletingBooking } = useDeleteBooking();
