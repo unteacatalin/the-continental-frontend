@@ -59,9 +59,16 @@ function BookingRow({ booking }) {
     numGuests,
     totalPrice,
     status,
-    guests: { fullName: guestName, email, nationalID, id: guestId },
-    rooms: { name: roomName, id: roomId },
+    guests,
+    rooms,
   } = booking;
+  const guestName = guests?.fullName;
+  const email = guests?.email; 
+  const nationalID = guests?.nationalID;
+  const guestId = guests?.id;
+  const roomName = rooms?.name; 
+  const roomId = rooms?.id;
+
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
   const { deleteBooking, isDeletingBooking } = useDeleteBooking();
