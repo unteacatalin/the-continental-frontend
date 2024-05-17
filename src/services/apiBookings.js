@@ -295,7 +295,7 @@ export async function getBookedRoomsInInterval(startDate, endDate, bookingId) {
     throw new Error('Booked rooms could not be retrieved');
   }
 
-  console.log({BookedRoomsInIntervalAPI: data});
+  console.log({BookedRoomsInIntervalAPI: data, backendUrl});
   const rooms = data?.data?.rooms;
 
   return { rooms, error };
