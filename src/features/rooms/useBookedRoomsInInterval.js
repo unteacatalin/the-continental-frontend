@@ -7,7 +7,7 @@ export function useBookedRoomsInInterval() {
   const { startDate, endDate, bookingId } = useCreateUpdateBooking();
   const {
     isLoading,
-    data: bookedRooms,
+    data,
     error,
   } = useQuery({
     queryKey: [
@@ -23,6 +23,8 @@ export function useBookedRoomsInInterval() {
         bookingId
       ),
   });
+
+  const bookedRooms = data?.data;
 
   return { isLoading, bookedRooms, error };
 }

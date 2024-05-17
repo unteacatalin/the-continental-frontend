@@ -239,28 +239,63 @@ export async function getStaysTodayActivity() {
 
 // Available rooms between start date and end date
 export async function getBookedRoomsInInterval(startDate, endDate, bookingId) {
-  let query = supabase.from('bookings').select('roomId');
-  if (bookingId) {
-    query = query.or(
-      `and(startDate.lte.${startDate},endDate.gte.${startDate},id.neq.${bookingId}),and(startDate.lte.${endDate},endDate.gte.${endDate},id.neq.${bookingId})`
-    );
-  } else {
-    query = query.or(
-      `and(startDate.lte.${startDate},endDate.gte.${startDate}),and(startDate.lte.${endDate},endDate.gte.${endDate})`
-    );
-  }
-  const { data, error } = await query;
+  let backendUrl;
 
-  // Equivalent to this. But by querying this, we only download the data we actually need, otherwise we would need ALL bookings ever created
-  // (stay.statDate >= startDate && stay.startDate <= startDate) ||
-  // (stay.endDate >= endDate && stay.endDate <= endDate)
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  let exists = false;
+  backendUrl += 'api/v1/bookings/booked-rooms-in-interval';
+
+  if (startDate) {
+    if (exists) {
+      backendUrl += '&'
+    } else {
+      backendUrl += '?'
+    }
+    backendUrl += `startDate=${startDate}`;
+  }
+
+  if (endDate) {
+    if (exists) {
+      backendUrl += '&'
+    } else {
+      backendUrl += '?'
+    }
+    backendUrl += `endDate=${endDate}`;
+  }
+
+  if (bookingId) {
+    if (exists) {
+      backendUrl += '&'
+    } else {
+      backendUrl += '?'
+    }
+    backendUrl += `bookingId=${bookingId}`;
+  }
+
+  let { data, error } = axios.get(
+    backendUrl,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
 
   if (error) {
     console.error(error);
-    throw new Error('Bookings could not get loaded');
+    throw new Error('Booked rooms could not be retrieved');
   }
 
-  return data;
+  console.log({BookedRoomsInIntervalAPI: data});
+  const rooms = data?.data?.rooms;
+
+  return { rooms, error };
 }
 
 export async function createUpdateBooking(obj, id) {
@@ -303,7 +338,6 @@ export async function createUpdateBooking(obj, id) {
     // rooms: { id: roomId },
     // guests: { id: guestId },
   } = obj;
-  console.log('AJUNG AICI????????');
   const validCreateAt = !isNaN(new Date(created_at)) ? new Date(created_at).toISOString() : undefined;
   const validStartDate = !isNaN(new Date(startDate)) ? new Date(startDate).toISOString() : undefined;
   const validEndDate = !isNaN(new Date(endDate)) ? new Date(endDate).toISOString() : undefined;
