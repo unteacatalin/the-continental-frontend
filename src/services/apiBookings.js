@@ -252,28 +252,31 @@ export async function getBookedRoomsInInterval(startDate, endDate, bookingId) {
 
   if (startDate) {
     if (exists) {
-      backendUrl += '&'
+      backendUrl += '&';
     } else {
-      backendUrl += '?'
+      backendUrl += '?';
     }
+    exists = true;
     backendUrl += `startDate=${startDate}`;
   }
 
   if (endDate) {
     if (exists) {
-      backendUrl += '&'
+      backendUrl += '&';
     } else {
-      backendUrl += '?'
+      backendUrl += '?';
     }
+    exists = true;
     backendUrl += `endDate=${endDate}`;
   }
 
   if (bookingId) {
     if (exists) {
-      backendUrl += '&'
+      backendUrl += '&';
     } else {
-      backendUrl += '?'
+      backendUrl += '?';
     }
+    exists = true;
     backendUrl += `bookingId=${bookingId}`;
   }
 
