@@ -280,7 +280,7 @@ export async function getBookedRoomsInInterval(startDate, endDate, bookingId) {
     backendUrl += `bookingId=${bookingId}`;
   }
 
-  let { data, error } = axios.get(
+  let { data, error } = await axios.get(
     backendUrl,
     {
       withCredentials: true,
