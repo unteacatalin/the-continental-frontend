@@ -25,7 +25,7 @@ export function useBookedRoomsInInterval() {
   });
 
   console.log({useBookedRoomsInInterval: data});
-  const bookedRooms = data?.data;
+  const bookedRooms = data?.rooms;
 
   return { isLoading, bookedRooms, error };
 }
