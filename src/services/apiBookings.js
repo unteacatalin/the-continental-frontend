@@ -218,23 +218,39 @@ export async function getStaysAfterDate(date) {
 
 // Activity means that there is a check in or a check out today
 export async function getStaysTodayActivity() {
-  const { data, error } = await supabase
-    .from('bookings')
-    .select('id, numNights, status, guests(fullName, nationality, countryFlag)')
-    .or(
-      `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
-    )
-    .order('created_at');
+  let backendUrl;
 
-  // Equivalent to this. But by querying this, we only download the data we actually need, otherwise we would need ALL bookings ever created
-  // (stay.status === 'unconfirmed' && isToday(new Date(stay.startDate))) ||
-  // (stay.status === 'checked-in' && isToday(new Date(stay.endDate)))
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
 
-  if (error) {
-    console.error(error);
+  backendUrl += 'api/v1/bookings/today-activity';
+
+  let error = '';
+
+  const { data, error: errorGettingTodayActivity } = await axios.get(
+    backendUrl,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
+
+  if (errorGettingTodayActivity) {
+    console.error(errorGettingTodayActivity);
+    error = 'Bookings could not get loaded';
     throw new Error('Bookings could not get loaded');
   }
-  return data;
+
+  console.log({ TodayActivityApi: data });
+
+  const stays = data?.data?.stays;
+
+  return {stays, error};
 }
 
 // Available rooms between start date and end date

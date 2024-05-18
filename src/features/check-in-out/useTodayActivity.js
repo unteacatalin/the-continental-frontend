@@ -4,7 +4,7 @@ import { getStaysTodayActivity } from '../../services/apiBookings';
 export function useTodayActivity() {
   const {
     isLoading,
-    data: activities,
+    data,
     error,
   } = useQuery({
     queryFn: getStaysTodayActivity,
@@ -12,6 +12,8 @@ export function useTodayActivity() {
   });
 
   if (error) throw new Error("Unable to fetch today's activity");
+
+  const activities = data?.stays;
 
   return { isLoading, activities };
 }
