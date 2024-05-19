@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-import { getToday } from '../utils/helpers';
 import supabase from '../utils/supabase';
 // import { PAGE_SIZE } from '../utils/constants';
 
@@ -420,12 +419,33 @@ export async function createUpdateBooking(obj, id) {
 }
 
 export async function deleteBooking(id) {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   // REMEMBER RLS POLICIES
-  const { data, error } = await supabase.from('bookings').delete().eq('id', id);
+  const { data, error } = await axios.delete(
+    `${backendUrl}api/v1/bookings/${id}`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
 
   if (error) {
     console.error(error);
     throw new Error('Booking could not be deleted');
   }
-  return data;
+
+  console.log({deleteBooking: data});
+
+  const booking = data?.data?.booking;
+
+  return { data: booking, error };
 }
