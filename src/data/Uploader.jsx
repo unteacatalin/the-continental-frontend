@@ -4,6 +4,14 @@ import axios from 'axios';
 import Button from '../ui/Button';
 
 async function deleteGuests() {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   const { error } = await axios.delete(
     `${backendUrl}api/v1/guests`,
     {
@@ -18,6 +26,14 @@ async function deleteGuests() {
 }
 
 async function deleteRooms() {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   const { error } = await axios.delete(
     `${backendUrl}api/v1/rooms`,
     {
@@ -32,6 +48,14 @@ async function deleteRooms() {
 }
 
 async function deleteBookings() {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   const { error } = await axios.delete(
     `${backendUrl}api/v1/bookings`,
     {
@@ -46,6 +70,14 @@ async function deleteBookings() {
 }
 
 async function createGuests() {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   const { guests, error } = await axios.post(
     `${backendUrl}api/v1/guests`,
     {
@@ -61,6 +93,14 @@ async function createGuests() {
 }
 
 async function createRooms() {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   const { rooms, error } = await axios.post(
     `${backendUrl}api/v1/rooms`,
     {
@@ -76,6 +116,14 @@ async function createRooms() {
 }
 
 async function createBookings() {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+    
   const { bookings, error } = await axios.post(
     `${backendUrl}api/v1/bookings`,
     {
