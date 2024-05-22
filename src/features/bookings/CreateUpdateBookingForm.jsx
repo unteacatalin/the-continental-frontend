@@ -54,6 +54,7 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
   const { updateStartDate, updateEndDate, updateBookingId } =
     useCreateUpdateBooking();
   const { isLoading: isLoadingRooms, rooms } = useRooms();
+
   const { isLoading: isLoadingSettings, settings } = useSettings();
   const [roomOptions, setRoomOptions] = useState([]);
 
@@ -88,7 +89,9 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
 
   const [numNights, setNumNights] = useState(editValues.numNights ?? 1);
   const [bookingGuestId, setBookingGuestId] = useState(
-    editValues.guestId ?? undefined
+    isEditSession
+      ? guests?.find((guest) => editValues.guestId === guest.id)?.id
+      : guests?.at(0)?.id
   );
   const [guestOptions, setGuestOptions] = useState([]);
 
@@ -166,6 +169,15 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
     },
     [rooms, editValues?.roomId]
   );
+
+  useEffect(
+    function () {
+      if (Array.isArray(guests) && editValues?.guestId) {
+        setBookingGuest(rooms.find((room) => room.id === editValues.roomId));
+      }
+    },
+    [rooms, editValues.guestId]
+  );  
 
   useEffect(
     function () {
@@ -354,6 +366,15 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
     }
   }
 
+  function handleGuestChange(e) {
+    if (Array.isArray(guests)) {
+      const selectedGuest = guests.find(
+        (guest) => guest.id === Number(e.target.value)
+      );
+      setBookingGuestId(selectedGuest?.id);
+    }
+  }
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, onError)}
@@ -481,7 +502,7 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
         <Select
           options={guestOptions}
           type='white'
-          onChange={(e) => setBookingGuestId(e.target.value)}
+          onChange={handleGuestChange}
           value={bookingGuestId}
           disabled={isWorking}
         />
