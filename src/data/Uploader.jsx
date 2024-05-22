@@ -79,7 +79,7 @@ async function createGuests() {
   }
 
   const { guests, error } = await axios.post(
-    `${backendUrl}api/v1/guests`,
+    `${backendUrl}api/v1/guests/init`,
     {
       withCredentials: true,
       headers: {
@@ -102,7 +102,7 @@ async function createRooms() {
   }
 
   const { rooms, error } = await axios.post(
-    `${backendUrl}api/v1/rooms`,
+    `${backendUrl}api/v1/rooms/init`,
     {
       withCredentials: true,
       headers: {
@@ -123,9 +123,9 @@ async function createBookings() {
   } else {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
-    
+
   const { bookings, error } = await axios.post(
-    `${backendUrl}api/v1/bookings`,
+    `${backendUrl}api/v1/bookings/init`,
     {
       withCredentials: true,
       headers: {
