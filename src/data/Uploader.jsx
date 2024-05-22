@@ -78,13 +78,12 @@ async function createGuests() {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
-  const { guests, error } = await axios.post(
+  const { guests, error } = await axios.get(
     `${backendUrl}api/v1/guests/init`,
     {
       withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
       }
     }
   );
@@ -102,13 +101,12 @@ async function createRooms() {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
-  const { rooms, error } = await axios.post(
+  const { rooms, error } = await axios.get(
     `${backendUrl}api/v1/rooms/init`,
     {
       withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
       }
     }
   );
@@ -126,13 +124,12 @@ async function createBookings() {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
-  const { bookings, error } = await axios.post(
+  const { bookings, error } = await axios.get(
     `${backendUrl}api/v1/bookings/init`,
     {
       withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
       }
     }
   );
