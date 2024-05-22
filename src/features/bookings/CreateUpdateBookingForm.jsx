@@ -173,7 +173,7 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
   useEffect(
     function () {
       if (Array.isArray(guests) && editValues?.guestId) {
-        setBookingGuestId(rooms.find((room) => room.id === editValues.roomId));
+        setBookingGuestId(guests.find((guest) => guest.id === editValues.guestId)?.id);
       }
     },
     [rooms, editValues.guestId]
