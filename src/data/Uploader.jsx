@@ -1,103 +1,91 @@
 import { useState } from 'react';
-import { isFuture, isPast, isToday } from 'date-fns';
-import supabase from '../utils/supabase';
 import Button from '../ui/Button';
-import { subtractDates } from '../utils/helpers';
-
-import { bookings } from './data-bookings';
-import { rooms } from './data-rooms';
-import { guests } from './data-guests';
-
-// const originalSettings = {
-//   minBookingLength: 3,
-//   maxBookingLength: 30,
-//   maxGuestsPerBooking: 10,
-//   breakfastPrice: 15,
-// };
 
 async function deleteGuests() {
-  const { error } = await supabase.from('guests').delete().gt('id', 0);
+  const { error } = await axios.delete(
+    `${backendUrl}api/v1/guests`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
+
   if (error) console.log(error.message);
 }
 
 async function deleteRooms() {
-  const { error } = await supabase.from('rooms').delete().gt('id', 0);
+  const { error } = await axios.delete(
+    `${backendUrl}api/v1/rooms`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );  
+  
   if (error) console.log(error.message);
 }
 
 async function deleteBookings() {
-  const { error } = await supabase.from('bookings').delete().gt('id', 0);
-  if (error) console.log(error.message);
+  const { error } = await axios.delete(
+    `${backendUrl}api/v1/bookings`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
+
+  if (error) console.log(error);
 }
 
 async function createGuests() {
-  const { error } = await supabase.from('guests').insert(guests);
-  if (error) console.log(error.message);
+  const { guests, error } = await axios.post(
+    `${backendUrl}api/v1/guests`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
+
+  if (error) console.error(error);
+  else console.log(guests);
 }
 
 async function createRooms() {
-  const { error } = await supabase.from('rooms').insert(rooms);
-  if (error) console.log(error.message);
+  const { rooms, error } = await axios.post(
+    `${backendUrl}api/v1/rooms`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
+
+  if (error) console.error(error);
+  else console.log(rooms);
 }
 
 async function createBookings() {
-  // Bookings need a guestId and a roomId. We can't tell Supabase IDs for each object, it will calculate them on its own. So it might be different for different people, especially after multiple uploads. Therefore, we need to first get all guestIds and roomIds, and then replace the original IDs in the booking data with the actual ones from the DB
-  const { data: guestsIds } = await supabase
-    .from('guests')
-    .select('id')
-    .order('id');
-  const allGuestIds = guestsIds.map((room) => room.id);
-  const { data: roomsIds } = await supabase
-    .from('rooms')
-    .select('id')
-    .order('id');
-  const allRoomIds = roomsIds.map((room) => room.id);
+  const { bookings, error } = await axios.post(
+    `${backendUrl}api/v1/bookings`,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*', 
+      }
+    }
+  );
 
-  const finalBookings = bookings.map((booking) => {
-    // Here relying on the order of rooms, as they don't have and ID yet
-    const room = rooms.at(booking.roomId - 1);
-    const numNights = subtractDates(booking.endDate, booking.startDate);
-    const roomPrice = numNights * (room.regularPrice - room.discount);
-    const extrasPrice = booking.hasBreakfast
-      ? numNights * 25 * booking.numGuests
-      : 0; // hardcoded breakfast price
-    const totalPrice = roomPrice + extrasPrice;
-
-    let status;
-    if (
-      isPast(new Date(booking.endDate)) &&
-      !isToday(new Date(booking.endDate))
-    )
-      status = 'checked-out';
-    if (
-      isFuture(new Date(booking.startDate)) ||
-      isToday(new Date(booking.startDate))
-    )
-      status = 'unconfirmed';
-    if (
-      (isFuture(new Date(booking.endDate)) ||
-        isToday(new Date(booking.endDate))) &&
-      isPast(new Date(booking.startDate)) &&
-      !isToday(new Date(booking.startDate))
-    )
-      status = 'checked-in';
-
-    return {
-      ...booking,
-      numNights,
-      roomPrice,
-      extrasPrice,
-      totalPrice,
-      guestId: allGuestIds.at(booking.guestId - 1),
-      roomId: allRoomIds.at(booking.roomId - 1),
-      status,
-    };
-  });
-
-  console.log(finalBookings);
-
-  const { error } = await supabase.from('bookings').insert(finalBookings);
-  if (error) console.log(error.message);
+  if (error) console.error(error);
+  else console.log(bookings);
 }
 
 function Uploader() {
