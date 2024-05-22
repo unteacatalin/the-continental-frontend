@@ -61,7 +61,7 @@ async function deleteBookings() {
     {
       withCredentials: true,
       headers: {
-        'Access-Control-Allow-Origin': '*', 
+        'Access-Control-Allow-Origin': '*',
       }
     }
   );
@@ -83,7 +83,8 @@ async function createGuests() {
     {
       withCredentials: true,
       headers: {
-        'Access-Control-Allow-Origin': '*', 
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
       }
     }
   );
@@ -106,7 +107,8 @@ async function createRooms() {
     {
       withCredentials: true,
       headers: {
-        'Access-Control-Allow-Origin': '*', 
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
       }
     }
   );
@@ -129,7 +131,8 @@ async function createBookings() {
     {
       withCredentials: true,
       headers: {
-        'Access-Control-Allow-Origin': '*', 
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
       }
     }
   );
