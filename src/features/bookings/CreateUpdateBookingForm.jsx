@@ -90,7 +90,7 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
   const [numNights, setNumNights] = useState(editValues.numNights ?? 1);
   const [bookingGuestId, setBookingGuestId] = useState(
     isEditSession
-      ? guests?.find((guest) => editValues.guestId === guest.id)?.id
+      ? guests?.find((guest) => editValues?.guests?.id === guest?.id)?.id
       : guests?.at(0)?.id
   );
   const [guestOptions, setGuestOptions] = useState([]);
@@ -172,11 +172,11 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
 
   useEffect(
     function () {
-      if (Array.isArray(guests) && editValues?.guestId) {
-        setBookingGuestId(guests.find((guest) => guest.id === editValues.guestId)?.id);
+      if (Array.isArray(guests) && editValues?.guests?.id) {
+        setBookingGuestId(guests.find((guest) => guest.id === editValues.guests.id)?.id);
       }
     },
-    [guests, editValues?.guestId]
+    [guests, editValues?.guests?.Id]
   );
 
   console.log({ guests, editValues });
