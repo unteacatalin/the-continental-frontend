@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getGuests as getGuestsApi } from '../../services/apiGuests';
+import { getAllGuests as getAllGuestsApi } from '../../services/apiGuests';
 
 export function useAllGuests() {
   // SORT

@@ -245,3 +245,48 @@ export async function deleteGuest(id) {
 
   return { data: guest, error };
 }
+
+export async function getAllGuests({ sortBy }) {
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  let exists = false;
+  backendUrl += 'api/v1/guests/all';
+
+  // SORT
+  if (sortBy && sortBy.field) {
+    if (exists) {
+      backendUrl += '&';
+    } else {
+      backendUrl += '?';
+      exists = true;
+    }
+
+    backendUrl += `sort=${sortBy.field}${sortBy.direction === 'desc' ? '-' : '+'}`;
+  }
+
+  const { data, error } = await axios.get(
+    backendUrl,
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    }
+  );
+
+  if (error) {
+    console.error(error);
+    throw new Error('All guests could not be retrieved');
+  }
+
+  const guests = data?.data?.guests;
+  const count = data?.data?.count;
+
+  return { data: guests, count, error }
+}
