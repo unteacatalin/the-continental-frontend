@@ -14,7 +14,7 @@ export function useAllGuests() {
     isLoading,
     error,
   } = useQuery({
-    queryFn: () => getGuestsApi({ sortBy }),
+    queryFn: () => getAllGuestsApi({ sortBy }),
     queryKey: ['allGuests'],
   });
 

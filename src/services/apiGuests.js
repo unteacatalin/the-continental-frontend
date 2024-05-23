@@ -285,7 +285,7 @@ export async function getAllGuests({ sortBy }) {
     throw new Error('All guests could not be retrieved');
   }
 
-  console.log({ getAllGuests: data });
+  console.log({ getAllGuests: data, backendUrl });
 
   const guests = data?.data?.guests;
   const count = data?.data?.count;
