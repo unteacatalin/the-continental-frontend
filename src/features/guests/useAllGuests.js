@@ -20,7 +20,7 @@ export function useAllGuests() {
 
   console.log({ useAllGuests: data });
 
-  const guests = data?.data?.guests;
+  const guests = data?.data;
 
   return { isLoading, guests, error };
 }
