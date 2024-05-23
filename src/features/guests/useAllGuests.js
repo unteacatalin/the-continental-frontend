@@ -10,7 +10,7 @@ export function useAllGuests() {
 
   // QUERY
   const {
-    data: { data: guests, count } = {},
+    data,
     isLoading,
     error,
   } = useQuery({
@@ -18,5 +18,7 @@ export function useAllGuests() {
     queryKey: ['allGuests'],
   });
 
-  return { isLoading, guests, error, count };
+  const guests = data?.data?.guests;
+
+  return { isLoading, guests, error };
 }
