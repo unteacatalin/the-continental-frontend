@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 
 import { updateUser as updateUserApi } from '../../services/apiAuth';
-// import { jwtExpiry } from '../../utils/supabase';
 
 export function useUpdateUser() {
   const queryClient = useQueryClient();

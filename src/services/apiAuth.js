@@ -3,20 +3,14 @@ import supabase from '../utils/supabase';
 import { supabaseUrl } from '../utils/supabase';
 
 export async function signup({ fullName, email, password }) {
-  // const { data, error } = await supabase.auth.signUp({
-  //   email,
-  //   password,
-  //   options: {
-  //     data: {
-  //       fullName,
-  //       avatar: '',
-  //     },
-  //   },
-  // });
+  let backendUrl;
 
-  // if (error) throw new Error(error.message);
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
 
-  // return data;
   const {
     data,
     error,
@@ -26,7 +20,7 @@ export async function signup({ fullName, email, password }) {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
     },
-    url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signup',
+    url: `${backendUrl}api/v1/users/signup`,
     data: JSON.stringify({
       email,
       password,
@@ -50,10 +44,14 @@ export async function signup({ fullName, email, password }) {
 }
 
 export async function login({ email, password }) {
-  // const { data, error } = await supabase.auth.signInWithPassword({
-  //   email,
-  //   password,
-  // });
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   const {
     data,
     error,
@@ -63,7 +61,7 @@ export async function login({ email, password }) {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
     },
-    url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signin',
+    url: `${backendUrl}api/v1/users/signin`,
     data: JSON.stringify({
       email,
       password,
@@ -78,17 +76,16 @@ export async function login({ email, password }) {
   if (!user) throw new Error('Authentication failed! Please try again later!');
 
   return user;
-
-//   if (error) throw new Error(error.message);
-
-//   return data;
 }
 
 export async function getCurrentUser(existingUserData, logout) {
-  // const { data: { session } = {} } = await supabase.auth.getSession();
-  // if (!session) return null;
+  let backendUrl;
 
-  // const { data: { user } = {}, error } = await supabase.auth.getUser();
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
 
   if (!existingUserData.jwt_expiry || existingUserData.jwt_expiry < Date.now()) {
     logout();
@@ -100,7 +97,7 @@ export async function getCurrentUser(existingUserData, logout) {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
-      url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/me', 
+      url: `${backendUrl}api/v1/users/me`, 
       withCredentials: true
     });
   
@@ -115,14 +112,21 @@ export async function getCurrentUser(existingUserData, logout) {
 }
 
 export async function logout() {
-  // const { error } = await supabase.auth.signOut();
+  let backendUrl;
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
   const { data, error } = await axios({
     method: 'GET',
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
     },
-    url: 'https://untea-the-continental-backend-b7b62ca8f70a.herokuapp.com/api/v1/users/signout', 
+    url: `${backendUrl}api/v1/users/signout`, 
     withCredentials: true
   });
 

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import { login as loginApi } from '../../services/apiAuth';
-// import { jwtExpiry } from '../../utils/supabase';
 
 export function useLogin() {
   const queryClient = useQueryClient();
