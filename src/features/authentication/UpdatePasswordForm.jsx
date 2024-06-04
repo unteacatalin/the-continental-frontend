@@ -20,15 +20,34 @@ function UpdatePasswordForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
+        label='Current Password (min 8 characters)'
+        error={errors?.password?.message}
+      >
+        <Input
+          type='password'
+          id='currentPassword'
+          autoComplete='current-password'
+          disabled={isUpdatingUser}
+          {...register('currentPassword', {
+            required: 'This field is required',
+            minLength: {
+              value: 8,
+              message: 'Password needs a minimum of 8 characters',
+            },
+          })}
+        />
+      </FormRow>
+
+      <FormRow
         label='Password (min 8 characters)'
         error={errors?.password?.message}
       >
         <Input
           type='password'
-          id='password'
-          autoComplete='current-password'
+          id='newPassword'
+          autoComplete='new-password'
           disabled={isUpdatingUser}
-          {...register('password', {
+          {...register('newPassword', {
             required: 'This field is required',
             minLength: {
               value: 8,
@@ -44,13 +63,13 @@ function UpdatePasswordForm() {
       >
         <Input
           type='password'
-          autoComplete='new-password'
+          autoComplete='confirm-password'
           id='passwordConfirm'
           disabled={isUpdatingUser}
           {...register('passwordConfirm', {
             required: 'This field is required',
             validate: (value) =>
-              getValues().password === value || 'Passwords need to match',
+              getValues().newPassword === value || 'Passwords need to match',
           })}
         />
       </FormRow>

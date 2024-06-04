@@ -171,3 +171,43 @@ export async function updateUser({ password, fullName, avatar }) {
 
   return { userAvatar };
 }
+
+const uploadImage = async function (image) {
+  let backendUrl;
+
+  console.log({image});
+
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+
+  if (!image) {
+    console.error('Missing image file! Unable to upload image!');
+    throw new Error('Missing image file! Unable to upload image!');
+  }
+
+  let reqUrl = `${backendUrl}api/v1/users/image`;
+  let method = 'POST';
+
+  const { data, error}  = await axios({
+    method,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'multipart/form-data',
+    },
+    url: reqUrl,
+    data: image,
+    withCredentials: true,
+  });
+
+  if (error) {
+    console.error(error);
+    throw new Error('Avatar image cound not be saved!');
+  }  
+
+  const imageName = data?.data?.imageName;
+
+  return {data: {imageName}, error};  
+}
