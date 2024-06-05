@@ -183,7 +183,7 @@ export async function updateUser(newUser) {
 
   const user = data?.data?.user;
 
-  return {data: user, error};  
+  return user;
 }
 
 const uploadImage = async function (image) {
