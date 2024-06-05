@@ -179,6 +179,8 @@ export async function updateUser(newUser) {
     throw new Error('User data cound not be saved!');
   }
 
+  console.log({updateUser: data});
+
   const user = data?.data?.user;
 
   return {data: user, error};  
