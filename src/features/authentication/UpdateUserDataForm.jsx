@@ -29,7 +29,7 @@ function UpdateUserDataForm() {
 
   function onSubmit(data) {
     const avatar = typeof data.avatar === 'string' ? data.avatar : data.avatar[0];
-    console.log({ onSubmit: data });
+    console.log({ "onSubmit-data": data, "onSubmit-avatar": avatar });
     // e.preventDefault();
     // if (!fullName) return;
     // Disabled so no one can change my name!!!
