@@ -35,10 +35,8 @@ function UpdateUserDataForm() {
     // Disabled so no one can change my name!!!
     const formData = new FormData();
     // formData.append("image", typeof data.image[0] === 'file' ?? data.image[0]);
-    if (data.image[0]) {
-      formData.append("avatar", data.image[0]);
-      console.log({ avatar: data.image[0] });
-    }
+    formData.append("avatar", data?.image?.[0]);
+    console.log({ avatar: data?.image?.[0] });
 
     updateUser(
       { ...data, avatar, formData },
