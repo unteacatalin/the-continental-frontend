@@ -11,9 +11,7 @@ import { useUpdateUser } from './useUpdateUser';
 import { useUser } from './useUser';
 
 function UpdateUserDataForm() {
-  const { register, handleSubmit, reset, getValues, formState, control } = useForm({
-    defaultValues: isEditSession ? editValues : {},
-  });
+  const { register, handleSubmit, reset, getValues, formState, control } = useForm();
   const { errors } = formState;
   
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
