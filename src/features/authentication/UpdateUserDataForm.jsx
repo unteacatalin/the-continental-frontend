@@ -1,4 +1,5 @@
-import { useState } from 'react';
+// import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 
 import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
@@ -10,6 +11,11 @@ import { useUpdateUser } from './useUpdateUser';
 import { useUser } from './useUser';
 
 function UpdateUserDataForm() {
+  const { register, handleSubmit, reset, getValues, formState, control } = useForm({
+    defaultValues: isEditSession ? editValues : {},
+  });
+  const { errors } = formState;
+  
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
   const {
     user: {
@@ -20,49 +26,71 @@ function UpdateUserDataForm() {
 
   const { updateUser, isUpdatingUser } = useUpdateUser();
 
-  const [fullName, setFullName] = useState(currentFullName);
-  const [avatar, setAvatar] = useState(null);
+  // const [fullName, setFullName] = useState(currentFullName);
+  // const [avatar, setAvatar] = useState(null);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!fullName) return;
+  function onSubmit(data) {
+    const avatar = typeof data.avatar === 'string' ? data.avatar : data.avatar[0];
+    console.log({ onSubmit: data });
+    // e.preventDefault();
+    // if (!fullName) return;
     // Disabled so no one can change my name!!!
-    // updateUser(
-    //   { fullName, avatar },
-    //   {
-    //     onSuccess: () => {
-    //       setAvatar(null);
-    //       e.target.reset();
-    //     },
-    //   }
-    // );
+    updateUser(
+      { ...data, avatar },
+      {
+        onSuccess: (data) => {
+          // setAvatar(null);
+          reset();
+          // e.target.reset();
+        },
+      }
+    );
   }
 
   function handleCancel() {
-    setFullName(currentFullName);
-    setAvatar(null);
+    // setFullName(currentFullName);
+    // setAvatar(null);
   }
 
+  function onError(error) {}
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow label='Email address'>
         <Input value={email} disabled />
       </FormRow>
       <FormRow label='Full name'>
         <Input
           type='text'
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          defaultValue={currentFullName}
+          // onChange={(e) => setFullName(e.target.value)}
           id='fullName'
           disabled={isUpdatingUser}
+          {...register('fullName', {
+            required: false
+          })}
         />
       </FormRow>
       <FormRow label='Avatar image'>
-        <FileInput
-          id='avatar'
-          accept='image/*'
-          onChange={(e) => setAvatar(e.target.files[0])}
-          disabled={isUpdatingUser}
+        <Controller
+          control={control}
+          name={"avatar"}
+          rules={{required: false}}
+          render={({field: {value, onChange, ...field}}) => {
+            return (
+              <FileInput
+                {...field}
+                value={value?.fileName}
+                id='avatar'
+                accept='image/*'
+                disabled={isUpdatingUser}
+                {...register('avatar')}
+                onChange={(event) => {
+                  onChange(event.target.files[0]);
+                }}                
+              />
+            )
+          }}
         />
       </FormRow>
       <FormRow>

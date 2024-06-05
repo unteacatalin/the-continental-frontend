@@ -133,43 +133,55 @@ export async function logout() {
   if (error) throw new Error(error.message);
 }
 
-export async function updateUser({ password, fullName, avatar }) {
-  // 1. Update password OR fullName
-  let updateData;
-  if (password) updateData = { password };
-  if (fullName) updateData = { data: { fullName } };
-  const {
-    data: { user: userFullNamePassword } = {},
-    error: errorFullNamePassword,
-  } = await supabase.auth.updateUser(updateData);
+export async function updateUser(newUser) {
+  let backendUrl;
 
-  if (errorFullNamePassword) throw new Error(error.message);
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+  }
+  
+  const avatar = newUser?.formData;
+  console.log({"updateUser-newUser": newUser, avatar});
+  let error, imageName;
+  
+  // 1. Upload the avatar image
+  if (avatar) {
+    const {data, error: errorUploadingFile} = await uploadImage(avatar);
+    if (errorUploadingFile) {
+      error = errorUploadingFile;
+      throw new Error(error);
+    } else {
+      imageName = data?.imageName;
+    }
+  }  
+  
+  const imageUrl= newUser?.avatar;
+  let reqUrl = `${backendUrl}api/v1/users/me`;
+  const method = 'PATCH';
 
-  if (!avatar) return { userFullNamePassword };
-
-  // 2. Upload the avatar image
-  const fileName = `avatar-${userFullNamePassword.id}-${Math.random()}`;
-
-  const { error: storageError } = await supabase.storage
-    .from('avatars')
-    .upload(fileName, avatar);
-
-  if (storageError) throw new Error(storageError.message);
-
-  // 3. Update avatar in the user
-  updateData = {
-    data: {
-      avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
+  // 2. Update password OR fullName
+  const { data, error: errorSavingData}  = await axios({
+    method,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
     },
-  };
+    url: reqUrl,
+    data: JSON.stringify( {...newUser, avatar: imageName ? imageName : imageUrl ? imageUrl : undefined, formData: undefined} ),
+    withCredentials: true,
+  });
 
-  // https://mbehgukaiafkgmqfeboa.supabase.co/storage/v1/object/public/avatars/default-user.jpg?t=2023-08-31T18%3A11%3A58.521Z
-  const { data: { user: userAvatar } = {}, error: errorAvatar } =
-    await supabase.auth.updateUser(updateData);
+  if (errorSavingData) {
+    error = errorSavingData;
+    console.error(error);
+    throw new Error('User data cound not be saved!');
+  }
 
-  if (errorAvatar) throw new Error(errorAvatar.message);
+  const user = data?.data?.user;
 
-  return { userAvatar };
+  return {data: user, error};  
 }
 
 const uploadImage = async function (image) {
