@@ -89,7 +89,7 @@ function UpdateUserDataForm() {
                 disabled={isUpdatingUser}
                 {...register('avatar')}
                 onChange={(event) => {
-                  onChange(event.target.files[0]);
+                  onChange(event?.target?.files[0]);
                 }}                
               />
             )
