@@ -40,17 +40,37 @@ export const getSettings = async function () {
 }
 
 // We expect a newSetting object that looks like {setting: newValue}
-export async function updateSetting(newSetting) {
-  const { data, error } = await supabase
-    .from("settings")
-    .update(newSetting)
-    // There is only ONE row of settings, and it has the ID=1, and so this is the updated one
-    .eq("id", 1)
-    .single();
+export async function updateSetting(newSettings) {
+  let backendUrl;
 
-  if (error) {
-    console.error(error);
-    throw new Error("Settings could not be updated");
+  if (import.meta.env.NETLIFY === 'true') {
+    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+  } else {
+    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
-  return data;
+
+  let reqUrl = `${backendUrl}api/v1/settings`;
+  let method = 'PATCH';  
+
+  const { data, error: errorSavingData}  = await axios({
+    method,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+    url: reqUrl,
+    data: JSON.stringify(newSettings),
+    withCredentials: true,
+  });  
+
+
+  if (errorSavingData) {
+    error = errorSavingData;
+    console.error(error);
+    throw new Error('Room cound not be saved!');
+  }
+
+  const settings = data?.data?.settings;
+
+  return settings; 
 }

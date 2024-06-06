@@ -1,7 +1,4 @@
 import axios from 'axios';
-// import supabase from '../utils/supabase';
-
-// import { PAGE_SIZE } from '../utils/constants';
 
 export async function getGuestsRowCount({ filter }) {
   let backendUrl;
@@ -49,43 +46,6 @@ export async function getGuestsRowCount({ filter }) {
 
   return { data: { count, pageSize }, error }
 }
-
-// export async function getGuests({ filter, sortBy, page }) {
-  // let query = supabase.from('guests').select('*', { count: 'exact' });
-
-  // // FILTER
-  // if (filter) {
-  //   if (filter.nationalID) {
-  //     query = query.ilike('nationalID', `%${filter.nationalID}%`);
-  //   }
-  //   if (filter.email) {
-  //     query = query.ilike('email', `%${filter.email}%`);
-  //   }
-  // }
-
-  // // SORT
-  // if (sortBy && sortBy.field) {
-  //   query = query.order(sortBy.field, {
-  //     ascending: sortBy.direction === 'asc',
-  //   });
-  // }
-
-  // // PAGINATION
-  // if (page) {
-  //   const from = (page - 1) * PAGE_SIZE;
-  //   const to = page * PAGE_SIZE - 1;
-
-  //   query = query.range(from, to);
-  // }
-
-  // const { data, error, count } = await query;
-
-  // if (error) {
-  //   console.error(error);
-  //   throw new Error('Guests could not be loaded');
-  // }
-
-  // return { data, count };
 
 export async function getGuests({ filter, sortBy, page }) {
   let backendUrl;

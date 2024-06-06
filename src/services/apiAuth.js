@@ -1,6 +1,4 @@
 import axios from 'axios';
-import supabase from '../utils/supabase';
-import { supabaseUrl } from '../utils/supabase';
 
 export async function signup({ fullName, email, password }) {
   let backendUrl;

@@ -1,8 +1,5 @@
 import axios from 'axios';
 
-import supabase from '../utils/supabase';
-// import { PAGE_SIZE } from '../utils/constants';
-
 export async function getBookings({ filter, sortBy, page }) {
   let backendUrl;
 
@@ -318,8 +315,6 @@ export async function getBookedRoomsInInterval(startDate, endDate, bookingId) {
 
 export async function createUpdateBooking(obj, id) {
   // // 1. Create/update guest
-  // let query = supabase.from('bookings');
-
   let backendUrl;
 
   if (import.meta.env.NETLIFY === 'true') {
@@ -375,23 +370,6 @@ export async function createUpdateBooking(obj, id) {
     roomId,
     guestId,
   };
-
-  // if (!id) {
-  //   // A) CREATE
-  //   query = query.insert([newBooking]);
-  // } else {
-  //   // B) EDIT
-  //   query = query.update(newBooking).eq('id', id);
-  // }
-
-  // const { data, error } = await query.select().single();
-
-  // if (error) {
-  //   console.error(error);
-  //   throw new Error('Booking could not be updated');
-  // }
-  // return data;
-
 
   const { data, error: errorSavingData } = await axios({
     method,
