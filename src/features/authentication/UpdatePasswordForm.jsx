@@ -12,16 +12,22 @@ function UpdatePasswordForm() {
 
   const { updateUser, isUpdatingUser } = useUpdateUser();
 
-  function onSubmit({ password }) {
+  function onSubmit({ currentPassword, newPassword }) {
+    reset();
     // Disabled so no one can change my password!!!
-    // updateUser({ password }, { onSuccess: reset });
+    updateUser(
+      { currentPassword, newPassword }, 
+      { 
+        onSuccess: reset 
+      }
+    );
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
         label='Current Password (min 8 characters)'
-        error={errors?.password?.message}
+        error={errors?.currentPassword?.message}
       >
         <Input
           type='password'
@@ -39,8 +45,8 @@ function UpdatePasswordForm() {
       </FormRow>
 
       <FormRow
-        label='Password (min 8 characters)'
-        error={errors?.password?.message}
+        label='New password (min 8 characters)'
+        error={errors?.newPassword?.message}
       >
         <Input
           type='password'

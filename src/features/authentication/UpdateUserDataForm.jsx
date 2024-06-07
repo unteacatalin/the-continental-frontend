@@ -43,6 +43,7 @@ function UpdateUserDataForm() {
   }
 
   function handleCancel() {
+    reset();
     // setFullName(currentFullName);
     // setAvatar(null);
   }
