@@ -155,7 +155,7 @@ export async function updateUser(newUser) {
   }  
   
   const imageUrl= newUser?.avatar;
-  let reqUrl = `${backendUrl}api/v1/users/me`;
+  let reqUrl = newUser?.currentPassword && newUser?.newPassword ? `${backendUrl}api/v1/users/updateMyPassword` : `${backendUrl}api/v1/users/me`;
   const method = 'PATCH';
 
   // 2. Update password OR fullName
