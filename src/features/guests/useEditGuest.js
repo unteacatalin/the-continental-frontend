@@ -7,8 +7,6 @@ export function useEditGuest() {
   const queryClient = useQueryClient();
 
   const { mutate: editGuest, isLoading: isEditing } = useMutation({
-    // mutationFn: ({ newGuest, countryFlag, nationality, nationalID, email, id }) =>
-    //   createEditGuest({...newGuest, countryFlag, nationality, nationalID, email, id}),
     mutationFn: (newGuest) =>
       createEditGuest(newGuest),
     onSuccess: () => {

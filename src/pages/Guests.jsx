@@ -1,12 +1,9 @@
-// import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import Row from '../ui/Row';
 import Heading from '../ui/Heading';
-// import Spinner from '../ui/Spinner';
 import Button from '../ui/Button';
-// import { getGuestsRowCount } from '../services/apiGuests';
 import GuestsTableOperations from '../features/guests/GuestsTableOperations';
 import GuestsTable from '../features/guests/GuestsTable';
 import CreateGuestForm from '../features/guests/CreateGuestForm';
@@ -22,29 +19,6 @@ function Guests() {
   );
 
   let filter = { email, nationalID };
-
-  // PAGINATION
-  // const page = !searchParams.get('page') ? 1 : Number(searchParams.get('page'));
-
-  // const { data, isFetching } = useQuery({
-  //   queryKey: ['guestsCount', filter],
-  //   queryFn: async () => await getGuestsRowCount({ filter }),
-  // });
-
-  // const countRows = data?.data?.count;
-  // const pageSize = data?.data?.pageSize;
-
-  // console.log({countGuests: countRows, pageSizeGuests: pageSize, data});
-
-  // useEffect(
-  //   function () {
-  //     if (countRows && pageSize && Math.ceil(countRows / pageSize) < page && page > 1) {
-  //       searchParams.set('page', page - 1);
-  //       setSearchParams(searchParams);
-  //     }
-  //   },
-  //   [countRows]
-  // );
 
   useEffect(
     function () {
@@ -66,8 +40,6 @@ function Guests() {
     },
     [searchParams.get('email'), searchParams.get('nationalID')]
   );
-
-  // if (isFetching) return <Spinner />;
 
   return (
     <>

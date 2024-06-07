@@ -63,7 +63,6 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
 
   function onSubmit(data) {
     const image = typeof data.image === 'string' ? data.image : data.image[0];
-    console.log({ onSubmit: data });
     if (isEditSession) {
       editRoom(
         { ...data, image , id: editId },
@@ -78,13 +77,11 @@ function CreateCabinForm({ onCloseModal, roomToEdit = {} }) {
       const formData = new FormData();
       // formData.append("image", typeof data.image[0] === 'file' ?? data.image[0]);
       formData.append("image", data.image[0]);
-      console.log({ image: data.image[0] });
 
       createRoom(
         { ...data, image, formData },
         {
           onSuccess: (data) => {
-            // console.log({ data });
             reset();
             onCloseModal?.();
           },

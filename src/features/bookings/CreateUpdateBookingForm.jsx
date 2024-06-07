@@ -179,8 +179,6 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
     [guests, editValues?.guests?.Id]
   );
 
-  console.log({ guests, editValues });
-
   useEffect(
     function () {
       if (Array.isArray(rooms) && !isEditSession) {

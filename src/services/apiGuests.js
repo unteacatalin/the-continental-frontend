@@ -59,8 +59,6 @@ export async function getGuests({ filter, sortBy, page }) {
   let exists = false;
   backendUrl += 'api/v1/guests';
 
-  console.log({guestFilter: filter});
-
   // FILTER
   if (filter) {
     if (filter.nationalID) {
@@ -102,8 +100,6 @@ export async function getGuests({ filter, sortBy, page }) {
     backendUrl += `page=${page}`;
   }  
 
-  console.log({backendUrl});
-
   const { data, error } = await axios.get(
     backendUrl,
     {
@@ -124,8 +120,6 @@ export async function getGuests({ filter, sortBy, page }) {
   const from = data?.data?.from;
   const to = data?.data?.to;
   const PAGE_SIZE = data?.data?.pageSize;
-
-  console.log({getGuests: data});
 
   return { data: guests, count, from, to, PAGE_SIZE, error }
 }
@@ -244,8 +238,6 @@ export async function getAllGuests({ sortBy }) {
     console.error(error);
     throw new Error('All guests could not be retrieved');
   }
-
-  console.log({ getAllGuests: data, backendUrl });
 
   const guests = data?.data?.guests;
   const count = data?.data?.count;

@@ -1,15 +1,6 @@
-import supabase from "../utils/supabase";
 import axios from 'axios';
 
 export const getSettings = async function () {
-  // const { data, error } = await supabase.from("settings").select("*").single();
-
-  // if (error) {
-  //   console.error(error);
-  //   throw new Error("Settings could not be loaded");
-  // }
-  // return data;
-
   let backendUrl;
 
   if (import.meta.env.NETLIFY === 'true') {

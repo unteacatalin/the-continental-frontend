@@ -99,7 +99,6 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
   function onSubmit(data) {
     if (isEditSession) {
       editGuest(
-        // { newGuest: data, countryFlag: flag, nationality, id: editId },
         { ...data, countryFlag: flag, nationality, nationalID, email, id: editId },
         {
           onSuccess: (data) => {
@@ -110,7 +109,6 @@ function CreateGuestForm({ onCloseModal, guestToEdit = {} }) {
       );
     } else {
       createGuest(
-        // { newGuest: data, countryFlag: flag, nationality },
         { ...data, countryFlag: flag, nationality, nationalID, email },
         {
           onSuccess: (data) => {

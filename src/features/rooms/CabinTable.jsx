@@ -10,8 +10,6 @@ import Pagination from '../../ui/Pagination';
 function CabinTable() {
   const { isLoading, rooms, count, PAGE_SIZE, error } = useRooms();
   // const [searchParams] = useSearchParams();
-  
-  console.log({rooms});
 
   if (isLoading) return <Spinner />;
   

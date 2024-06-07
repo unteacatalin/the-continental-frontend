@@ -12,8 +12,6 @@ export const getRooms = async function ({filter, sortBy, page}) {
   let exists = false;
   backendUrl += 'api/v1/rooms';
 
-  console.log({roomFilter: filter});
-
   // FILTER  
   if (filter) {
     if (filter.discount) {
@@ -54,8 +52,6 @@ export const getRooms = async function ({filter, sortBy, page}) {
     backendUrl += `page=${page}`;
   }  
 
-  console.log({backendUrl});  
-
   const { data, error}  = await axios.get(
     backendUrl,
     {
@@ -70,8 +66,6 @@ export const getRooms = async function ({filter, sortBy, page}) {
     console.error(error);
     throw new Error('Rooms data could not be loaded');
   }
-
-  console.log({getGuests: data});
 
   const rooms = data?.data?.rooms;
   const count = data?.data?.count;
@@ -121,7 +115,6 @@ export const createEditRoom = async function (newRoom) {
   }
 
   const image = newRoom?.formData;
-  console.log({"createEditRoom-formData": image});
   let error, imageName;
 
   if (image) {
@@ -168,8 +161,6 @@ export const createEditRoom = async function (newRoom) {
 
 const uploadImage = async function (image) {
   let backendUrl;
-
-  console.log({image});
 
   if (import.meta.env.NETLIFY === 'true') {
     backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;

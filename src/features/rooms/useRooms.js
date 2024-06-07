@@ -39,7 +39,6 @@ export function useRooms() {
   const to = data?.to;
   const PAGE_SIZE = data?.PAGE_SIZE;
   
-  console.log({ROOMS: data, count, from, to, PAGE_SIZE});
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);  
 

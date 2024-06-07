@@ -22,7 +22,7 @@ async function deleteGuests() {
     }
   );
 
-  if (error) console.log(error.message);
+  if (error) console.error(error.message);
 }
 
 async function deleteRooms() {
@@ -44,7 +44,7 @@ async function deleteRooms() {
     }
   );  
   
-  if (error) console.log(error.message);
+  if (error) console.error(error.message);
 }
 
 async function deleteBookings() {
@@ -66,7 +66,7 @@ async function deleteBookings() {
     }
   );
 
-  if (error) console.log(error);
+  if (error) console.error(error);
 }
 
 async function createGuests() {
@@ -89,7 +89,7 @@ async function createGuests() {
   );
 
   if (error) console.error(error);
-  else console.log(guests);
+  // else console.log(guests);
 }
 
 async function createRooms() {
@@ -112,7 +112,7 @@ async function createRooms() {
   );
 
   if (error) console.error(error);
-  else console.log(rooms);
+  // else console.log(rooms);
 }
 
 async function createBookings() {
@@ -135,7 +135,7 @@ async function createBookings() {
   );
 
   if (error) console.error(error);
-  else console.log(bookings);
+  // else console.log(bookings);
 }
 
 function Uploader() {

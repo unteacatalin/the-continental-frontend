@@ -141,7 +141,6 @@ export async function updateUser(newUser) {
   }
   
   const avatar = newUser?.formData;
-  console.log({"updateUser-newUser": newUser, avatar});
   let error, imageName;
   
   // 1. Upload the avatar image
@@ -177,8 +176,6 @@ export async function updateUser(newUser) {
     throw new Error('User data cound not be saved!');
   }
 
-  console.log({updateUser: data});
-
   const user = data?.data?.user;
 
   return user;
@@ -186,8 +183,6 @@ export async function updateUser(newUser) {
 
 const uploadImage = async function (image) {
   let backendUrl;
-
-  console.log({image});
 
   if (import.meta.env.NETLIFY === 'true') {
     backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;

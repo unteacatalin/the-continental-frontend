@@ -6,7 +6,6 @@ import { useRecentStays } from './useRecentStays';
 import Stats from './Stats';
 import { useRooms } from '../rooms/useRooms';
 import SalesChart from './SalesChart';
-import { format } from 'date-fns';
 import DurationChart from './DurationChart';
 import TodayActivity from '../check-in-out/TodayActivity';
 
@@ -19,13 +18,11 @@ const StyledDashboardLayout = styled.div`
 
 function DashboardLayout() {
   const { isLoading: isLoadingBookings, bookings } = useRecentBookings();
-  console.log({dataBookingsAfterDate: bookings});
   const {
     isLoading: isLoadingStays,
     confirmedStays,
     numDays,
   } = useRecentStays();
-  console.log({confirmedStays});
   const { isLoading: isLoadingRooms, rooms } = useRooms();
 
   if (isLoadingBookings || isLoadingStays || isLoadingRooms) return <Spinner />;

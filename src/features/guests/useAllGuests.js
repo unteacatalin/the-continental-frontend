@@ -18,8 +18,6 @@ export function useAllGuests() {
     queryKey: ['allGuests'],
   });
 
-  console.log({ useAllGuests: data });
-
   const guests = data?.data;
 
   return { isLoading, guests, error };

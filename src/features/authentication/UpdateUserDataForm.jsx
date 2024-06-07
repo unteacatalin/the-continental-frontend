@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
 import Button from '../../ui/Button';
@@ -24,30 +23,20 @@ function UpdateUserDataForm() {
 
   const { updateUser, isUpdatingUser } = useUpdateUser();
 
-  // const [fullName, setFullName] = useState(currentFullName);
-  // const [avatar, setAvatar] = useState(null);
-
   function onSubmit(data) {
     const avatar = typeof data.avatar === 'string' ? data.avatar : data.avatar[0];
-    console.log({ "onSubmit-data": data, "onSubmit-avatar": avatar });
-    // e.preventDefault();
-    // if (!fullName) return;
     // Disabled so no one can change my name!!!
     let formData;
     if (data?.avatar?.[0]) {
       formData = new FormData();
-      // formData.append("image", typeof data.image[0] === 'file' ?? data.image[0]);
       formData.append("avatar", data?.avatar?.[0]);
-      console.log({ avatar: data?.avatar?.[0] });
     }
 
     updateUser(
       { ...data, avatar, formData },
       {
         onSuccess: (data) => {
-          // setAvatar(null);
           reset();
-          // e.target.reset();
         },
       }
     );
@@ -69,7 +58,6 @@ function UpdateUserDataForm() {
         <Input
           type='text'
           defaultValue={currentFullName}
-          // onChange={(e) => setFullName(e.target.value)}
           id='fullName'
           disabled={isUpdatingUser}
           {...register('fullName', {

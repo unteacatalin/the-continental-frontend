@@ -11,7 +11,6 @@ export function useUpdateUser() {
       updateUserApi(newUser),
     onSuccess: (user) => {
       toast.success('User account successfully updated');
-      console.log({useUpdateUser: user});
       const userData = { ...user, jwt_expiry: Date.now() + process.env.JWT_EXPIRES_IN };
       queryClient.setQueryData(['user'], userData);
       queryClient.invalidateQueries({ queryKey: ['user'] });

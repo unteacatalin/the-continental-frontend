@@ -12,8 +12,6 @@ export async function getBookings({ filter, sortBy, page }) {
   let exists = false;
   backendUrl += 'api/v1/bookings';
 
-  console.log({bookingFilter: filter});
-
   // FILTER
   if (filter) {
     if (exists) {
@@ -50,8 +48,6 @@ export async function getBookings({ filter, sortBy, page }) {
     backendUrl += `page=${page}`;
   }
 
-  console.log({backendUrl}); 
-
   const { data, error}  = await axios.get(
     backendUrl,
     {
@@ -66,8 +62,6 @@ export async function getBookings({ filter, sortBy, page }) {
     console.error(error);
     throw new Error('Rooms data could not be loaded');
   }
-
-  console.log({getGuests: data});
 
   const bookings = data?.data?.bookings || [];
   const count = data?.data?.count;
@@ -114,8 +108,6 @@ export async function getBooking(id) {
 
   const booking = data?.data?.booking;
 
-  console.log({getBookingAPI: booking});
-
   return {data: booking, error};
 }
 
@@ -142,8 +134,6 @@ export async function getBookingsAfterDate(date) {
     backendUrl = `${backendUrl}/${date}`;
   }
 
-  console.log({getBookingsAfterDateURL: backendUrl});
-
   const { data, error: errorBookingsAfterDate } = await axios.get(
     backendUrl,
     {
@@ -158,8 +148,6 @@ export async function getBookingsAfterDate(date) {
     console.error(errorBookingsAfterDate);
     throw new Error('Bookings could not get loaded');
   }
-
-  console.log({getBookingsAfterDateDATA: data});
 
   const bookings = data?.data?.bookings || [];
 
@@ -188,8 +176,6 @@ export async function getStaysAfterDate(date) {
     backendUrl = `${backendUrl}/${date}`;
   }
 
-  console.log({getStaysAfterDateURL: backendUrl});
-
   const { data, error: errorStaysAfterDate } = await axios.get(
     backendUrl,
     {
@@ -204,8 +190,6 @@ export async function getStaysAfterDate(date) {
     console.error(errorStaysAfterDate);
     throw new Error('Bookings could not get loaded');
   }
-
-  console.log({getStaysAfterDateDATA: data});
 
   const bookings = data?.data?.bookings || [];
 
@@ -241,8 +225,6 @@ export async function getStaysTodayActivity() {
     error = 'Bookings could not get loaded';
     throw new Error('Bookings could not get loaded');
   }
-
-  console.log({ TodayActivityApi: data });
 
   const stays = data?.data?.stays;
 
@@ -308,7 +290,6 @@ export async function getBookedRoomsInInterval(startDate, endDate, bookingId) {
   }
 
   const rooms = data?.data?.rooms;
-  console.log({BookedRoomsInIntervalAPI: rooms, backendUrl});
 
   return { rooms, error };
 }
@@ -330,8 +311,6 @@ export async function createUpdateBooking(obj, id) {
     reqUrl += `/${id}`;
     method = 'PATCH';
   }
-  
-  console.log({ obj });
   
   const {
     created_at,
@@ -381,7 +360,6 @@ export async function createUpdateBooking(obj, id) {
     data: JSON.stringify(newBooking),
     withCredentials: true
   });
-  console.log({createUpdateBooking: data});
 
   let error;
 
@@ -420,8 +398,6 @@ export async function deleteBooking(id) {
     console.error(error);
     throw new Error('Booking could not be deleted');
   }
-
-  console.log({deleteBooking: data});
 
   const booking = data?.data?.booking;
 
