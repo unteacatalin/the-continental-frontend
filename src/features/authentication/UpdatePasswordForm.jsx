@@ -15,12 +15,12 @@ function UpdatePasswordForm() {
   function onSubmit({ currentPassword, newPassword }) {
     reset();
     // Disabled so no one can change my password!!!
-    updateUser(
-      { currentPassword, newPassword }, 
-      { 
-        onSuccess: reset 
-      }
-    );
+    // updateUser(
+    //   { currentPassword, newPassword }, 
+    //   { 
+    //     onSuccess: reset 
+    //   }
+    // );
   }
 
   return (
