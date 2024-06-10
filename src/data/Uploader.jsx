@@ -78,7 +78,7 @@ async function createGuests() {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
-  const { guests, error } = await axios.get(
+  const { data: guests, error } = await axios.get(
     `${backendUrl}api/v1/guests/init`,
     {
       withCredentials: true,
@@ -89,7 +89,7 @@ async function createGuests() {
   );
 
   if (error) console.error(error);
-  // else console.log(guests);
+  else console.log(guests);
 }
 
 async function createRooms() {
@@ -101,7 +101,7 @@ async function createRooms() {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
-  const { rooms, error } = await axios.get(
+  const { data: rooms, error } = await axios.get(
     `${backendUrl}api/v1/rooms/init`,
     {
       withCredentials: true,
@@ -112,7 +112,7 @@ async function createRooms() {
   );
 
   if (error) console.error(error);
-  // else console.log(rooms);
+  else console.log(rooms);
 }
 
 async function createBookings() {
@@ -124,7 +124,7 @@ async function createBookings() {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
 
-  const { bookings, error } = await axios.get(
+  const { data: bookings, error } = await axios.get(
     `${backendUrl}api/v1/bookings/init`,
     {
       withCredentials: true,
@@ -135,7 +135,7 @@ async function createBookings() {
   );
 
   if (error) console.error(error);
-  // else console.log(bookings);
+  else console.log(bookings);
 }
 
 function Uploader() {
