@@ -31,7 +31,7 @@ const FilterInput = styled('input').withConfig({
   ${(props) =>
     props.inputWidth &&
     css`
-      width: ${props.inputWidth};
+      width: '32px';
     `}
 
   border-radius: var(--border-radius-sm);
