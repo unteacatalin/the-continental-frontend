@@ -28,11 +28,7 @@ const FilterInput = styled('input').withConfig({
       color: var(--color-brand-50);
     `}
 
-  ${(prop) => 
-    prop.id='nationalID' && 
-    css`
-      width: 32px
-  `}
+  width: ${props => props.width ? props.width : 'auto'};
 
   border-radius: var(--border-radius-sm);
   font-weight: 500;
