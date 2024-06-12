@@ -16,7 +16,7 @@ const StyledFilter = styled.div`
 `;
 
 const FilterInput = styled('input').withConfig({
-  shouldForwardProp: (prop) => !['active'].includes(prop),
+  shouldForwardProp: (prop) => !['active', 'inputWidth'].includes(prop),
 })`
   background-color: var(--color-grey-0);
   border: none;
@@ -29,9 +29,9 @@ const FilterInput = styled('input').withConfig({
     `}
 
   ${(props) =>
-    props.width &&
+    props.inputWidth &&
     css`
-      width: ${props.width};
+      width: ${props.inputWidth};
     `}
 
   width: ${props => props.width ? props.width : 'auto'};
