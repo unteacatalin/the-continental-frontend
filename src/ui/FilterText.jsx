@@ -29,9 +29,9 @@ const FilterInput = styled('input').withConfig({
     `}
 
   ${(prop) => 
-    !['nationalID'].includes(prop) && 
+    prop.filterField='nationalID' && 
     css`
-      width: '32px'
+      width: 32px
   `}
 
   border-radius: var(--border-radius-sm);
