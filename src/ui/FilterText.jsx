@@ -29,7 +29,7 @@ const FilterInput = styled('input').withConfig({
     `}
 
   ${(prop) => 
-    prop.filterField='nationalID' && 
+    prop.id='nationalID' && 
     css`
       width: 32px
   `}
