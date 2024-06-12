@@ -18,7 +18,7 @@ function GuestsTableOperations() {
         filterField='nationalID'
         placeholder='nationalID'
         refFilterGuest={refFilterGuestNationalID}
-        inputWidth='32px'
+        inputWidth='15rem'
       />
       <SortBy
         options={[
