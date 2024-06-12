@@ -31,7 +31,7 @@ const FilterInput = styled('input').withConfig({
   ${(props) =>
     props.width &&
     css`
-      width: props.width;
+      width: ${props.width};
     `}
 
   width: ${props => props.width ? props.width : 'auto'};
