@@ -34,8 +34,6 @@ const FilterInput = styled('input').withConfig({
       width: ${props.inputWidth};
     `}
 
-  width: ${props => props.width ? props.width : 'auto'};
-
   border-radius: var(--border-radius-sm);
   font-weight: 500;
   font-size: 1.4rem;
