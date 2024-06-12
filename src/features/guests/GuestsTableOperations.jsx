@@ -13,12 +13,13 @@ function GuestsTableOperations() {
         filterField='email'
         placeholder='email'
         refFilterGuest={refFilterGuestEmail}
+        inputWidth='30rem'
       />
       <FilterText
         filterField='nationalID'
         placeholder='nationalID'
         refFilterGuest={refFilterGuestNationalID}
-        inputWidth='15rem'
+        inputWidth='16rem'
       />
       <SortBy
         options={[
