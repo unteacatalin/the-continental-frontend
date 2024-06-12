@@ -31,7 +31,7 @@ const FilterInput = styled('input').withConfig({
   ${(props) =>
     props.inputWidth &&
     css`
-      width: 32px;
+      width: 5rem;
     `}
 
   border-radius: var(--border-radius-sm);
@@ -47,7 +47,7 @@ const FilterInput = styled('input').withConfig({
   }
 `;
 
-function FilterText({ filterField, placeholder, refFilterGuest }) {
+function FilterText({ filterField, placeholder, refFilterGuest, inputWidth }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentFilter = searchParams.get(filterField) || '';
   const [fieldText, setFieldText] = useState(currentFilter);
@@ -82,6 +82,7 @@ function FilterText({ filterField, placeholder, refFilterGuest }) {
         ref={refFilterGuest}
         onChange={handleChange}
         id={filterField}
+        inputWidth={inputWidth}
       />
     </StyledFilter>
   );
