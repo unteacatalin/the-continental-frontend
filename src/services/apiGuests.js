@@ -1,52 +1,5 @@
 import axios from 'axios';
 
-export async function getGuestsRowCount({ filter }) {
-  let backendUrl;
-
-  if (import.meta.env.NETLIFY === 'true') {
-    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
-  } else {
-    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
-  }
-
-  let exists = false;
-  backendUrl += 'api/v1/guests/count';
-
-  // FILTER
-  if (filter) {
-    if (filter.nationalID) {
-      backendUrl += `?nationalID=${filter.nationalID}`;
-      exists = true;
-    }
-    if (filter.email) {
-      if (exists) {
-        backendUrl += '&';
-      } else {
-        backendUrl += '?';
-        exists = true;
-      }
-      backendUrl += `email=${filter.email}`;
-    }
-  }
-
-  const { data, error } = await axios.get(backendUrl,{
-    withCredentials: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    }
-  });
-
-  if (error) {
-    console.error(error);
-    throw new Error('Guests count could not be loaded');
-  }
-
-  const count = data?.data?.count;
-  const pageSize = data?.data?.pageSize;
-
-  return { data: { count, pageSize }, error }
-}
-
 export async function getGuests({ filter, sortBy, page }) {
   let backendUrl;
 

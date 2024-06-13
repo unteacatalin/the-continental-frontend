@@ -15,7 +15,7 @@ import DtPicker from '../../ui/DtPicker';
 import { useAllGuests } from '../guests/useAllGuests';
 import { useBookedRoomsInInterval } from '../rooms/useBookedRoomsInInterval';
 import { useCreateUpdateBooking } from '../../context/CreateUpdateBookingContext';
-import { useRooms } from '../rooms/useRooms';
+import { useAllRooms } from '../rooms/useAllRooms';
 import { useSettings } from '../settings/useSettings';
 import { subtractDates } from '../../utils/helpers';
 
@@ -53,7 +53,7 @@ function CreateUpdateBookingForm({ onCloseModal, bookingToEdit = {} }) {
   const { isLoading: isLoadingGuests, guests } = useAllGuests();
   const { updateStartDate, updateEndDate, updateBookingId } =
     useCreateUpdateBooking();
-  const { isLoading: isLoadingRooms, rooms } = useRooms();
+  const { isLoading: isLoadingRooms, rooms } = useAllRooms();
 
   const { isLoading: isLoadingSettings, settings } = useSettings();
   const [roomOptions, setRoomOptions] = useState([]);
