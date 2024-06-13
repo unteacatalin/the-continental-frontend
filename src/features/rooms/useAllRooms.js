@@ -18,7 +18,7 @@ export function useAllRooms() {
     queryKey: ['allRooms'],
   });
 
-  const guests = data?.data;
+  const rooms = data?.data;
 
-  return { isLoading, guests, error };
+  return { isLoading, rooms, error };
 }
