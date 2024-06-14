@@ -114,10 +114,7 @@ async function createRooms() {
   );
 
   if (error) console.error(error);
-  else {
-    // queryClient.invalidateQueries({ queryKey: ['rooms'] });
-    console.log(rooms);
-  }
+  else console.log(rooms);
 }
 
 async function createBookings() {
@@ -140,10 +137,7 @@ async function createBookings() {
   );
   
   if (error) console.error(error);
-  else {
-    // queryClient.invalidateQueries({ queryKey: ['bookings'] });
-    console.log(bookings);
-  }
+  else console.log(bookings);
 }
 
 function Uploader() {
