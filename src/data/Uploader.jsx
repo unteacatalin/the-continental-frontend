@@ -4,6 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import Button from '../ui/Button';
 
+const queryClient = useQueryClient();
+
 async function deleteGuests() {
   let backendUrl;
 
@@ -24,10 +26,9 @@ async function deleteGuests() {
   );
 
   if (error) console.error(error.message);
-  else {
-    const queryClient = useQueryClient();
-    queryClient.invalidateQueries({ queryKey: ['guests'] });
-  }
+  // else {
+  //   queryClient.invalidateQueries({ queryKey: ['guests'] });
+  // }
 }
 
 async function deleteRooms() {
@@ -50,10 +51,9 @@ async function deleteRooms() {
   );  
   
   if (error) console.error(error.message);
-  else {
-    const queryClient = useQueryClient();
-    queryClient.invalidateQueries({ queryKey: ['rooms'] });
-  }
+  // else {
+  //   queryClient.invalidateQueries({ queryKey: ['rooms'] });
+  // }
 }
 
 async function deleteBookings() {
@@ -76,10 +76,9 @@ async function deleteBookings() {
   );
 
   if (error) console.error(error);
-  else {
-    const queryClient = useQueryClient();
-    queryClient.invalidateQueries({ queryKey: ['bookings'] });
-  }
+  // else {
+  //   queryClient.invalidateQueries({ queryKey: ['bookings'] });
+  // }
 }
 
 async function createGuests() {
@@ -103,8 +102,7 @@ async function createGuests() {
 
   if (error) console.error(error);
   else {
-    const queryClient = useQueryClient();
-    queryClient.invalidateQueries({ queryKey: ['guests'] });
+    // queryClient.invalidateQueries({ queryKey: ['guests'] });
     console.log(guests);
   }
 }
@@ -130,8 +128,7 @@ async function createRooms() {
 
   if (error) console.error(error);
   else {
-    const queryClient = useQueryClient();
-    queryClient.invalidateQueries({ queryKey: ['rooms'] });
+    // queryClient.invalidateQueries({ queryKey: ['rooms'] });
     console.log(rooms);
   }
 }
@@ -157,8 +154,7 @@ async function createBookings() {
 
   if (error) console.error(error);
   else {
-    const queryClient = useQueryClient();
-    queryClient.invalidateQueries({ queryKey: ['bookings'] });
+    // queryClient.invalidateQueries({ queryKey: ['bookings'] });
     console.log(bookings);
   }
 }
@@ -178,13 +174,18 @@ function Uploader() {
     await createRooms();
     await createBookings();
 
+    queryClient.invalidateQueries();
+
     setIsLoading(false);
   }
 
   async function uploadBookings() {
     setIsLoading(true);
+
     await deleteBookings();
     await createBookings();
+    queryClient.invalidateQueries();
+
     setIsLoading(false);
   }
 
