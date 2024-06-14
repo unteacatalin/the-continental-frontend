@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useQueryClient } from '@tanstack/react-query';
 
 import Button from '../ui/Button';
 
@@ -23,6 +24,10 @@ async function deleteGuests() {
   );
 
   if (error) console.error(error.message);
+  else {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ['guests'] });
+  }
 }
 
 async function deleteRooms() {
@@ -45,6 +50,10 @@ async function deleteRooms() {
   );  
   
   if (error) console.error(error.message);
+  else {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ['rooms'] });
+  }
 }
 
 async function deleteBookings() {
@@ -67,6 +76,10 @@ async function deleteBookings() {
   );
 
   if (error) console.error(error);
+  else {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ['bookings'] });
+  }
 }
 
 async function createGuests() {
@@ -89,7 +102,11 @@ async function createGuests() {
   );
 
   if (error) console.error(error);
-  else console.log(guests);
+  else {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ['guests'] });
+    console.log(guests);
+  }
 }
 
 async function createRooms() {
@@ -112,7 +129,11 @@ async function createRooms() {
   );
 
   if (error) console.error(error);
-  else console.log(rooms);
+  else {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ['rooms'] });
+    console.log(rooms);
+  }
 }
 
 async function createBookings() {
@@ -135,7 +156,11 @@ async function createBookings() {
   );
 
   if (error) console.error(error);
-  else console.log(bookings);
+  else {
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: ['bookings'] });
+    console.log(bookings);
+  }
 }
 
 function Uploader() {
