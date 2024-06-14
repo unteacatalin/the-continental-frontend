@@ -25,10 +25,7 @@ async function deleteGuests() {
   );
   
   if (error) console.error(error.message);
-  // else {
-    //   queryClient.invalidateQueries({ queryKey: ['guests'] });
-    // }
-  }
+}
   
   async function deleteRooms() {
     let backendUrl;
@@ -50,10 +47,7 @@ async function deleteGuests() {
   );  
   
   if (error) console.error(error.message);
-  // else {
-    //   queryClient.invalidateQueries({ queryKey: ['rooms'] });
-    // }
-  }
+}
   
   async function deleteBookings() {
     let backendUrl;
@@ -75,10 +69,7 @@ async function deleteGuests() {
   );
   
   if (error) console.error(error);
-  // else {
-    //   queryClient.invalidateQueries({ queryKey: ['bookings'] });
-    // }
-  }
+}
   
   async function createGuests() {
   let backendUrl;
@@ -100,10 +91,7 @@ async function deleteGuests() {
   );
   
   if (error) console.error(error);
-  else {
-    // queryClient.invalidateQueries({ queryKey: ['guests'] });
-    console.log(guests);
-  }
+  else console.log(guests);
 }
 
 async function createRooms() {
@@ -184,7 +172,7 @@ function Uploader() {
     
     await deleteBookings();
     await createBookings();
-    queryClient.invalidateQueries();
+    queryClient.invalidateQueries({ queryKey: ['bookings'] });
     
     setIsLoading(false);
   }
