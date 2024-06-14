@@ -4,17 +4,16 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import Button from '../ui/Button';
 
-const queryClient = useQueryClient();
 
 async function deleteGuests() {
   let backendUrl;
-
+  
   if (import.meta.env.NETLIFY === 'true') {
     backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
   } else {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
-
+  
   const { error } = await axios.delete(
     `${backendUrl}api/v1/guests`,
     {
@@ -24,72 +23,72 @@ async function deleteGuests() {
       }
     }
   );
-
+  
   if (error) console.error(error.message);
   // else {
-  //   queryClient.invalidateQueries({ queryKey: ['guests'] });
-  // }
-}
-
-async function deleteRooms() {
-  let backendUrl;
-
-  if (import.meta.env.NETLIFY === 'true') {
-    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
-  } else {
-    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+    //   queryClient.invalidateQueries({ queryKey: ['guests'] });
+    // }
   }
-
-  const { error } = await axios.delete(
-    `${backendUrl}api/v1/rooms`,
-    {
-      withCredentials: true,
-      headers: {
-        'Access-Control-Allow-Origin': '*', 
+  
+  async function deleteRooms() {
+    let backendUrl;
+    
+    if (import.meta.env.NETLIFY === 'true') {
+      backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+    } else {
+      backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+    }
+    
+    const { error } = await axios.delete(
+      `${backendUrl}api/v1/rooms`,
+      {
+        withCredentials: true,
+        headers: {
+          'Access-Control-Allow-Origin': '*', 
       }
     }
   );  
   
   if (error) console.error(error.message);
   // else {
-  //   queryClient.invalidateQueries({ queryKey: ['rooms'] });
-  // }
-}
-
-async function deleteBookings() {
-  let backendUrl;
-
-  if (import.meta.env.NETLIFY === 'true') {
-    backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
-  } else {
-    backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+    //   queryClient.invalidateQueries({ queryKey: ['rooms'] });
+    // }
   }
-
-  const { error } = await axios.delete(
-    `${backendUrl}api/v1/bookings`,
-    {
-      withCredentials: true,
-      headers: {
+  
+  async function deleteBookings() {
+    let backendUrl;
+    
+    if (import.meta.env.NETLIFY === 'true') {
+      backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
+    } else {
+      backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
+    }
+    
+    const { error } = await axios.delete(
+      `${backendUrl}api/v1/bookings`,
+      {
+        withCredentials: true,
+        headers: {
         'Access-Control-Allow-Origin': '*',
       }
     }
   );
-
+  
   if (error) console.error(error);
   // else {
-  //   queryClient.invalidateQueries({ queryKey: ['bookings'] });
-  // }
-}
-
-async function createGuests() {
+    //   queryClient.invalidateQueries({ queryKey: ['bookings'] });
+    // }
+  }
+  
+  async function createGuests() {
   let backendUrl;
-
+  
   if (import.meta.env.NETLIFY === 'true') {
     backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
   } else {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
-
+  
   const { data: guests, error } = await axios.get(
     `${backendUrl}api/v1/guests/init`,
     {
@@ -99,7 +98,7 @@ async function createGuests() {
       }
     }
   );
-
+  
   if (error) console.error(error);
   else {
     // queryClient.invalidateQueries({ queryKey: ['guests'] });
@@ -109,13 +108,13 @@ async function createGuests() {
 
 async function createRooms() {
   let backendUrl;
-
+  
   if (import.meta.env.NETLIFY === 'true') {
     backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
   } else {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
-
+  
   const { data: rooms, error } = await axios.get(
     `${backendUrl}api/v1/rooms/init`,
     {
@@ -135,13 +134,13 @@ async function createRooms() {
 
 async function createBookings() {
   let backendUrl;
-
+  
   if (import.meta.env.NETLIFY === 'true') {
     backendUrl = process.env.VITE_CONTINENTAL_BACKEND_URL;
   } else {
     backendUrl = import.meta.env.VITE_CONTINENTAL_BACKEND_URL;
   }
-
+  
   const { data: bookings, error } = await axios.get(
     `${backendUrl}api/v1/bookings/init`,
     {
@@ -151,7 +150,7 @@ async function createBookings() {
       }
     }
   );
-
+  
   if (error) console.error(error);
   else {
     // queryClient.invalidateQueries({ queryKey: ['bookings'] });
@@ -161,7 +160,8 @@ async function createBookings() {
 
 function Uploader() {
   const [isLoading, setIsLoading] = useState(false);
-
+  const queryClient = useQueryClient();
+  
   async function uploadAll() {
     setIsLoading(true);
     // Bookings need to be deleted FIRST
@@ -173,25 +173,25 @@ function Uploader() {
     await createGuests();
     await createRooms();
     await createBookings();
-
+    
     queryClient.invalidateQueries();
-
+    
     setIsLoading(false);
   }
 
   async function uploadBookings() {
     setIsLoading(true);
-
+    
     await deleteBookings();
     await createBookings();
     queryClient.invalidateQueries();
-
+    
     setIsLoading(false);
   }
-
+  
   return (
     <div
-      style={{
+    style={{
         marginTop: 'auto',
         backgroundColor: '#e0e7ff',
         padding: '8px',
